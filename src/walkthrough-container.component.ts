@@ -43,7 +43,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     @HostBinding('class.hide')
     get hide() {
-        console.log('HIDE');
         return !this.show;
     }
     constructor(
@@ -52,12 +51,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         super();
     }
 
-
     @HostListener('click')
     click() {
         this.next();
     }
-
 
     /**
      * Attach a ComponentPortal as content to this walkthrough container.
@@ -93,18 +90,13 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         zoneStyle.height = coordinate.height + 'px';
     }
 
-
     contentBlockPosition(coordinate: WalkthroughElementCoordinate) {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
-        const height = element.getBoundingClientRect().height;
+        const height = element.getBoundingClientRect().height
+            + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom);
 
-        console.log(element, elementStyle.marginTop, elementStyle.marginBottom)
-        console.log(height)
-        console.log(coordinate)
-
-
-        if (height < coordinate.top) {
+        if (coordinate.top < height) {
             element.style.top = (coordinate.top + coordinate.height) + 'px';
         }
     }
