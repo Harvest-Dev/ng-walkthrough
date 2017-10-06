@@ -4,9 +4,7 @@ import {
     Input,
     Component,
     ComponentFactoryResolver,
-    ChangeDetectorRef,
     EmbeddedViewRef,
-    ViewContainerRef,
     ComponentRef,
     ApplicationRef,
     Injector,
@@ -25,6 +23,10 @@ export interface WalkthroughElementCoordinate {
     width: number
 }
 
+const booleanValue = (value: string | boolean) => {
+    return value === 'true' || value === true;
+};
+
 @Component({
     selector: 'ng-walkthrough',
     template: ''
@@ -37,12 +39,23 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() id: string;
     @Input() focusElementSelector: string;
 
+    @Input() previousStep: WalkthroughComponent;
+    @Input() nextStep: WalkthroughComponent;
+
+    @Input()
+    get finishStep() {
+        return this._hasFinish;
+    }
+    set finishStep(value: string | boolean) {
+        this._hasFinish = booleanValue(value);
+    }
+
     @Input()
     get hasBackdrop() {
         return this._hasBackdrop;
     }
     set hasBackdrop(value: string | boolean) {
-        this._hasBackdrop = value === 'true' || value === true;
+        this._hasBackdrop = booleanValue(value);
     }
 
     @Input()
@@ -50,7 +63,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         return this._hasGlow;
     }
     set hasGlow(value: string | boolean) {
-        this._hasGlow = value === 'true' || value === true;
+        this._hasGlow = booleanValue(value);
     }
 
     @Input()
@@ -59,11 +72,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _show = false;
     private _hasBackdrop: boolean;
     private _hasGlow: boolean;
+    private _hasFinish: boolean;
     private _focusElement: HTMLElement;
 
     constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _viewContainerRef: ViewContainerRef,
         private _componentFactoryResolver: ComponentFactoryResolver,
         private _applicationRef: ApplicationRef,
         private _injector: Injector
@@ -92,6 +104,18 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     open() {
         this._elementLocations(true);
+    }
+
+    loadPrevioustStep() {
+        setTimeout(() => {
+            this.previousStep.open();
+        }, 0)
+    }
+
+    loadNextStep() {
+        setTimeout(() => {
+            this.nextStep.open();
+        }, 0);
     }
 
     show() {
@@ -204,6 +228,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             }
             if (!this._show) {
                 if (this.contentTemplate) {
+                    console.log(this.contentTemplate);
                     this._attachWalkthroughContent(
                         this.contentTemplate,
                         WalkthroughComponent._walkthroughContainer.instance
@@ -216,6 +241,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 instance.show = true;
                 instance.hasBackdrop = this._hasBackdrop;
                 instance.hasGlow = this._hasGlow;
+                instance.hasPrevious = !!this.previousStep;
+                instance.hasNext = !!this.nextStep;
+                instance.hasFinish = this._hasFinish;
                 this.show();
             }
         }

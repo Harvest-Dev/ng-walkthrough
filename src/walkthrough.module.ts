@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
 
+import { WalkthroughFlowComponent } from './walkthrough-flow.component';
 import { WalkthroughComponent } from './walkthrough.component';
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 
 @NgModule({
     declarations: [
+        WalkthroughFlowComponent,
         WalkthroughComponent,
         WalkthroughContainerComponent
     ],
@@ -15,6 +17,7 @@ import { WalkthroughContainerComponent } from './walkthrough-container.component
         PortalModule
     ],
     exports: [
+        WalkthroughFlowComponent,
         WalkthroughComponent,
         WalkthroughContainerComponent
     ],

@@ -32,6 +32,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     hasBackdrop = false;
     hasGlow = false;
+    hasPrevious = false;
+    hasNext = false;
+    hasFinish = false;
 
     parent: WalkthroughComponent;
 
@@ -53,7 +56,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     @HostListener('click')
     click() {
-        this.next();
+        if (!this.hasNext) {
+            this.close();
+        }
     }
 
     /**
@@ -94,14 +99,24 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
         const height = element.getBoundingClientRect().height
-            + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom);
+            + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom, 10);
 
         if (coordinate.top < height) {
             element.style.top = (coordinate.top + coordinate.height) + 'px';
         }
     }
 
+    previous() {
+        this.close();
+        this.parent.loadPrevioustStep();
+    }
+
     next() {
+        this.close();
+        this.parent.loadNextStep();
+    }
+
+    close() {
         // remove content
         this._portalHost.dispose();
         // hide

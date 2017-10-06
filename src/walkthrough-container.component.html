@@ -2,6 +2,11 @@
     <div class="zone" [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" #zone></div>
     <div class="content-block" #contentBlock>
         <ng-template cdkPortalHost></ng-template>
+
+        <div class="navigate" *ngIf="hasPrevious || hasNext || hasFinish">
+             <div *ngIf="hasPrevious" (click)="previous()">Previous</div>
+            <div *ngIf="hasNext" (click)="next()">Next</div>
+            <div *ngIf="hasFinish" (click)="close()">Close</div>
+        </div>
     </div>
 </div>
-

@@ -5,19 +5,20 @@
         <div><button id="test2" (click)="walk2.open()">Test</button></div>
     </div>
 
-
     <ng-walkthrough #walk1
         id="wt-test1"
         focusElementSelector="#test1"
         hasGlow="true"
-        [contentTemplate]="step1">
-
+        [contentTemplate]="step1"
+        [nextStep]="walk2">
     </ng-walkthrough>
     <ng-walkthrough #walk2
         id="wt-test2"
         focusElementSelector="#test2"
         hasBackdrop="true"
-        [contentTemplate]="step2">
+        [contentTemplate]="step2"
+        [previousStep]="walk1"
+        finishStep="true">
     </ng-walkthrough>
 
     <ng-template #step1>
