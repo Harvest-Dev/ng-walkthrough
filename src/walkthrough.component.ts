@@ -1,0 +1,224 @@
+import {
+    Type,
+    TemplateRef,
+    Input,
+    Component,
+    ComponentFactoryResolver,
+    ChangeDetectorRef,
+    EmbeddedViewRef,
+    ViewContainerRef,
+    ComponentRef,
+    ApplicationRef,
+    Injector,
+    HostListener,
+    OnInit,
+    AfterViewInit
+} from '@angular/core';
+
+import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
+import { WalkthroughContainerComponent } from './walkthrough-container.component';
+
+export interface WalkthroughElementCoordinate {
+    top: number;
+    left: number;
+    height: number;
+    width: number
+}
+
+@Component({
+    selector: 'ng-walkthrough',
+    template: ''
+})
+export class WalkthroughComponent implements OnInit, AfterViewInit {
+
+    private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent>;
+    private static _walkthroughContainerCreating = false;
+
+    @Input() id: string;
+    @Input() focusElementSelector: string;
+
+    @Input()
+    get hasBackdrop() {
+        return this._hasBackdrop;
+    }
+    set hasBackdrop(value: string | boolean) {
+        this._hasBackdrop = value === 'true' || value === true;
+    }
+
+    @Input()
+    get hasGlow() {
+        return this._hasGlow;
+    }
+    set hasGlow(value: string | boolean) {
+        this._hasGlow = value === 'true' || value === true;
+    }
+
+    @Input()
+    contentTemplate: TemplateRef<any>;
+
+    private _show = false;
+    private _hasBackdrop: boolean;
+    private _hasGlow: boolean;
+    private _focusElement: HTMLElement;
+
+    constructor(
+        private _changeDetectorRef: ChangeDetectorRef,
+        private _viewContainerRef: ViewContainerRef,
+        private _componentFactoryResolver: ComponentFactoryResolver,
+        private _applicationRef: ApplicationRef,
+        private _injector: Injector
+    ) { }
+
+    @HostListener('window:resize')
+    resize() {
+        if (WalkthroughComponent._walkthroughContainer && this._show) {
+            this._elementLocations(false);
+        }
+    }
+
+    ngOnInit() {
+    }
+
+    ngAfterViewInit() {
+        // init the Walkthrough element container
+        if (!WalkthroughComponent._walkthroughContainer && !WalkthroughComponent._walkthroughContainerCreating) {
+            WalkthroughComponent._walkthroughContainerCreating = true;
+            setTimeout(() => {
+                WalkthroughComponent._walkthroughContainer =
+                    this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
+            }, 0);
+        }
+    }
+
+    open() {
+        this._elementLocations(true);
+    }
+
+    show() {
+        this._show = true;
+    }
+
+    hide() {
+        this._show = false;
+    }
+
+    private _appendComponentToBody<T>(component: Type<T>): ComponentRef<T> {
+        // create a component reference
+        const componentRef = this._componentFactoryResolver.resolveComponentFactory(component).create(this._injector);
+
+        // attach component to the appRef so that so that it will be dirty checked.
+        this._applicationRef.attachView(componentRef.hostView);
+
+        // get DOM element from component
+        const domElem = (componentRef.hostView as EmbeddedViewRef<T>).rootNodes[0] as HTMLElement;
+
+        document.body.appendChild(domElem);
+
+        return componentRef;
+    }
+
+    private _attachWalkthroughContent<T>(
+        componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
+        walkthroughContainer: WalkthroughContainerComponent
+    ) {
+        if (componentOrTemplateRef instanceof TemplateRef) {
+            walkthroughContainer.attachTemplatePortal(
+                new TemplatePortal<T>(componentOrTemplateRef, null!));
+        } else {
+            const injectionTokens = new WeakMap();
+            injectionTokens.set(WalkthroughContainerComponent, walkthroughContainer);
+            const injector = new PortalInjector(this._injector, injectionTokens);
+            walkthroughContainer.attachComponentPortal(
+                new ComponentPortal(componentOrTemplateRef, undefined, injector)
+            );
+
+        }
+
+    }
+
+    private _elementLocations(open: boolean): void {
+
+        this._getFocusElement();
+
+        // get focus elements datas
+
+        const element = this._focusElement;
+        if (element) {
+            const offsetCoordinates = this._getOffsetCoordinates(element);
+            this._setFocus(offsetCoordinates, open);
+        }
+    }
+
+    /**
+     *
+     */
+    private _getFocusElement() {
+        const focusElements: NodeListOf<HTMLElement> = this.focusElementSelector
+            ? document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>
+            : null;
+
+        // getting focus element
+
+        if (focusElements && focusElements.length > 0) {
+            if (focusElements.length > 1) {
+                console.warn('Multiple items fit selector, displaying first visible as focus item');
+                for (let i = 0, l = focusElements.length; i < l; i++) {
+                    // offsetHeight not of 0 means visible
+                    if (focusElements[i].offsetHeight) {
+                        this._focusElement = focusElements[i];
+                        i = focusElements.length;
+                    }
+                }
+            } else {
+                this._focusElement = focusElements[0];
+            }
+        } else {
+            console.error('No element found with selector: ' + this.focusElementSelector);
+            this._focusElement = null;
+        }
+    }
+
+    /**
+     * get the offest coordinates of a HTML element
+     * @param focusElement target element
+     * @returns cordinates of focusElement (width, height, left, top)
+     */
+    private _getOffsetCoordinates(focusElement: HTMLElement): WalkthroughElementCoordinate {
+        const ionicElement = focusElement.getBoundingClientRect();
+        const width = ionicElement.width;
+        const height = ionicElement.height;
+        const left = ionicElement.left;
+        const top = ionicElement.top;
+
+        return { top: top, left: left, height: height, width: width };
+    }
+
+    /**
+     *
+     */
+    private _setFocus(coordinate: WalkthroughElementCoordinate, open: boolean) {
+        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        if (instance) {
+            if (instance.zone) {
+                instance.hightlightZone(coordinate);
+            }
+            if (!this._show) {
+                if (this.contentTemplate) {
+                    this._attachWalkthroughContent(
+                        this.contentTemplate,
+                        WalkthroughComponent._walkthroughContainer.instance
+                    );
+                    setTimeout(() => {
+                        instance.contentBlockPosition(coordinate);
+                    }, 0);
+                }
+                instance.parent = this;
+                instance.show = true;
+                instance.hasBackdrop = this._hasBackdrop;
+                instance.hasGlow = this._hasGlow;
+                this.show();
+            }
+        }
+
+    }
+}
