@@ -4,3 +4,20 @@ dist
 debug.log
 node_modules
 out-tsc
+
+# git
+*.orig
+
+# IDE
+/nbproject/
+
+# meld
+*_BACKUP_*
+*_LOCAL_*
+*_BASE_*
+*_REMOTE_*
+
+# global
+*.log
+*.bak
+[Tt]humbs.db

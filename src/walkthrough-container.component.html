@@ -1,12 +1,13 @@
-<div class="container">
-    <div class="zone" [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" #zone></div>
-    <div class="content-block" #contentBlock>
+<div class="wkt-container">
+    <div class="wkt-zone" [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" #zone></div>
+    <div class="wkt-content-block" #contentBlock>
         <ng-template cdkPortalHost></ng-template>
 
-        <div class="navigate" *ngIf="hasPrevious || hasNext || hasFinish">
-             <div *ngIf="hasPrevious" (click)="previous()">Previous</div>
-            <div *ngIf="hasNext" (click)="next()">Next</div>
-            <div *ngIf="hasFinish" (click)="close()">Close</div>
+        <div class="wkt-navigate" *ngIf="hasPrevious||hasNext||hasFinish">
+            <div class="wkt-previous-link" *ngIf="hasPrevious" (click)="previous()">Previous</div>
+            <div class="wkt-next-link" *ngIf="hasNext" (click)="next()">Next</div>
+            <div class="wkt-finish-link" *ngIf="hasFinish" (click)="close()">Close</div>
         </div>
     </div>
 </div>
+

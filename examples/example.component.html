@@ -11,6 +11,11 @@
         hasGlow="true"
         [contentTemplate]="step1"
         [nextStep]="walk2">
+        <ng-template #step1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+            </p>
+        </ng-template>
     </ng-walkthrough>
     <ng-walkthrough #walk2
         id="wt-test2"
@@ -19,18 +24,11 @@
         [contentTemplate]="step2"
         [previousStep]="walk1"
         finishStep="true">
+        <ng-template #step2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+            </p>
+        </ng-template>
     </ng-walkthrough>
-
-    <ng-template #step1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
-        </p>
-    </ng-template>
-
-    <ng-template #step2>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
-        </p>
-    </ng-template>
 
 </div>
