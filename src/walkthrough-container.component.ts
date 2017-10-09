@@ -30,12 +30,23 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     show: boolean;
 
+    // highlight
+
     hasBackdrop = false;
     hasGlow = false;
+
+    // navigate
+
     hasPrevious = false;
     hasNext = false;
     hasFinish = false;
     hasCloseButton = false;
+
+    // arrow
+
+    hasArrow = false;
+    arrowPath: string;
+    arrowMarkerDist = 7;
 
     text = new WalkthroughText();
 
@@ -51,6 +62,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     get hide() {
         return !this.show;
     }
+
+    private _contentPosition: 'top' | 'bottom';
+
     constructor(
         public viewContainerRef: ViewContainerRef
     ) {
@@ -106,9 +120,34 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
         if (coordinate.top < height) {
             element.style.top = (coordinate.top + coordinate.height) + 'px';
+            this._contentPosition = 'bottom';
         } else {
             element.style.top = (coordinate.top - coordinate.height - height) + 'px';
+            this._contentPosition = 'top';
         }
+    }
+
+    arrowPosition(coordinate: WalkthroughElementCoordinate) {
+
+        const element = this.contentBlock.nativeElement as HTMLElement;
+        const offsetCoordinates = element.getBoundingClientRect();
+
+        const startLeft = offsetCoordinates.left + offsetCoordinates.width / 2;
+        let startTop = offsetCoordinates.top + offsetCoordinates.height;
+        let endLeft = coordinate.left;
+
+        if (this._contentPosition === 'bottom') {
+            startTop -= offsetCoordinates.height;
+        }
+
+        if (startLeft > coordinate.left) {
+            endLeft += coordinate.width + this.arrowMarkerDist;
+        } else {
+            endLeft -= this.arrowMarkerDist;
+        }
+        const endTop = coordinate.top + (coordinate.height / 2);
+
+        this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
     }
 
     previous() {

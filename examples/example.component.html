@@ -34,7 +34,8 @@
         [contentTemplate]="step2"
         [previousStep]="walk1"
         [nextStep]="walk3"
-        closeButton="true">
+        closeButton="true"
+        showArrow="true">
         <ng-template #step2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
@@ -54,7 +55,8 @@
         [contentTemplate]="step3"
         [previousStep]="walk2"
         finishStep="true"
-        [texts]="frenchText">
+        [texts]="frenchText"
+        showArrow="true">
         <ng-template #step3>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet

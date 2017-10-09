@@ -74,3 +74,24 @@
 .wkt-finish-link{
 
 }
+
+// arrow
+
+svg {
+    overflow: visible;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border: 1px solid transparent;
+}
+
+#wkt-arrow > path {
+    fill:#fff;
+}
+
+.wkt-arrow-path {
+    stroke:#fff;
+    stroke-width: 2px;
+    fill: none;
+    marker-end: url(#wkt-arrow);
+}

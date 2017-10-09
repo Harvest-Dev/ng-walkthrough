@@ -51,6 +51,13 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._hasCloseButton = booleanValue(value);
     }
 
+    @Input()
+    get showArrow() {
+        return this._hasArrow;
+    }
+    set showArrow(value: string | boolean) {
+        this._hasArrow = booleanValue(value);
+    }
 
     @Input()
     get finishStep() {
@@ -83,6 +90,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasBackdrop: boolean;
     private _hasGlow: boolean;
     private _hasFinish: boolean;
+    private _hasArrow: boolean;
     private _hasCloseButton: boolean;
     private _focusElement: HTMLElement;
 
@@ -241,11 +249,18 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._attachContentTemplate(coordinate, instance);
                 this._initContentTemplate(instance);
             }
+            setTimeout(() => {
+                // update elements positions
+                instance.contentBlockPosition(coordinate);
+                if (this._hasArrow) {
+                    instance.arrowPosition(coordinate);
+                }
+            }, 0);
         }
     }
 
     /**
-     * Attache the template in the contener, if a template is linked, and show this at the good position.
+     * Attache the template in the contener, if a template is linked.
      */
     private _attachContentTemplate(coordinate: WalkthroughElementCoordinate, instance: WalkthroughContainerComponent) {
         if (this.contentTemplate) {
@@ -253,9 +268,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this.contentTemplate,
                 WalkthroughComponent._walkthroughContainer.instance
             );
-            setTimeout(() => {
-                instance.contentBlockPosition(coordinate);
-            }, 0);
         }
     }
 
@@ -271,6 +283,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasNext = !!this.nextStep;
         instance.hasCloseButton = this._hasCloseButton;
         instance.hasFinish = this._hasFinish;
+        instance.hasArrow = this._hasArrow;
         instance.text = this.texts
             ? { ...new WalkthroughText(), ...this.texts }
             : new WalkthroughText();

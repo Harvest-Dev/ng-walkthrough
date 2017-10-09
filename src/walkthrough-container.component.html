@@ -9,4 +9,13 @@
             <div class="wkt-finish-link" *ngIf="hasFinish" (click)="close()">{{text.close}}</div>
         </div>
     </div>
+    <svg width="100%" height="100%" *ngIf="hasArrow">
+    <defs>
+    <marker id="wkt-arrow" viewBox="0 0 10 10" refX="8" refY="5"
+            markerUnits="strokeWidth" orient="auto" markerWidth="10" markerHeight="10">
+        <polyline points="0,0 10,5 0,10 5,5" fill="#FFF" />
+    </marker>
+    </defs>
+    <path class="wkt-arrow-path" [attr.d]="arrowPath" />
+    </svg>
 </div>
