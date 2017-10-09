@@ -44,6 +44,15 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() texts: WalkthroughText;
 
     @Input()
+    get closeButton() {
+        return this._hasCloseButton;
+    }
+    set closeButton(value: string | boolean) {
+        this._hasCloseButton = booleanValue(value);
+    }
+
+
+    @Input()
     get finishStep() {
         return this._hasFinish;
     }
@@ -74,6 +83,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasBackdrop: boolean;
     private _hasGlow: boolean;
     private _hasFinish: boolean;
+    private _hasCloseButton: boolean;
     private _focusElement: HTMLElement;
 
     constructor(
@@ -85,7 +95,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @HostListener('window:resize')
     resize() {
         if (WalkthroughComponent._walkthroughContainer && this._show) {
-            this._elementLocations(false);
+            this._elementLocations();
         }
     }
 
@@ -104,7 +114,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     open() {
-        this._elementLocations(true);
+        this._elementLocations();
     }
 
     loadPrevioustStep() {
@@ -161,7 +171,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     }
 
-    private _elementLocations(open: boolean): void {
+    private _elementLocations(): void {
 
         this._getFocusElement();
 
@@ -170,7 +180,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             const offsetCoordinates = this._getOffsetCoordinates(element);
-            this._setFocus(offsetCoordinates, open);
+            this._setFocus(offsetCoordinates);
         }
     }
 
@@ -219,38 +229,52 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     *
+     * get instance, hightlight the focused element et show the template
      */
-    private _setFocus(coordinate: WalkthroughElementCoordinate, open: boolean) {
+    private _setFocus(coordinate: WalkthroughElementCoordinate) {
         const instance = WalkthroughComponent._walkthroughContainer.instance;
         if (instance) {
             if (instance.zone) {
                 instance.hightlightZone(coordinate);
             }
             if (!this._show) {
-                if (this.contentTemplate) {
-                    console.log(this.contentTemplate);
-                    this._attachWalkthroughContent(
-                        this.contentTemplate,
-                        WalkthroughComponent._walkthroughContainer.instance
-                    );
-                    setTimeout(() => {
-                        instance.contentBlockPosition(coordinate);
-                    }, 0);
-                }
-                instance.parent = this;
-                instance.show = true;
-                instance.hasBackdrop = this._hasBackdrop;
-                instance.hasGlow = this._hasGlow;
-                instance.hasPrevious = !!this.previousStep;
-                instance.hasNext = !!this.nextStep;
-                instance.hasFinish = this._hasFinish;
-                instance.text = this.texts
-                    ? { ...new WalkthroughText(), ...this.texts }
-                    : new WalkthroughText();
-                this.show();
+                this._attachContentTemplate(coordinate, instance);
+                this._initContentTemplate(instance);
             }
         }
-
     }
+
+    /**
+     * Attache the template in the contener, if a template is linked, and show this at the good position.
+     */
+    private _attachContentTemplate(coordinate: WalkthroughElementCoordinate, instance: WalkthroughContainerComponent) {
+        if (this.contentTemplate) {
+            this._attachWalkthroughContent(
+                this.contentTemplate,
+                WalkthroughComponent._walkthroughContainer.instance
+            );
+            setTimeout(() => {
+                instance.contentBlockPosition(coordinate);
+            }, 0);
+        }
+    }
+
+    /**
+     * init all datas of the contenaire
+     */
+    private _initContentTemplate(instance: WalkthroughContainerComponent) {
+        instance.parent = this;
+        instance.show = true;
+        instance.hasBackdrop = this._hasBackdrop;
+        instance.hasGlow = this._hasGlow;
+        instance.hasPrevious = !!this.previousStep;
+        instance.hasNext = !!this.nextStep;
+        instance.hasCloseButton = this._hasCloseButton;
+        instance.hasFinish = this._hasFinish;
+        instance.text = this.texts
+            ? { ...new WalkthroughText(), ...this.texts }
+            : new WalkthroughText();
+        this.show();
+    }
+
 }

@@ -13,7 +13,8 @@
         focusElementSelector="#test1"
         hasGlow="true"
         [contentTemplate]="step1"
-        [nextStep]="walk2">
+        [nextStep]="walk2"
+        closeButton="true">
         <ng-template #step1>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
@@ -32,7 +33,8 @@
         hasBackdrop="true"
         [contentTemplate]="step2"
         [previousStep]="walk1"
-        [nextStep]="walk3">
+        [nextStep]="walk3"
+        closeButton="true">
         <ng-template #step2>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet

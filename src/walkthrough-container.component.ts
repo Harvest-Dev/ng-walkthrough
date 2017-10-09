@@ -35,6 +35,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasPrevious = false;
     hasNext = false;
     hasFinish = false;
+    hasCloseButton = false;
 
     text = new WalkthroughText();
 
