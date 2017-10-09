@@ -9,7 +9,7 @@ out-tsc
 *.orig
 
 # IDE
-nbproject/
+nbproject/**
 
 # meld
 *_BACKUP_*
