@@ -4,25 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="PITCH-CLIENT-APP">
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/walkthrough.component.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/tsconfig.es2015.json</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/index.ts</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/walkthrough-container.component.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/test.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/walkthrough-container.component.scss</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/example.module.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/webpack/webpack.dev.js</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/example.component.html</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/.gitignore</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/walkthrough-container.component.html</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/tslint.json</file>
+            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/index.html</file>
+            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/locale/messages.fr.xlf</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/example.component.scss</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/example.component.ts</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/walkthrough.module.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/styles.scss</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/src/vendor.ts</file>
             <file>file:/C:/Data/sources-svn/pitch/test/my-lib/examples/example.main.ts</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/tasks/build.js</file>
-            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/README.md</file>
+            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/webpack/webpack.common.js</file>
+            <file>file:/C:/Data/sources-svn/pitch/test/my-lib/index.ts</file>
         </group>
     </open-files>
 </project-private>

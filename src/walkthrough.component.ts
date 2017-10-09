@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
-import { WalkthroughContainerComponent } from './walkthrough-container.component';
+import { WalkthroughContainerComponent, WalkthroughText } from './walkthrough-container.component';
 
 export interface WalkthroughElementCoordinate {
     top: number;
@@ -41,6 +41,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     @Input() previousStep: WalkthroughComponent;
     @Input() nextStep: WalkthroughComponent;
+    @Input() texts: WalkthroughText;
 
     @Input()
     get finishStep() {
@@ -244,6 +245,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 instance.hasPrevious = !!this.previousStep;
                 instance.hasNext = !!this.nextStep;
                 instance.hasFinish = this._hasFinish;
+                instance.text = this.texts
+                    ? { ...new WalkthroughText(), ...this.texts }
+                    : new WalkthroughText();
                 this.show();
             }
         }

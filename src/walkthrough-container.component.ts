@@ -36,6 +36,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasNext = false;
     hasFinish = false;
 
+    text = new WalkthroughText();
+
     parent: WalkthroughComponent;
 
     @ViewChild(PortalHostDirective) _portalHost: PortalHostDirective;
@@ -126,4 +128,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this.parent.hide();
     }
 
+}
+
+export class WalkthroughText {
+    previous?= 'Previous';
+    next?= 'Next';
+    close?= 'Close';
 }
