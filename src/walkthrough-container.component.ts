@@ -103,6 +103,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
         if (coordinate.top < height) {
             element.style.top = (coordinate.top + coordinate.height) + 'px';
+        } else {
+            element.style.top = (coordinate.top - coordinate.height - height) + 'px';
         }
     }
 

@@ -1,8 +1,11 @@
 <div>
-    <button  id="test1" (click)="walk1.open()">Test</button>
+    <div>
+        <button id="test1" (click)="walk1.open()">Test 1</button>
+        <button id="test3" (click)="walk3.open()">Test 3</button>
+    </div>
     <div class="overflow">
         <div></div>
-        <div><button id="test2" (click)="walk2.open()">Test</button></div>
+        <div><button id="test2" (click)="walk2.open()">Test 2</button></div>
     </div>
 
     <ng-walkthrough #walk1
@@ -13,7 +16,13 @@
         [nextStep]="walk2">
         <ng-template #step1>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+                condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+                facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+                Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+                et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+                ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+                sed, fermentum volutpat sem.
             </p>
         </ng-template>
     </ng-walkthrough>
@@ -23,10 +32,35 @@
         hasBackdrop="true"
         [contentTemplate]="step2"
         [previousStep]="walk1"
-        finishStep="true">
+        [nextStep]="walk3">
         <ng-template #step2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+                condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+                facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+                Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+                et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+                ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+                sed, fermentum volutpat sem.
+            </p>
+        </ng-template>
+    </ng-walkthrough>
+    <ng-walkthrough #walk3
+        id="wt-test3"
+        focusElementSelector="#test3"
+        hasBackdrop="true"
+        [contentTemplate]="step3"
+        [previousStep]="walk2"
+        finishStep="true">
+        <ng-template #step3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+                condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+                facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+                Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+                et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+                ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+                sed, fermentum volutpat sem.
             </p>
         </ng-template>
     </ng-walkthrough>
