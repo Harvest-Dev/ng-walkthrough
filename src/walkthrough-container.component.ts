@@ -128,7 +128,12 @@ export class WalkthroughContainerComponent extends BasePortalHost {
                 zoneStyle.borderRadius = this.radius + '%';
             } else if (this.radius === 'auto') {
                 // if mode auto
-                zoneStyle.borderRadius = window.getComputedStyle(element, null).borderRadius;
+                const elementStyle = window.getComputedStyle(element, null);
+                // borderRadius work only on Chrome, use TopLeft, TopRight... for Firefox/Egde/IE
+                zoneStyle.borderTopLeftRadius = elementStyle.borderTopLeftRadius;
+                zoneStyle.borderTopRightRadius = elementStyle.borderTopRightRadius;
+                zoneStyle.borderBottomLeftRadius = elementStyle.borderBottomLeftRadius;
+                zoneStyle.borderBottomRightRadius = elementStyle.borderBottomRightRadius;
             } else {
                 // if is numeric, change in %
                 zoneStyle.borderRadius = this.radius;
