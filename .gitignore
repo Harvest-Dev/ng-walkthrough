@@ -4,6 +4,7 @@ dist
 debug.log
 node_modules
 out-tsc
+package-lock.json
 
 # git
 *.orig

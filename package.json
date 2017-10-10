@@ -1,5 +1,5 @@
 {
-	"name": "walkthrough",
+	"name": "angular-walkthrough",
 	"version": "0.1.0",
 	"description": "Walkthrough, an Angular library",
 	"main": "./bundles/walkthrough.umd.js",
@@ -84,6 +84,16 @@
 		"webpack-node-externals": "^1.5.4"
 	},
 	"repository": {
-		"url": "https://github.com/Zefling/ng-walkthrough"
+		"url": "git+https://github.com/Zefling/ng-walkthrough.git"
+	},
+	"publishConfig": {
+		"registry": "https://www.npmjs.com"
+	},
+	"bugs": {
+		"url": "https://github.com/Zefling/ng-walkthrough/issues"
+	},
+	"homepage": "https://github.com/Zefling/ng-walkthrough#readme",
+	"directories": {
+		"example": "examples"
 	}
 }
