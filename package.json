@@ -1,11 +1,15 @@
 {
 	"name": "angular-walkthrough",
-	"version": "0.1.0",
+	"version": "0.1.8",
 	"description": "Walkthrough, an Angular library",
-	"main": "./bundles/walkthrough.umd.js",
-	"module": "./walkthrough.es5.js",
-	"es2015": "./walkthrough.js",
-	"typings": "./walkthrough.d.ts",
+	"baseUrl": "./",
+	"author": "Célian Veyssière",
+	"main": "./bundles/angular-walkthrough.umd.js",
+	"module": "./angular-walkthrough.es5.js",
+	"es2015": "./angular-walkthrough.js",
+	"typings": "./angular-walkthrough.d.ts",
+	"license": "MIT",
+	"private": false,
 	"scripts": {
 		"build": "node ./tasks/build",
 		"lint": "tslint ./src/**/*.ts",
@@ -20,8 +24,6 @@
 		"walkthrough",
 		"angular"
 	],
-	"author": "Zéfling",
-	"license": "MIT",
 	"dependencies": {
 		"@angular/cdk": "^2.0.0-beta",
 		"@angular/common": "^4.0.0",
@@ -37,6 +39,7 @@
 		"@angular/compiler-cli": "^4.0.0",
 		"@types/jasmine": "2.5.38",
 		"@types/node": "^6.0.42",
+		"angular-librarian": "^1.0.0-beta.14",
 		"angular2-template-loader": "0.6.0",
 		"awesome-typescript-loader": "^3.0.0",
 		"codelyzer": "~3.0.0",
@@ -82,16 +85,14 @@
 		"webpack-node-externals": "^1.5.4"
 	},
 	"repository": {
+		"type": "git",
 		"url": "git+https://github.com/Zefling/ng-walkthrough.git"
 	},
 	"publishConfig": {
-		"registry": "https://www.npmjs.com"
+		"registry": "https://registry.npmjs.com"
 	},
 	"bugs": {
 		"url": "https://github.com/Zefling/ng-walkthrough/issues"
 	},
-	"homepage": "https://github.com/Zefling/ng-walkthrough#readme",
-	"directories": {
-		"example": "examples"
-	}
+	"homepage": "https://github.com/Zefling/ng-walkthrough#readme"
 }

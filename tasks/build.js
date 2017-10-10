@@ -21,7 +21,7 @@ const es5Dir = path.resolve(tscDir, 'lib-es5');
 const es2015Dir = path.resolve(tscDir, 'lib-es2015');
 
 const runPromise = (message, fn) => {
-    return function() {
+    return function () {
         console.info(colorize.colorize(message, 'cyan'));
         return fn().then(complete);
     };
@@ -32,28 +32,28 @@ const complete = (depth = 0) => {
     console.info(colorize.colorize(`${ spaces }> Complete`, 'green'));
 };
 const compileCode = () => Promise.all([2015, 5].map((type) =>
-    ngc({ project: path.resolve(rootDir, `tsconfig.es${ type }.json`)})
-        .then((exitCode) =>
-            exitCode === 0 ? Promise.resolve() : Promise.reject()
-        )
-));
+        ngc({project : path.resolve(rootDir, `tsconfig.es${ type }.json`)})
+            .then((exitCode) =>
+                exitCode === 0 ? Promise.resolve() : Promise.reject()
+            )
+    ));
 const copyMetadata = () =>
     copyGlobs(['**/*.d.ts', '**/*.metadata.json'], es2015Dir, distDir);
 const copyPackageFiles = () =>
-    copyGlobs(['.npmignore', 'package.json', 'README.md'], rootDir, distDir)
+    copyGlobs(['.npmignore', 'package.json', 'README.md', 'LICENSE.md'], rootDir, distDir)
         .then(() => {
             const contents = fs.readFileSync(path.resolve(distDir, 'package.json'), 'utf8');
 
-            return fs.writeFileSync(path.resolve(distDir, 'package.json'),  contents.replace('"dependencies":', '"peerDependencies":'));
+            return fs.writeFileSync(path.resolve(distDir, 'package.json'), contents.replace('"dependencies":', '"peerDependencies":'));
         });
 const copySource = () => copyGlobs('**/*', srcDir, buildDir);
 const doInlining = () => inlineResources(buildDir, 'src');
 const rollupBundles = () => rollup(libName, {
-    dist: distDir,
-    es2015: es2015Dir,
-    es5: es5Dir,
-    root: rootDir
-});
+        dist : distDir,
+        es2015 : es2015Dir,
+        es5 : es5Dir,
+        root : rootDir
+    });
 
 return Promise.resolve()
     .then(runPromise('Copying `src` files into `build`', copySource))

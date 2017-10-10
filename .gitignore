@@ -22,3 +22,4 @@ nbproject/**
 *.log
 *.bak
 [Tt]humbs.db
+/angular-walkthrough-0.1.0/angular-walkthrough-0.1.0/package/nbproject/private/

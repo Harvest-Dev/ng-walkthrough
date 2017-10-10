@@ -8,7 +8,6 @@ build
 coverage
 debug.log
 DEVELOPMENT.md
-dist
 index.ts
 karma.conf.js
 node_modules

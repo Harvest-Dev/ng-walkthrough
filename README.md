@@ -4,7 +4,9 @@ This Angular model is inspired in part by [ng-walkthrough](https://github.com/so
 
 ## Installation
 
-In progress
+```
+npm install angular-walkthrough
+```
 
 ## Requirements
 
