@@ -15,6 +15,10 @@ npm install angular-walkthrough
 - Angular 4.0.0 and more
 - Angular/cdk 2.0.0-beta.12
 
+## Demo
+
+[See a demo](https://zefling.github.io/ng-walkthrough/demo/).
+
 ## Usage
 
 ### Directive Attributes
