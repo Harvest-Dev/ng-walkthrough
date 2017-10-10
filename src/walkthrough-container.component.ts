@@ -48,6 +48,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     arrowPath: string;
     arrowMarkerDist = 7;
 
+    radius: string;
+
     text = new WalkthroughText();
 
     parent: WalkthroughComponent;
@@ -110,6 +112,24 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         zoneStyle.top = coordinate.top + 'px';
         zoneStyle.width = coordinate.width + 'px';
         zoneStyle.height = coordinate.height + 'px';
+    }
+
+    hightlightZoneStyling(element: HTMLElement) {
+        const zoneStyle = (this.zone.nativeElement as HTMLElement).style;
+        if (this.radius) {
+            if (Number(this.radius) === parseFloat(this.radius)) {
+                // if is numeric, change in %
+                zoneStyle.borderRadius = this.radius + '%';
+            } else if (this.radius === 'auto') {
+                // if mode auto
+                zoneStyle.borderRadius = window.getComputedStyle(element, null).borderRadius;
+            } else {
+                // if is numeric, change in %
+                zoneStyle.borderRadius = this.radius;
+            }
+        } else {
+            zoneStyle.borderRadius = '';
+        }
     }
 
     contentBlockPosition(coordinate: WalkthroughElementCoordinate) {

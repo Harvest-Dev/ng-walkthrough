@@ -19,7 +19,7 @@
     position: absolute;
 
     &.backdrop {
-        outline: 2000px solid rgba(0,0,0, .6);
+        box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6);
     }
     &.glow {
         box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;

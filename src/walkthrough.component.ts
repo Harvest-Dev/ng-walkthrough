@@ -38,6 +38,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     @Input() id: string;
     @Input() focusElementSelector: string;
+    @Input() radius: string;
 
     @Input() previousStep: WalkthroughComponent;
     @Input() nextStep: WalkthroughComponent;
@@ -246,10 +247,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 instance.hightlightZone(coordinate);
             }
             if (!this._show) {
-                this._attachContentTemplate(coordinate, instance);
+                this._attachContentTemplate();
                 this._initContentTemplate(instance);
             }
             setTimeout(() => {
+                instance.hightlightZoneStyling(this._focusElement);
                 // update elements positions
                 instance.contentBlockPosition(coordinate);
                 if (this._hasArrow) {
@@ -262,7 +264,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     /**
      * Attache the template in the contener, if a template is linked.
      */
-    private _attachContentTemplate(coordinate: WalkthroughElementCoordinate, instance: WalkthroughContainerComponent) {
+    private _attachContentTemplate() {
         if (this.contentTemplate) {
             this._attachWalkthroughContent(
                 this.contentTemplate,
@@ -284,6 +286,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasCloseButton = this._hasCloseButton;
         instance.hasFinish = this._hasFinish;
         instance.hasArrow = this._hasArrow;
+        instance.radius = this.radius;
         instance.text = this.texts
             ? { ...new WalkthroughText(), ...this.texts }
             : new WalkthroughText();
