@@ -14,7 +14,8 @@ import {
 } from '@angular/core';
 
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
-import { WalkthroughContainerComponent, WalkthroughText } from './walkthrough-container.component';
+import { WalkthroughContainerComponent } from './walkthrough-container.component';
+import { WalkthroughText } from './walkthrough-text';
 
 export interface WalkthroughElementCoordinate {
     top: number;

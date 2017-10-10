@@ -16,6 +16,7 @@ import {
     TemplatePortal
 } from '@angular/cdk/portal';
 import { WalkthroughComponent, WalkthroughElementCoordinate } from './walkthrough.component';
+import { WalkthroughText } from './walkthrough-text';
 
 export function throwWalkthroughContentAlreadyAttachedError() {
     throw Error('Attempting to attach walkthrough content after content is already attached');
@@ -63,6 +64,11 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     @HostBinding('class.hide')
     get hide() {
         return !this.show;
+    }
+
+    @HostBinding('class.cursor')
+    get cursor() {
+        return !this.hasNext;
     }
 
     private _contentPosition: 'top' | 'bottom';
@@ -188,10 +194,4 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this.parent.hide();
     }
 
-}
-
-export class WalkthroughText {
-    previous?= 'Previous';
-    next?= 'Next';
-    close?= 'Close';
 }

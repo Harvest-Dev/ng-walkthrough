@@ -9,6 +9,7 @@ In progress
 ## Requirements
 
 - Angular 4.0.0 and more
+- Angular/cdk 2.0.0-beta.12
 
 ## Usage
 
