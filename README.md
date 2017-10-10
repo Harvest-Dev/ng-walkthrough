@@ -48,6 +48,6 @@ WalkthroughText {
 }
 ```
 
-## License
+## License
 
 Like Angular, this module is released under the permissive MIT license. Your contributions are always welcome.
