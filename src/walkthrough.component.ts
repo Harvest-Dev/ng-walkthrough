@@ -200,6 +200,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         const element = this._focusElement;
         if (element) {
+            element.scrollIntoView();
             const offsetCoordinates = this._getOffsetCoordinates(element);
 
             if (this.typeSelector === 'zone') {
