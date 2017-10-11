@@ -23,18 +23,21 @@ npm install angular-walkthrough
 
 ### Directive Attributes
 
-- `id`  (optional): HTML id
-- `focusElementSelector`  (optional): CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
-- `radius`  (optional): apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
-- `previousStep`  (optional): add a ling to go to the previous `ng-walkthrough`.
-- `nextStep`  (optional): add a ling to go to the next `ng-walkthrough`.
-- `texts`  (optional): change texts. It's a overlay of `WalkthroughText`.
-- `closeButton`  (optional): `true` for show the button. By defaut `false`.
-- `showArrow`  (optional): `true` for show the arrow. By defaut `false`.
-- `finishStep`  (optional): `true` for show a link to exit. By defaut `false`.
-- `hasBackdrop`  (optional): `true` for show a dark backdrop around the focus element. By defaut `false`.
-- `hasGlow`  (optional): `true` for show a glow on the focus element. By defaut `false`.
+- `id` (optional): HTML id
+- `focusElementSelector` (optional): CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
+- `typeSelector` (optional): Type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
+- `radius` (optional): apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
+- `previousStep` (optional): add a ling to go to the previous `ng-walkthrough`.
+- `nextStep` (optional): add a ling to go to the next `ng-walkthrough`.
+- `texts` (optional): change texts. It's a overlay of `WalkthroughText`.
+- `closeButton` (optional): `true` for show the button. By defaut `false`.
+- `closeAnywhere` (optional): click anywhere to close. By defaut `true`.
+- `showArrow` (optional): `true` for show the arrow. By defaut `false`.
+- `finishStep` (optional): `true` for show a link to exit. By defaut `false`.
+- `hasBackdrop` (optional): `true` for show a dark backdrop around the focus element. By defaut `false`.
+- `hasGlow` (optional): `true` for show a glow on the focus element. By defaut `false`.
 - `contentTemplate` (optional): add a `ng-template` with your description.
+- `justifyContent` (optional): align the `contentTemplate`. Possible value: `left`, `center` or `right`. By defaut : `left`
 
 ### Change texts
 

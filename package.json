@@ -18,7 +18,8 @@
 		"prebuild": "rimraf dist out-tsc",
 		"start": "webpack-dev-server --open --config ./webpack/webpack.dev.js",
 		"tagVersion": "node ./tasks/tag-version",
-		"test": "node ./tasks/test"
+		"test": "node ./tasks/test",
+		"publish" : "npm publish ./dist --tag latest"
 	},
 	"keywords": [
 		"walkthrough",

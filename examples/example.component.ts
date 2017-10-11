@@ -15,4 +15,14 @@ export class ExampleComponent {
         close: 'Fermer'
     }
 
+    testClickCount = 0;
+    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!']
+
+
+    buttonAction() {
+        if (this.testClickCount < this.testClickTexts.length - 1) {
+            this.testClickCount++;
+        }
+    }
+
 }

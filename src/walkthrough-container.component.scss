@@ -16,6 +16,12 @@
     }
 }
 
+button {
+    background: none;
+    border: 0;
+    color: #FFF;
+}
+
 // hightlight zone
 
 .wkt-zone {
@@ -42,6 +48,7 @@
     background-color: rgba(0,0,0, .6);
     z-index: 1;
     color: #FFF;
+    min-width: calc(320px - 2em);
 }
 .wkt-close + .wkt-content {
     margin-top: 1.3em;
@@ -52,6 +59,7 @@
 .wkt-close {
     position: absolute;
     right: 1em;
+    cursor:pointer;
 }
 
 .wkt-navigate {
@@ -59,11 +67,12 @@
     flex-wrap: wrap;
     justify-content: center;
 
-    & > div {
+    & > button {
         padding: 6px;
         font-size: 120%;
 
         &:hover {
+            cursor:pointer;
             text-decoration: underline;
         }
     }

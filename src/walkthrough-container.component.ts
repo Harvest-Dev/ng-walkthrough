@@ -42,6 +42,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasNext = false;
     hasFinish = false;
     hasCloseButton = false;
+    hasCloseAnywhere = true;
 
     // arrow
 
@@ -68,7 +69,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     @HostBinding('class.cursor')
     get cursor() {
-        return !this.hasNext;
+        return this.hasCloseAnywhere;
     }
 
     private _contentPosition: 'top' | 'bottom';
@@ -81,7 +82,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     @HostListener('click')
     click() {
-        if (!this.hasNext) {
+        if (this.hasCloseAnywhere) {
             this.close();
         }
     }
@@ -143,7 +144,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         }
     }
 
-    contentBlockPosition(coordinate: WalkthroughElementCoordinate) {
+    contentBlockPosition(coordinate: WalkthroughElementCoordinate, position: 'left' | 'center' | 'right') {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
         const height = element.getBoundingClientRect().height
@@ -155,6 +156,12 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         } else {
             element.style.top = (coordinate.top - coordinate.height - height) + 'px';
             this._contentPosition = 'top';
+        }
+
+        if (position === 'center') {
+            element.style.left = (window.innerWidth / 2 - element.getBoundingClientRect().width / 2) + 'px';
+        } else if (position === 'right') {
+            element.style.right = '0';
         }
     }
 

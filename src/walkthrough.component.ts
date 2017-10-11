@@ -39,11 +39,15 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     @Input() id: string;
     @Input() focusElementSelector: string;
+    @Input() typeSelector: 'element' | 'zone' = 'element';
     @Input() radius: string;
 
     @Input() previousStep: WalkthroughComponent;
     @Input() nextStep: WalkthroughComponent;
     @Input() texts: WalkthroughText;
+
+    @Input() contentTemplate: TemplateRef<any>;
+    @Input() justifyContent: 'left' | 'center' | 'right' = 'left';
 
     @Input()
     get closeButton() {
@@ -51,6 +55,14 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
     set closeButton(value: string | boolean) {
         this._hasCloseButton = booleanValue(value);
+    }
+
+    @Input()
+    get closeAnywhere() {
+        return this._hasCloseAnywhere;
+    }
+    set closeAnywhere(value: string | boolean) {
+        this._hasCloseAnywhere = booleanValue(value);
     }
 
     @Input()
@@ -85,16 +97,15 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._hasGlow = booleanValue(value);
     }
 
-    @Input()
-    contentTemplate: TemplateRef<any>;
-
     private _show = false;
-    private _hasBackdrop: boolean;
-    private _hasGlow: boolean;
-    private _hasFinish: boolean;
-    private _hasArrow: boolean;
-    private _hasCloseButton: boolean;
+    private _hasBackdrop = false;
+    private _hasGlow = false;
+    private _hasFinish = false;
+    private _hasArrow = false;
+    private _hasCloseButton = false;
+    private _hasCloseAnywhere: boolean = true;
     private _focusElement: HTMLElement;
+    private _focusElementEnd: HTMLElement;
 
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
@@ -190,6 +201,15 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             const offsetCoordinates = this._getOffsetCoordinates(element);
+
+            if (this.typeSelector === 'zone') {
+                const offsetEndCoordinatesEnd = this._getOffsetCoordinates(this._focusElementEnd);
+                offsetCoordinates.height = offsetEndCoordinatesEnd.top - offsetCoordinates.top
+                    + offsetEndCoordinatesEnd.height;
+                offsetCoordinates.width = offsetEndCoordinatesEnd.left - offsetCoordinates.left
+                    + offsetEndCoordinatesEnd.width;
+            }
+
             this._setFocus(offsetCoordinates);
         }
     }
@@ -207,15 +227,37 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         if (focusElements && focusElements.length > 0) {
             if (focusElements.length > 1) {
                 console.warn('Multiple items fit selector, displaying first visible as focus item');
-                for (let i = 0, l = focusElements.length; i < l; i++) {
+                let l = focusElements.length;
+                for (let i = 0; i < l; i++) {
                     // offsetHeight not of 0 means visible
                     if (focusElements[i].offsetHeight) {
                         this._focusElement = focusElements[i];
                         i = focusElements.length;
+                        break;
                     }
                 }
+
+                // if typeSelector is by zone, get also the last element
+                if (this.typeSelector === 'zone') {
+
+                    for (let i = l - 1; i >= 0; i--) {
+                        // offsetHeight not of 0 means visible
+                        if (focusElements[i].offsetHeight) {
+                            this._focusElementEnd = focusElements[i];
+                            i = focusElements.length;
+                            break;
+                        }
+                    }
+
+                    // this the zone this just a unique element, change mode for 'element'
+                    if (this._focusElement === this._focusElementEnd) {
+                        this.typeSelector = 'element';
+                    }
+                }
+
             } else {
                 this._focusElement = focusElements[0];
+                this.typeSelector = 'element';
             }
         } else {
             console.error('No element found with selector: ' + this.focusElementSelector);
@@ -254,7 +296,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
                 instance.hightlightZoneStyling(this._focusElement);
                 // update elements positions
-                instance.contentBlockPosition(coordinate);
+                instance.contentBlockPosition(coordinate, this.justifyContent);
                 if (this._hasArrow) {
                     instance.arrowPosition(coordinate);
                 }
@@ -285,6 +327,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasPrevious = !!this.previousStep;
         instance.hasNext = !!this.nextStep;
         instance.hasCloseButton = this._hasCloseButton;
+        instance.hasCloseAnywhere = this._hasCloseAnywhere;
         instance.hasFinish = this._hasFinish;
         instance.hasArrow = this._hasArrow;
         instance.radius = this.radius;
