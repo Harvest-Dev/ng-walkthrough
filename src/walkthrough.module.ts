@@ -4,6 +4,7 @@ import { PortalModule } from '@angular/cdk/portal';
 
 import { WalkthroughFlowComponent } from './walkthrough-flow.component';
 import { WalkthroughComponent } from './walkthrough.component';
+import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 
 @NgModule({
@@ -23,6 +24,9 @@ import { WalkthroughContainerComponent } from './walkthrough-container.component
     ],
     entryComponents: [
         WalkthroughContainerComponent
+    ],
+    providers: [
+        WalkthroughService
     ]
 })
 export class WalkthroughModule {

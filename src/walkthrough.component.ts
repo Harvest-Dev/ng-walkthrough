@@ -321,7 +321,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
      */
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
         instance.parent = this;
-        instance.show = true;
+        instance.open();
         instance.hasBackdrop = this._hasBackdrop;
         instance.hasGlow = this._hasGlow;
         instance.hasPrevious = !!this.previousStep;

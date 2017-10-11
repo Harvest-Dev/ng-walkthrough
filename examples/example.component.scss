@@ -1,3 +1,18 @@
+/deep/ html,
+/deep/ body {
+    height: 100%;
+    width: 100%;
+    padding:0;
+    margin:0;
+}
+
+:host,
+:host > div {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 .overflow {
     height: 250px;
     overflow: auto;
@@ -11,6 +26,11 @@ button {
     margin-left: 5%;
 }
 
+.bigger {
+    height: 100%;
+    width: 100%;
+    position:relative;
+}
 
 #test3 {
     position: absolute;
@@ -19,4 +39,11 @@ button {
     width: 50px;
     height: 50px;
     border-radius: 25% 50% 25% 40%;
+    z-index:1;
 }
+
+#test4 {
+    bottom: 1em;
+    position: absolute;
+}
+

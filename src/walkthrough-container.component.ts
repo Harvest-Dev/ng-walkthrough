@@ -16,6 +16,7 @@ import {
     TemplatePortal
 } from '@angular/cdk/portal';
 import { WalkthroughComponent, WalkthroughElementCoordinate } from './walkthrough.component';
+import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
 
 export function throwWalkthroughContentAlreadyAttachedError() {
@@ -75,7 +76,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     private _contentPosition: 'top' | 'bottom';
 
     constructor(
-        public viewContainerRef: ViewContainerRef
+        public viewContainerRef: ViewContainerRef,
+        private _walkthroughService: WalkthroughService
     ) {
         super();
     }
@@ -188,6 +190,11 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
     }
 
+    open() {
+        this._walkthroughService.disableScroll();
+        this.show = true;
+    }
+
     previous() {
         this.close();
         this.parent.loadPrevioustStep();
@@ -204,6 +211,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         // hide
         this.show = false;
         this.parent.hide();
+
+        this._walkthroughService.enableScroll();
     }
 
 }
