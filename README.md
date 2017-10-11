@@ -38,7 +38,7 @@ npm install angular-walkthrough
 
 ### Change texts
 
-It's possible to change add texts. With the `texts`  directive attribute.
+It's possible to change all texts. With the `texts`  directive attribute.
 
 ```
 WalkthroughText {
@@ -46,6 +46,25 @@ WalkthroughText {
     next     = 'Next';
     close    = 'Close';
 }
+```
+
+### Example
+
+Highlighting `#selectorId` element with example text in `ng-template`.
+
+```
+<ng-walkthrough
+    id="wt-test"
+    focusElementSelector="#selectorId"
+    hasBackdrop="true"
+    [contentTemplate]="template"
+    closeButton="true">
+    <ng-template #template>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+        </p>
+    </ng-template>
+</ng-walkthrough>
 ```
 
 ## License
