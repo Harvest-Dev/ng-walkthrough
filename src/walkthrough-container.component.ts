@@ -156,7 +156,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             element.style.top = (coordinate.top + coordinate.height) + 'px';
             this._contentPosition = 'bottom';
         } else {
-            element.style.top = (coordinate.top - coordinate.height - height) + 'px';
+            element.style.top = (coordinate.top - height) + 'px';
             this._contentPosition = 'top';
         }
 

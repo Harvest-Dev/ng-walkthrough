@@ -15,6 +15,7 @@ import {
 
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
+import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
 
 export interface WalkthroughElementCoordinate {
@@ -103,14 +104,15 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasFinish = false;
     private _hasArrow = false;
     private _hasCloseButton = false;
-    private _hasCloseAnywhere: boolean = true;
+    private _hasCloseAnywhere = true;
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
 
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
         private _applicationRef: ApplicationRef,
-        private _injector: Injector
+        private _injector: Injector,
+        private _walkthroughService: WalkthroughService
     ) { }
 
     @HostListener('window:resize')
@@ -200,7 +202,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         const element = this._focusElement;
         if (element) {
-            element.scrollIntoView();
+            this._walkthroughService.scrollIntoViewIfOutOfView(element);
             const offsetCoordinates = this._getOffsetCoordinates(element);
 
             if (this.typeSelector === 'zone') {
@@ -228,7 +230,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         if (focusElements && focusElements.length > 0) {
             if (focusElements.length > 1) {
                 console.warn('Multiple items fit selector, displaying first visible as focus item');
-                let l = focusElements.length;
+                const l = focusElements.length;
                 for (let i = 0; i < l; i++) {
                     // offsetHeight not of 0 means visible
                     if (focusElements[i].offsetHeight) {

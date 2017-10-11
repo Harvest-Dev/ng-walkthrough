@@ -5,8 +5,9 @@ export class WalkthroughService {
 
     private _preventDefault = ((e: Event) => {
         e = e || window.event;
-        if (e.preventDefault)
+        if (e.preventDefault) {
             e.preventDefault();
+        }
         e.returnValue = false;
     }).bind(this);
 
@@ -31,6 +32,24 @@ export class WalkthroughService {
         document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
     }
 
+    scrollIntoViewIfOutOfView(element: HTMLElement) {
+        const topOfPage = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        const heightOfPage = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        let elementY = 0;
+        let elementH = 0;
 
+        let p = element;
+        while (p && p.tagName.toLowerCase() !== 'body') {
+            elementY += p.offsetTop;
+            p = p.offsetParent as HTMLElement;
+        }
+        elementH = element.offsetHeight;
+
+        if ((topOfPage + heightOfPage) < (elementY + elementH)) {
+            element.scrollIntoView(false);
+        } else if (elementY < topOfPage) {
+            element.scrollIntoView(true);
+        }
+    }
 
 }
