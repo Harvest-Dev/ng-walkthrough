@@ -26,6 +26,7 @@ npm install angular-walkthrough
 All attributes are optional.
 
 - `id`: HTML id.
+
 **Focus zone**:
 - `focusElementSelector`: CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
 - `focusHighlightAnimation`: `true` for show highlight animation on the focus element. By defaut `false`.
@@ -34,11 +35,13 @@ All attributes are optional.
 - `focusAction`: add an action `click` on the highlight zone.
 - `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
 - `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
+
 **Content**:
 - `contentTemplate`: add a `ng-template` with your description.
 - `contentText`: show a simple description without formating in content.
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`. By defaut : `darken`.
 - `justifyContent`: align the `contentTemplate`. Possible values: `left`, `center` or `right`. By defaut : `left`.
+
 **Navigation**:
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.
 - `nextStep`: add a ling to go to the next `ng-walkthrough`.
@@ -46,6 +49,7 @@ All attributes are optional.
 - `closeAnywhere`: click anywhere to close. By defaut `true`.
 - `finishStep`: `true` for show a link to exit. By defaut `false`.
 - `texts`: change texts. It's a overlay of `WalkthroughText`.
+
 **Arrow**:
 - `showArrow`: `true` for show the arrow. By defaut `false`.
 - `arrowColor`: change the arrow color. By defaut `#FFF`.
