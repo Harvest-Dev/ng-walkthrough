@@ -130,7 +130,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     private _id: string;
-    private _uid: string = `walkthrough-${nextUniqueId++}`;
+    private _uid = `walkthrough-${nextUniqueId++}`;
     private _show = false;
     private _hasHighlightAnimation = false;
     private _hasBackdrop = false;
