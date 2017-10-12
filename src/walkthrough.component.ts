@@ -106,24 +106,33 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     @Input()
-    get hasBackdrop() {
+    get focusHighlightAnimation() {
+        return this._hasHighlightAnimation;
+    }
+    set focusHighlightAnimation(value: string | boolean) {
+        this._hasHighlightAnimation = booleanValue(value);
+    }
+
+    @Input()
+    get focusBackdrop() {
         return this._hasBackdrop;
     }
-    set hasBackdrop(value: string | boolean) {
+    set focusBackdrop(value: string | boolean) {
         this._hasBackdrop = booleanValue(value);
     }
 
     @Input()
-    get hasGlow() {
+    get focusGlow() {
         return this._hasGlow;
     }
-    set hasGlow(value: string | boolean) {
+    set focusGlow(value: string | boolean) {
         this._hasGlow = booleanValue(value);
     }
 
     private _id: string;
     private _uid: string = `walkthrough-${nextUniqueId++}`;
     private _show = false;
+    private _hasHighlightAnimation = false;
     private _hasBackdrop = false;
     private _hasGlow = false;
     private _hasFinish = false;
@@ -344,6 +353,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.parent = this;
         instance.open();
         instance.hasClickable = typeof this.focusClick === 'function';
+        instance.hasHighlight = this._hasHighlightAnimation;
         instance.hasBackdrop = this._hasBackdrop;
         instance.hasGlow = this._hasGlow;
         instance.hasPrevious = !!this.previousStep;

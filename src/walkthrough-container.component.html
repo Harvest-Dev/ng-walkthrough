@@ -1,6 +1,6 @@
 <div class="wkt-container">
     <div class="wkt-zone" #zone (click)="clickZone($event)"
-         [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" [class.clickable]="hasClickable"></div>
+         [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" [class.clickable]="hasClickable" [class.highlight]="hasHighlight"></div>
     <div class="wkt-content-block" [class.darken]="contentStyle === 'draken'" #contentBlock>
         <button type="button" class="wkt-close"  *ngIf="hasCloseButton" (click)="close()">✖</button>
         <div class="wkt-content"><ng-template cdkPortalHost></ng-template></div>

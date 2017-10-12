@@ -49,7 +49,7 @@
 <ng-walkthrough #walk1
     id="wt-test1"
     focusElementSelector="#test1"
-    hasGlow="true"
+    focusGlow="true"
     [contentTemplate]="step1"
     [nextStep]="walk2"
     closeButton="true"
@@ -70,7 +70,8 @@
 <ng-walkthrough #walk2
     id="wt-test2"
     focusElementSelector="#test2"
-    hasBackdrop="true"
+    focusBackdrop="true"
+    focusHighlightAnimation="true"
     [contentTemplate]="step2"
     [previousStep]="walk1"
     [nextStep]="walk3"
@@ -92,7 +93,7 @@
 <ng-walkthrough #walk3
     id="wt-test3"
     focusElementSelector="#test3"
-    hasBackdrop="true"
+    focusBackdrop="true"
     [contentTemplate]="step3"
     [previousStep]="walk2"
     [nextStep]="walk4"
@@ -116,7 +117,7 @@
 <ng-walkthrough #walk4
     id="wt-test4"
     focusElementSelector="#test4"
-    hasBackdrop="true"
+    focusBackdrop="true"
     [contentTemplate]="step4"
     contentStyle="none"
     [previousStep]="walk3"
@@ -140,7 +141,7 @@
     id="wt-testTable"
     focusElementSelector="table th:nth-child(2), table td:nth-child(2)"
     typeSelector="zone"
-    hasBackdrop="true"
+    focusBackdrop="true"
     [contentTemplate]="testTable"
     showArrow="true"
     radius="5"

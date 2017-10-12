@@ -36,6 +36,10 @@ button {
     &.clickable {
         cursor:pointer;
     }
+    &.highlight {
+        -webkit-animation: highlight .45s 4;
+        animation: highlight .45s 4;
+    }
 }
 
 // text zone
@@ -110,3 +114,16 @@ svg {
     fill: none;
     marker-end: url(#wkt-arrow);
 }
+
+
+@-webkit-keyframes highlight {
+    0% { background-color: none;}
+    50% { background-color: rgba(255,255,255,.8); }
+    100% { background-color: none; 	}
+}
+@keyframes highlight {
+    0% { background-color: none;}
+    50% { background-color: rgba(255,255,255,.8); }
+    100% { background-color: none; 	}
+}
+

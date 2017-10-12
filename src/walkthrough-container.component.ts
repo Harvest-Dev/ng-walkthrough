@@ -35,6 +35,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     // highlight zone
 
+    hasHighlight = false;
     hasBackdrop = false;
     hasGlow = false;
     hasClickable: boolean;
