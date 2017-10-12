@@ -220,10 +220,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            this._offsetCoordinates = this._getOffsetCoordinates(element);
+            this._offsetCoordinates = element.getBoundingClientRect();
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._getOffsetCoordinates(this._focusElementEnd);
+                const offsetEndCoordinatesEnd = this._focusElementEnd.getBoundingClientRect();
                 this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
                 this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
@@ -283,21 +283,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             console.error('No element found with selector: ' + this.focusElementSelector);
             this._focusElement = null;
         }
-    }
-
-    /**
-     * get the offest coordinates of a HTML element
-     * @param focusElement target element
-     * @returns cordinates of focusElement (width, height, left, top)
-     */
-    private _getOffsetCoordinates(focusElement: HTMLElement): WalkthroughElementCoordinate {
-        const ionicElement = focusElement.getBoundingClientRect();
-        const width = ionicElement.width;
-        const height = ionicElement.height;
-        const left = ionicElement.left;
-        const top = ionicElement.top;
-
-        return { top: top, left: left, height: height, width: width };
     }
 
     /**
