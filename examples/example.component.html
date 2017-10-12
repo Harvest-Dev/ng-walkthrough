@@ -143,13 +143,18 @@
     radius="5"
     closeButton="true"
     closeAnywhere="false"
-    justifyContent="center">
+    [justifyContent]="testPosition">
     <ng-template #testTable>
         <p>
             Look this.
         </p>
         <div>
             <button (click)="buttonAction()">{{testClickTexts[testClickCount]}}</button>
+        </div>
+        <div>
+            <button (click)="testPosition ='left'">Left</button>
+            <button (click)="testPosition ='center'">Center</button>
+            <button (click)="testPosition ='right'">Right</button>
         </div>
     </ng-template>
 </ng-walkthrough>

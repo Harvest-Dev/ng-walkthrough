@@ -48,7 +48,21 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() texts: WalkthroughText;
 
     @Input() contentTemplate: TemplateRef<any>;
-    @Input() justifyContent: 'left' | 'center' | 'right' = 'left';
+
+    @Input()
+    get justifyContent() {
+        return this._justifyContent;
+    }
+    set justifyContent(value: 'left' | 'center' | 'right') {
+        if (this._justifyContent !== value) {
+            this._justifyContent = value;
+            if (WalkthroughComponent._walkthroughContainer && WalkthroughComponent._walkthroughContainer.instance) {
+                this._updateElementPositions(WalkthroughComponent._walkthroughContainer.instance);
+            }
+        } else {
+            this._justifyContent = value;
+        }
+    }
 
     @Input()
     get closeButton() {
@@ -105,8 +119,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasArrow = false;
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
+    private _justifyContent: 'left' | 'center' | 'right' = 'left';
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
+    private _offsetCoordinates: WalkthroughElementCoordinate;
 
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
@@ -203,17 +219,17 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            const offsetCoordinates = this._getOffsetCoordinates(element);
+            this._offsetCoordinates = this._getOffsetCoordinates(element);
 
             if (this.typeSelector === 'zone') {
                 const offsetEndCoordinatesEnd = this._getOffsetCoordinates(this._focusElementEnd);
-                offsetCoordinates.height = offsetEndCoordinatesEnd.top - offsetCoordinates.top
+                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
-                offsetCoordinates.width = offsetEndCoordinatesEnd.left - offsetCoordinates.left
+                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
                     + offsetEndCoordinatesEnd.width;
             }
 
-            this._setFocus(offsetCoordinates);
+            this._setFocus();
         }
     }
 
@@ -286,11 +302,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     /**
      * get instance, hightlight the focused element et show the template
      */
-    private _setFocus(coordinate: WalkthroughElementCoordinate) {
+    private _setFocus() {
         const instance = WalkthroughComponent._walkthroughContainer.instance;
         if (instance) {
             if (instance.zone) {
-                instance.hightlightZone(coordinate);
+                instance.hightlightZone(this._offsetCoordinates);
             }
             if (!this._show) {
                 this._attachContentTemplate();
@@ -298,13 +314,18 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             }
             setTimeout(() => {
                 instance.hightlightZoneStyling(this._focusElement);
-                // update elements positions
-                instance.contentBlockPosition(coordinate, this.justifyContent);
-                if (this._hasArrow) {
-                    instance.arrowPosition(coordinate);
-                }
+                this._updateElementPositions(instance);
             }, 0);
         }
+    }
+
+    private _updateElementPositions(instance: WalkthroughContainerComponent) {
+        setTimeout(() => {
+            instance.contentBlockPosition(this._offsetCoordinates, this._justifyContent);
+            if (this._hasArrow) {
+                instance.arrowPosition(this._offsetCoordinates);
+            }
+        }, 0);
     }
 
     /**

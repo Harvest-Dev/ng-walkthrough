@@ -74,6 +74,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     private _contentPosition: 'top' | 'bottom';
+    private _arrowPosition: 'topBottom' | 'leftRight';
 
     constructor(
         public viewContainerRef: ViewContainerRef,
@@ -149,45 +150,86 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     contentBlockPosition(coordinate: WalkthroughElementCoordinate, position: 'left' | 'center' | 'right') {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
+
         const height = element.getBoundingClientRect().height
             + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom, 10);
 
-        if (coordinate.top < height) {
-            element.style.top = (coordinate.top + coordinate.height) + 'px';
-            this._contentPosition = 'bottom';
-        } else {
-            element.style.top = (coordinate.top - height) + 'px';
-            this._contentPosition = 'top';
-        }
+        // position of content left/center/right
 
-        if (position === 'center') {
+        element.style.right = '';
+        element.style.left = '';
+
+        if (position === 'left') {
+            element.style.left = '0';
+        } else if (position === 'center') {
             element.style.left = (window.innerWidth / 2 - element.getBoundingClientRect().width / 2) + 'px';
         } else if (position === 'right') {
             element.style.right = '0';
+        }
+
+        // for arrow possition
+
+        const contentBlockCoordinates = element.getBoundingClientRect();
+        const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
+        const arrowMargin = 30;
+
+        this._arrowPosition = startLeft > coordinate.left - arrowMargin
+            && startLeft < coordinate.left + coordinate.width + arrowMargin
+            ? 'topBottom' : 'leftRight';
+
+        const margin = this._arrowPosition === 'topBottom' ? 30 : 0;
+
+        // position of content top/bottom
+
+        if (coordinate.top < height) {
+            element.style.top = (coordinate.top + coordinate.height + margin) + 'px';
+            this._contentPosition = 'bottom';
+        } else {
+            element.style.top = (coordinate.top - height - margin) + 'px';
+            this._contentPosition = 'top';
         }
     }
 
     arrowPosition(coordinate: WalkthroughElementCoordinate) {
 
-        const element = this.contentBlock.nativeElement as HTMLElement;
-        const offsetCoordinates = element.getBoundingClientRect();
+        const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
+        const contentBlockCoordinates = contentBlockElement.getBoundingClientRect();
 
-        const startLeft = offsetCoordinates.left + offsetCoordinates.width / 2;
-        let startTop = offsetCoordinates.top + offsetCoordinates.height;
+        const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
+        let startTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
+        let centerTop: number;
+        let centerLeft: number;
         let endLeft = coordinate.left;
+        let endTop = coordinate.top;
 
         if (this._contentPosition === 'bottom') {
-            startTop -= offsetCoordinates.height;
+            startTop -= contentBlockCoordinates.height;
         }
 
-        if (startLeft > coordinate.left) {
-            endLeft += coordinate.width + this.arrowMarkerDist;
+        if (this._arrowPosition === 'topBottom') {
+            endLeft += coordinate.width / 2;
+
+            if (this._contentPosition === 'bottom') {
+                endTop += coordinate.height
+            }
+
+            centerLeft = (startLeft + endLeft) / 2;
+            centerTop = (startTop + endTop) / 2;
+
+            this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${centerTop} ${centerLeft},${centerTop} `
+                + `Q${endLeft},${centerTop} ${endLeft},${endTop}`;
+
         } else {
-            endLeft -= this.arrowMarkerDist;
-        }
-        const endTop = coordinate.top + (coordinate.height / 2);
+            if (startLeft > coordinate.left) {
+                endLeft += coordinate.width + this.arrowMarkerDist;
+            } else {
+                endLeft -= this.arrowMarkerDist;
+            }
 
-        this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
+            endTop += coordinate.height / 2;
+
+            this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
+        }
     }
 
     open() {
