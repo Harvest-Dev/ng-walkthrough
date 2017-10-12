@@ -37,7 +37,8 @@ npm install angular-walkthrough
 - `hasBackdrop` (optional): `true` for show a dark backdrop around the focus element. By defaut `false`.
 - `hasGlow` (optional): `true` for show a glow on the focus element. By defaut `false`.
 - `contentTemplate` (optional): add a `ng-template` with your description.
-- `justifyContent` (optional): align the `contentTemplate`. Possible value: `left`, `center` or `right`. By defaut : `left`
+- `justifyContent` (optional): align the `contentTemplate`. Possible values: `left`, `center` or `right`. By defaut : `left`
+- `contentStyle` (optional): background style for content container. Possible values: `none`, `darken`. By defaut : `darken`
 
 ### Change texts
 

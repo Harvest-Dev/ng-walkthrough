@@ -48,6 +48,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() texts: WalkthroughText;
 
     @Input() contentTemplate: TemplateRef<any>;
+    @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input()
     get justifyContent() {
@@ -355,6 +356,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasFinish = this._hasFinish;
         instance.hasArrow = this._hasArrow;
         instance.radius = this.radius;
+        instance.contentStyle = this.contentStyle;
         instance.text = this.texts
             ? { ...new WalkthroughText(), ...this.texts }
             : new WalkthroughText();

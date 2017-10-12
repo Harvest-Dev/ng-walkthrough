@@ -51,6 +51,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     arrowPath: string;
     arrowMarkerDist = 7;
 
+    // styling
+
+    contentStyle: string;
     radius: string;
 
     text = new WalkthroughText();

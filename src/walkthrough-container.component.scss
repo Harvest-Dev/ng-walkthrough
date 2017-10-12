@@ -37,7 +37,6 @@ button {
 
 // text zone
 
-
 .wkt-container {
     position: relative;
 }
@@ -45,10 +44,12 @@ button {
     position: absolute;
     margin: 1em;
     padding: 6px;
-    background-color: rgba(0,0,0, .6);
     z-index: 1;
     color: #FFF;
     min-width: calc(320px - 2em);
+}
+.wkt-content-block.darken {
+    background-color: rgba(0,0,0, .6);
 }
 .wkt-close + .wkt-content {
     margin-top: 1.3em;
