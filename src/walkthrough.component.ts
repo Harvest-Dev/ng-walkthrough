@@ -29,6 +29,8 @@ const booleanValue = (value: string | boolean) => {
     return value === 'true' || value === true;
 };
 
+let nextUniqueId = 0;
+
 @Component({
     selector: 'ng-walkthrough',
     template: ''
@@ -38,9 +40,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent>;
     private static _walkthroughContainerCreating = false;
 
-    @Input() id: string;
     @Input() focusElementSelector: string;
     @Input() typeSelector: 'element' | 'zone' = 'element';
+    @Input() focusClick: (event: Event, content: WalkthroughContainerComponent) => {};
     @Input() radius: string;
 
     @Input() previousStep: WalkthroughComponent;
@@ -51,6 +53,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
+
+    @Input()
+    get id() { return this._id; }
+    set id(value: string) { this._id = value || this._uid; }
 
     @Input()
     get justifyContent() {
@@ -115,6 +121,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._hasGlow = booleanValue(value);
     }
 
+    private _id: string;
+    private _uid: string = `walkthrough-${nextUniqueId++}`;
     private _show = false;
     private _hasBackdrop = false;
     private _hasGlow = false;
@@ -335,6 +343,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
         instance.parent = this;
         instance.open();
+        instance.hasClickable = typeof this.focusClick === 'function';
         instance.hasBackdrop = this._hasBackdrop;
         instance.hasGlow = this._hasGlow;
         instance.hasPrevious = !!this.previousStep;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { WalkthroughText } from '../src';
+import { WalkthroughText, WalkthroughContainerComponent } from '../src';
 
 @Component({
     selector: 'example-root',
@@ -23,6 +23,10 @@ export class ExampleComponent {
         if (this.testClickCount < this.testClickTexts.length - 1) {
             this.testClickCount++;
         }
+    }
+
+    focusClickAction(event: Event, contenaire: WalkthroughContainerComponent) {
+        contenaire.next();
     }
 
 }

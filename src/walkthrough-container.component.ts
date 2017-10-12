@@ -31,11 +31,13 @@ export function throwWalkthroughContentAlreadyAttachedError() {
 export class WalkthroughContainerComponent extends BasePortalHost {
 
     show: boolean;
+    parent: WalkthroughComponent;
 
-    // highlight
+    // highlight zone
 
     hasBackdrop = false;
     hasGlow = false;
+    hasClickable: boolean;
 
     // navigate
 
@@ -58,15 +60,23 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     radius: string;
     arrowColor: string;
 
+    // texts change / i18n
+
     text = new WalkthroughText();
 
-    parent: WalkthroughComponent;
+    // elements
 
     @ViewChild(PortalHostDirective) _portalHost: PortalHostDirective;
-
     @ViewChild('content') content: TemplateRef<any>;
     @ViewChild('contentBlock') contentBlock: ElementRef;
     @ViewChild('zone') zone: ElementRef;
+
+    // HostBinding
+
+    @HostBinding('attr.id')
+    get id() {
+        return this.parent ? this.parent.id + '-container' : null;
+    }
 
     @HostBinding('class.hide')
     get hide() {
@@ -92,6 +102,12 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     click() {
         if (this.hasCloseAnywhere) {
             this.close();
+        }
+    }
+
+    clickZone(event: Event) {
+        if (this.parent && this.hasClickable) {
+            this.parent.focusClick(event, this);
         }
     }
 

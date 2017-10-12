@@ -53,7 +53,8 @@
     [contentTemplate]="step1"
     [nextStep]="walk2"
     closeButton="true"
-    closeAnywhere="false">
+    closeAnywhere="false"
+    [focusClick]="focusClickAction">
     <ng-template #step1>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
@@ -89,7 +90,7 @@
     </ng-template>
 </ng-walkthrough>
 <ng-walkthrough #walk3
-    id="wt-test2"
+    id="wt-test3"
     focusElementSelector="#test3"
     hasBackdrop="true"
     [contentTemplate]="step3"
@@ -113,7 +114,7 @@
     </ng-template>
 </ng-walkthrough>
 <ng-walkthrough #walk4
-    id="wt-test3"
+    id="wt-test4"
     focusElementSelector="#test4"
     hasBackdrop="true"
     [contentTemplate]="step4"

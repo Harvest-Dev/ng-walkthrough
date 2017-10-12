@@ -33,6 +33,9 @@ button {
     &.glow {
         box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;
     }
+    &.clickable {
+        cursor:pointer;
+    }
 }
 
 // text zone
