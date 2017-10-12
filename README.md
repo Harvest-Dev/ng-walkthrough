@@ -33,6 +33,7 @@ npm install angular-walkthrough
 - `closeButton` (optional): `true` for show the button. By defaut `false`.
 - `closeAnywhere` (optional): click anywhere to close. By defaut `true`.
 - `showArrow` (optional): `true` for show the arrow. By defaut `false`.
+- `arrowColor` (optional): change the arrow color. By defaut `#FFF`.
 - `finishStep` (optional): `true` for show a link to exit. By defaut `false`.
 - `hasBackdrop` (optional): `true` for show a dark backdrop around the focus element. By defaut `false`.
 - `hasGlow` (optional): `true` for show a glow on the focus element. By defaut `false`.

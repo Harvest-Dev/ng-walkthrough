@@ -13,9 +13,9 @@
     <defs>
     <marker id="wkt-arrow" viewBox="0 0 10 10" refX="8" refY="5"
             markerUnits="strokeWidth" orient="auto" markerWidth="10" markerHeight="10">
-        <polyline points="0,0 10,5 0,10 5,5" fill="#FFF" />
+        <polyline points="0,0 10,5 0,10 5,5" [attr.fill]="arrowColor || '#FFF'" />
     </marker>
     </defs>
-    <path class="wkt-arrow-path" [attr.d]="arrowPath" />
+    <path class="wkt-arrow-path" [attr.d]="arrowPath" [attr.stroke]="arrowColor || '#FFF'" />
     </svg>
 </div>

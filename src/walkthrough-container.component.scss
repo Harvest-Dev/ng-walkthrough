@@ -99,11 +99,10 @@ svg {
 }
 
 #wkt-arrow > path {
-    fill:#fff;
+    stroke-width: 0;
 }
 
 .wkt-arrow-path {
-    stroke:#fff;
     stroke-width: 2px;
     fill: none;
     marker-end: url(#wkt-arrow);

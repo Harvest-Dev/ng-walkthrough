@@ -50,11 +50,13 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasArrow = false;
     arrowPath: string;
     arrowMarkerDist = 7;
+    arrowMargin = 30;
 
     // styling
 
     contentStyle: string;
     radius: string;
+    arrowColor: string;
 
     text = new WalkthroughText();
 
@@ -180,7 +182,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             && startLeft < coordinate.left + coordinate.width + arrowMargin
             ? 'topBottom' : 'leftRight';
 
-        const margin = this._arrowPosition === 'topBottom' ? 30 : 0;
+        const margin = this._arrowPosition === 'topBottom' ? this.arrowMargin : 0;
 
         // position of content top/bottom
 
@@ -236,8 +238,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     open() {
-        this._walkthroughService.disableScroll();
+        // show
         this.show = true;
+        // scroll
+        this._walkthroughService.disableScroll();
     }
 
     previous() {
@@ -256,7 +260,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         // hide
         this.show = false;
         this.parent.hide();
-
+        // scroll
         this._walkthroughService.enableScroll();
     }
 

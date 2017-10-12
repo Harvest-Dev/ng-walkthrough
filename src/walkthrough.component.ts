@@ -50,6 +50,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() contentTemplate: TemplateRef<any>;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
+    @Input() arrowColor: string;
+
     @Input()
     get justifyContent() {
         return this._justifyContent;
@@ -246,7 +248,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         if (focusElements && focusElements.length > 0) {
             if (focusElements.length > 1) {
-                console.warn('Multiple items fit selector, displaying first visible as focus item');
+                // Multiple items fit selector, displaying first visible as focus item in 'element' mode
+
                 const l = focusElements.length;
                 for (let i = 0; i < l; i++) {
                     // offsetHeight not of 0 means visible
@@ -340,6 +343,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasCloseAnywhere = this._hasCloseAnywhere;
         instance.hasFinish = this._hasFinish;
         instance.hasArrow = this._hasArrow;
+        instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts
