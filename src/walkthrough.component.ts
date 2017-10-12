@@ -50,6 +50,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() texts: WalkthroughText;
 
     @Input() contentTemplate: TemplateRef<any>;
+    @Input() contentText: string;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
@@ -249,8 +250,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                     + offsetEndCoordinatesEnd.width;
             }
 
-            this._setFocus();
+        } else {
+            this._offsetCoordinates = null;
         }
+        this._setFocus();
     }
 
     /**
@@ -300,7 +303,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this.typeSelector = 'element';
             }
         } else {
-            console.error('No element found with selector: ' + this.focusElementSelector);
             this._focusElement = null;
         }
     }
@@ -311,11 +313,12 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _setFocus() {
         const instance = WalkthroughComponent._walkthroughContainer.instance;
         if (instance) {
-            if (instance.zone) {
+            if (this._focusElement && instance.zone) {
                 instance.hightlightZone(this._offsetCoordinates);
             }
             if (!this._show) {
                 this._attachContentTemplate();
+
                 this._initContentTemplate(instance);
             }
             setTimeout(() => {
@@ -328,7 +331,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _updateElementPositions(instance: WalkthroughContainerComponent) {
         setTimeout(() => {
             instance.contentBlockPosition(this._offsetCoordinates, this._justifyContent);
-            if (this._hasArrow) {
+            if (this._focusElement !== null && this._hasArrow) {
                 instance.arrowPosition(this._offsetCoordinates);
             }
         }, 0);
@@ -350,24 +353,29 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
      * init all datas of the contenaire
      */
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
+        const hasHighlightZone = this._focusElement !== null;
+
         instance.parent = this;
         instance.open();
-        instance.hasClickable = typeof this.focusClick === 'function';
-        instance.hasHighlight = this._hasHighlightAnimation;
+        instance.hasHighlightZone = hasHighlightZone;
+        instance.hasClickable = hasHighlightZone && typeof this.focusClick === 'function';
+        instance.hasHighlight = hasHighlightZone && this._hasHighlightAnimation;
         instance.hasBackdrop = this._hasBackdrop;
-        instance.hasGlow = this._hasGlow;
+        instance.hasGlow = hasHighlightZone && this._hasGlow;
         instance.hasPrevious = !!this.previousStep;
         instance.hasNext = !!this.nextStep;
         instance.hasCloseButton = this._hasCloseButton;
         instance.hasCloseAnywhere = this._hasCloseAnywhere;
         instance.hasFinish = this._hasFinish;
-        instance.hasArrow = this._hasArrow;
+        instance.hasArrow = hasHighlightZone && this._hasArrow;
         instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
+        instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts
             ? { ...new WalkthroughText(), ...this.texts }
             : new WalkthroughText();
+
         this.show();
     }
 

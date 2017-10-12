@@ -1,3 +1,4 @@
+
 import {
     Component,
     TemplateRef,
@@ -35,6 +36,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     // highlight zone
 
+    hasHighlightZone = false;
     hasHighlight = false;
     hasBackdrop = false;
     hasGlow = false;
@@ -60,6 +62,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     contentStyle: string;
     radius: string;
     arrowColor: string;
+
+    // content
+
+    contentText: string;
 
     // texts change / i18n
 
@@ -87,6 +93,11 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     @HostBinding('class.cursor')
     get cursor() {
         return this.hasCloseAnywhere;
+    }
+
+    @HostBinding('class.backdrop')
+    get backdrop() {
+        return !this.hasHighlightZone && this.hasBackdrop;
     }
 
     private _contentPosition: 'top' | 'bottom';
@@ -189,27 +200,34 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             element.style.right = '0';
         }
 
-        // for arrow possition
+        if (this.hasHighlightZone) {
 
-        const contentBlockCoordinates = element.getBoundingClientRect();
-        const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
-        const arrowMargin = 30;
+            // for arrow possition
 
-        this._arrowPosition = startLeft > coordinate.left - arrowMargin
-            && startLeft < coordinate.left + coordinate.width + arrowMargin
-            ? 'topBottom' : 'leftRight';
+            const contentBlockCoordinates = element.getBoundingClientRect();
+            const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
 
-        const margin = this._arrowPosition === 'topBottom' ? this.arrowMargin : 0;
 
-        // position of content top/bottom
+            this._arrowPosition = startLeft > coordinate.left - this.arrowMargin
+                && startLeft < coordinate.left + coordinate.width + this.arrowMargin
+                ? 'topBottom' : 'leftRight';
 
-        if (coordinate.top < height) {
-            element.style.top = (coordinate.top + coordinate.height + margin) + 'px';
-            this._contentPosition = 'bottom';
+            const margin = this._arrowPosition === 'topBottom' ? this.arrowMargin : 0;
+
+            // position of content top/bottom
+
+            if (coordinate.top < height) {
+                element.style.top = (coordinate.top + coordinate.height + margin) + 'px';
+                this._contentPosition = 'bottom';
+            } else {
+                element.style.top = (coordinate.top - height - margin) + 'px';
+                this._contentPosition = 'top';
+            }
+
         } else {
-            element.style.top = (coordinate.top - height - margin) + 'px';
-            this._contentPosition = 'top';
+            element.style.top = (this._walkthroughService.getHeightOfPage() / 2 - height / 2) + 'px';
         }
+
     }
 
     arrowPosition(coordinate: WalkthroughElementCoordinate) {

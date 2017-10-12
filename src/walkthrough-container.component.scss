@@ -14,6 +14,10 @@
     &.cursor {
         cursor:pointer;
     }
+
+    &.backdrop {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
 }
 
 button {
@@ -27,6 +31,9 @@ button {
 .wkt-zone {
     position: absolute;
 
+    &.hide {
+        display:none;
+    }
     &.backdrop {
         box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6);
     }

@@ -34,7 +34,7 @@ export class WalkthroughService {
 
     scrollIntoViewIfOutOfView(element: HTMLElement) {
         const topOfPage = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        const heightOfPage = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        const heightOfPage = this.getHeightOfPage();
         let elementY = 0;
         let elementH = 0;
 
@@ -50,6 +50,10 @@ export class WalkthroughService {
         } else if (elementY < topOfPage) {
             element.scrollIntoView(true);
         }
+    }
+
+    getHeightOfPage() {
+        return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     }
 
 }
