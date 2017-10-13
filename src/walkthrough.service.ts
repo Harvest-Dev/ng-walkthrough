@@ -11,9 +11,10 @@ export class WalkthroughService {
         e.returnValue = false;
     }).bind(this);
 
+    private _overflowRegex = /(auto|scroll)/;
+
     private _preventDefaultForScrollKeys = ((e: KeyboardEvent) => {
-        // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-        // left: 37, up: 38, right: 39, down: 40
+        // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36, left: 37, up: 38, right: 39, down: 40
         if (e.keyCode >= 32 && e.keyCode <= 40) {
             this._preventDefault(e);
             return false;
@@ -38,10 +39,10 @@ export class WalkthroughService {
         let elementY = 0;
         let elementH = 0;
 
-        let p = element;
-        while (p && p.tagName.toLowerCase() !== 'body') {
-            elementY += p.offsetTop;
-            p = p.offsetParent as HTMLElement;
+        let parent = element;
+        while (parent && parent !== document.body) {
+            elementY += parent.offsetTop;
+            parent = parent.offsetParent as HTMLElement;
         }
         elementH = element.offsetHeight;
 
@@ -49,7 +50,43 @@ export class WalkthroughService {
             element.scrollIntoView(false);
         } else if (elementY < topOfPage) {
             element.scrollIntoView(true);
+        } else {
+            // test of overflow element
+            let current = element;
+            while (current && current !== document.body) {
+                parent = this.getScrollParent(current);
+                if (current.offsetTop + current.offsetHeight - parent.scrollTop > parent.offsetHeight ||
+                    current.offsetLeft + current.offsetWidth - parent.scrollLeft > parent.offsetWidth) {
+
+                    element.scrollIntoView();
+                    break;
+                }
+                current = parent;
+            }
         }
+    }
+
+    getScrollParent(element: HTMLElement): HTMLElement {
+        let scrollParent;
+        let style = getComputedStyle(element);
+        const excludeStaticParent = style.position === 'absolute';
+
+        if (style.position !== 'fixed') {
+
+            let parent = element.parentElement;
+            while (parent && parent !== document.body) {
+                style = getComputedStyle(parent);
+                if (
+                    !(excludeStaticParent && style.position === 'static') &&
+                    this._overflowRegex.test(style.overflow + style.overflowY + style.overflowX)
+                ) {
+                    scrollParent = parent;
+                    break;
+                }
+                parent = parent.parentElement;
+            }
+        }
+        return scrollParent || document.body;
     }
 
     getHeightOfPage() {
