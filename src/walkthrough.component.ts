@@ -25,7 +25,7 @@ export interface WalkthroughElementCoordinate {
     width: number
 }
 
-const booleanValue = (value: string | boolean) => {
+export const booleanValue = (value: string | boolean) => {
     return value === 'true' || value === true;
 };
 

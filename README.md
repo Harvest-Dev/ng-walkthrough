@@ -21,7 +21,7 @@ npm install angular-walkthrough
 
 ## Usage
 
-### Directive Attributes
+### `ng-walkthrough` attributes
 
 All attributes are optional.
 
@@ -46,8 +46,32 @@ All attributes are optional.
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.
 - `nextStep`: add a ling to go to the next `ng-walkthrough`.
 - `closeButton`: `true` for show the button. By defaut `false`.
-- `closeAnywhere`: click anywhere to close. By defaut `true`.
+- `closeAnywhere`: `false` for click anywhere to close. By defaut `true`.
 - `finishStep`: `true` for show a link to exit. By defaut `false`.
+- `texts`: change texts. It's a overlay of `WalkthroughText`.
+
+**Arrow**:
+- `showArrow`: `true` for show the arrow. By defaut `false`.
+- `arrowColor`: change the arrow color. By defaut `#FFF`.
+
+### `ng-walkthrough-flow` attributes
+
+All attributes are optional and not overriding the subcomponents attributes.
+
+- `id`: HTML id.
+
+**Focus zone**:
+- `focusHighlightAnimation`: `true` for show highlight animation on the focus element. 
+- `focusBackdrop`: `true` for show a dark backdrop around the focus element. 
+- `focusGlow`: `true` for show a glow on the focus element.
+- `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. 
+
+**Content**:
+- `contentStyle`: background style for content container. Possible values: `none`, `darken`.
+
+**Navigation**:
+- `closeButton`: `true` for show the button.
+- `closeAnywhere`: `false` for for click anywhere to close.
 - `texts`: change texts. It's a overlay of `WalkthroughText`.
 
 **Arrow**:
