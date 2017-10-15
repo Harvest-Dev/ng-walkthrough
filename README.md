@@ -98,7 +98,7 @@ Highlighting `#selectorId` element with example text in `ng-template`.
 <ng-walkthrough
     id="wt-test"
     focusElementSelector="#selectorId"
-    hasBackdrop="true"
+    focusBackdrop="true"
     [contentTemplate]="template"
     closeButton="true">
     <ng-template #template>
@@ -108,6 +108,8 @@ Highlighting `#selectorId` element with example text in `ng-template`.
     </ng-template>
 </ng-walkthrough>
 ```
+
+For more examples see `example.component.html` in `examples` folder.
 
 ## License
 
