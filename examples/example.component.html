@@ -2,6 +2,7 @@
     <div>
         <button id="test1" (click)="walk1.open()">Test 1</button>
         <button id="testTable" (click)="walkTable.open()">Test Table</button>
+        <button id="testFlow" (click)="walkFlow.start()">Test Flow</button>
         <button id="test3" (click)="walk3.open()">Test 3</button>
     </div>
     <div class="overflow">
@@ -194,3 +195,67 @@
         </div>
     </ng-template>
 </ng-walkthrough>
+
+<ng-walkthrough-flow #walkFlow id="wt-test-flow">
+	<ng-walkthrough
+		focusElementSelector="#test1"
+		focusBackdrop="true"
+		[contentTemplate]="step1flow"
+		closeButton="true"
+		closeAnywhere="false">
+		<ng-template #step1flow>
+			<p>
+				1f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+				condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+				facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+				Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+				et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+				ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+				sed, fermentum volutpat sem.
+			</p>
+		</ng-template>
+	</ng-walkthrough>
+	<ng-walkthrough 
+		id="wt-test2-flow"
+		focusElementSelector="#test2"
+		focusBackdrop="true"
+		focusHighlightAnimation="true"
+		[contentTemplate]="step2flow"
+		closeButton="true"
+		closeAnywhere="false"
+		showArrow="true">
+		<ng-template #step2flow>
+			<p>
+				2f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+				condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+				facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+				Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+				et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+				ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+				sed, fermentum volutpat sem.
+			</p>
+		</ng-template>
+	</ng-walkthrough>
+	<ng-walkthrough 
+		id="wt-test3-flow"
+		focusElementSelector="#test3"
+		focusBackdrop="true"
+		[contentTemplate]="step3flow"
+		closeButton="true"
+		closeAnywhere="false"
+		showArrow="true"
+		arrowColor="yellow"
+		radius="auto">
+		<ng-template #step3flow>
+			<p>
+				3f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
+				condimentum eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla
+				facilisi. Suspendisse potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus.
+				Quisque at nisi id neque tempus varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique
+				et sem mollis vehicula. Nulla maximus urna a leo consectetur, at fringilla odio volutpat. Praesent
+				ultricies nunc eget tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien
+				sed, fermentum volutpat sem.
+			</p>
+		</ng-template>
+	</ng-walkthrough>
+</ng-walkthrough-flow>
