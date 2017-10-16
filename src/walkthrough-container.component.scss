@@ -35,7 +35,7 @@ button {
         display:none;
     }
     &.backdrop {
-        box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 2200px rgba(0, 0, 0, 0.6);
     }
     &.glow {
         box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;
@@ -126,11 +126,26 @@ svg {
 @-webkit-keyframes highlight {
     0% { background-color: none;}
     50% { background-color: rgba(255,255,255,.8); }
-    100% { background-color: none; 	}
+    100% { background-color: none; }
 }
 @keyframes highlight {
     0% { background-color: none;}
     50% { background-color: rgba(255,255,255,.8); }
-    100% { background-color: none; 	}
+    100% { background-color: none; }
 }
 
+// For > HD (4K screen)
+
+@media screen and (min-width: 1920px), screen and (min-height: 1920px) {
+    .wkt-zone.backdrop {
+        box-shadow: 0 0 0 4400px rgba(0, 0, 0, 0.6);
+    }
+}
+
+// For > 4K (8K screen)
+
+@media screen and (min-width: 3840px), screen and (min-height: 3840px) {
+    .wkt-zone.backdrop {
+        box-shadow: 0 0 0 8800px rgba(0, 0, 0, 0.6);
+    }
+}
