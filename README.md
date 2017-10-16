@@ -56,15 +56,15 @@ All attributes are optional.
 
 ### `ng-walkthrough-flow` attributes
 
-All attributes are optional and not overriding the subcomponents attributes.
+All attributes are optional and not overriding the subcomponents attributes except `previousStep`, `nextStep` and `finishStep` that will be ignored.
 
 - `id`: HTML id.
 
 **Focus zone**:
-- `focusHighlightAnimation`: `true` for show highlight animation on the focus element. 
-- `focusBackdrop`: `true` for show a dark backdrop around the focus element. 
+- `focusHighlightAnimation`: `true` for show highlight animation on the focus element.
+- `focusBackdrop`: `true` for show a dark backdrop around the focus element.
 - `focusGlow`: `true` for show a glow on the focus element.
-- `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. 
+- `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes.
 
 **Content**:
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`.
@@ -107,6 +107,37 @@ Highlighting `#selectorId` element with example text in `ng-template`.
         </p>
     </ng-template>
 </ng-walkthrough>
+```
+
+Example with a scenario with `ng-template`:
+
+```
+<ng-walkthrough-flow #walkFlow
+    id="wt-test-flow"
+    focusBackdrop="true"
+    focusHighlightAnimation="true"
+    closeButton="true"
+    closeAnywhere="false"
+    showArrow="true"
+    radius="auto"
+    [texts]="frenchText">
+    <ng-walkthrough
+        id="wt-test1-flow"
+        focusElementSelector="#test1"
+        [contentText]="Lorem ipsum dolor sit amet, consectetur adipiscing elit...">
+    </ng-walkthrough>
+    <ng-walkthrough
+        id="wt-test2-flow"
+        focusElementSelector="#test2"
+        [contentText]="Lorem ipsum dolor sit amet, consectetur adipiscing elit...">
+    </ng-walkthrough>
+    <ng-walkthrough
+        id="wt-test3-flow"
+        focusElementSelector="#test3"
+        closeButton="true"
+        [contentText]="Lorem ipsum dolor sit amet, consectetur adipiscing elit...">
+    </ng-walkthrough>
+</ng-walkthrough-flow>
 ```
 
 For more examples see `example.component.html` in `examples` folder.
