@@ -109,7 +109,7 @@ Highlighting `#selectorId` element with example text in `ng-template`.
 </ng-walkthrough>
 ```
 
-Example with a scenario with `ng-template`:
+Example of scenario with `ng-walkthrough-flow`:
 
 ```
 <ng-walkthrough-flow #walkFlow
@@ -140,7 +140,7 @@ Example with a scenario with `ng-template`:
 </ng-walkthrough-flow>
 ```
 
-For more examples see `example.component.html` in `examples` folder.
+For more examples, see `example.component.html` in `examples` folder.
 
 ## License
 
