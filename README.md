@@ -82,7 +82,7 @@ All attributes are optional and not overriding the subcomponents attributes exce
 
 It's possible to change all texts. With the `texts`  directive attribute.
 
-```
+```typescript
 WalkthroughText {
     previous = 'Previous';
     next     = 'Next';
@@ -94,7 +94,7 @@ WalkthroughText {
 
 Highlighting `#selectorId` element with example text in `ng-template`.
 
-```
+```html
 <ng-walkthrough
     id="wt-test"
     focusElementSelector="#selectorId"
@@ -111,7 +111,7 @@ Highlighting `#selectorId` element with example text in `ng-template`.
 
 Example of scenario with `ng-walkthrough-flow`:
 
-```
+```html
 <ng-walkthrough-flow #walkFlow
     id="wt-test-flow"
     focusBackdrop="true"
@@ -140,7 +140,7 @@ Example of scenario with `ng-walkthrough-flow`:
 </ng-walkthrough-flow>
 ```
 
-For more examples, see `example.component.html` in `examples` folder.
+For more examples, see `examples/example.component.html`.
 
 ## License
 
