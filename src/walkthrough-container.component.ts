@@ -41,6 +41,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasBackdrop = false;
     hasGlow = false;
     hasClickable: boolean;
+    hideOther: boolean;
 
     // navigate
 
@@ -89,6 +90,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     get hide() {
         return !this.show;
     }
+
 
     @HostBinding('class.cursor')
     get cursor() {
@@ -149,12 +151,54 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         return this._portalHost.attachTemplatePortal(portal);
     }
 
-    hightlightZone(coordinate: WalkthroughElementCoordinate) {
-        const zoneStyle = (this.zone.nativeElement as HTMLElement).style;
-        zoneStyle.left = coordinate.left + 'px';
-        zoneStyle.top = coordinate.top + 'px';
-        zoneStyle.width = coordinate.width + 'px';
-        zoneStyle.height = coordinate.height + 'px';
+    hightlightZone(
+        coordinate: WalkthroughElementCoordinate,
+        scrollDiff: number,
+        animation: string,
+        animationDelays: number,
+        continueFunction: () => {}
+    ) {
+
+        const element = (this.zone.nativeElement as HTMLElement);
+        const zoneStyle = element.style;
+        const style = window.getComputedStyle(element, null);
+        if (animationDelays > 0 && style.left !== 'auto') {
+            this.hideOther = true;
+            const fragment = 20;
+            const intervale = animationDelays / fragment;
+            const left = parseInt(style.left, 10);
+            const top = scrollDiff + parseInt(style.top, 10);
+            const width = parseInt(style.width, 10);
+            const height = parseInt(style.height, 10);
+            const partLeft = (coordinate.left - left) / fragment;
+            const partTop = (coordinate.top - top) / fragment;
+            const partWidth = (coordinate.width - width) / fragment;
+            const partHeight = (coordinate.height - height) / fragment;
+            let count = 0;
+
+            this.show = true;
+            zoneStyle.borderRadius = '50%';
+            const timer = setInterval(() => {
+
+                zoneStyle.left = (left + partLeft * count) + 'px';
+                zoneStyle.top = (top + partTop * count) + 'px';
+                zoneStyle.width = (width + partWidth * count) + 'px';
+                zoneStyle.height = (height + partHeight * count) + 'px';
+                if (count++ >= fragment) {
+                    clearInterval(timer);
+                    this.hideOther = false;
+                    continueFunction();
+                }
+            }, intervale);
+
+        } else {
+            zoneStyle.left = coordinate.left + 'px';
+            zoneStyle.top = coordinate.top + 'px';
+            zoneStyle.width = coordinate.width + 'px';
+            zoneStyle.height = coordinate.height + 'px';
+
+            continueFunction();
+        }
     }
 
     hightlightZoneStyling(element: HTMLElement) {

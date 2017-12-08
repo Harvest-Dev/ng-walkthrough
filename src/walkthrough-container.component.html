@@ -1,7 +1,7 @@
 <div class="wkt-container">
     <div class="wkt-zone" #zone (click)="clickZone($event)" [class.hide]="!hasHighlightZone"
          [class.backdrop]="hasBackdrop" [class.glow]="hasGlow" [class.clickable]="hasClickable" [class.highlight]="hasHighlight"></div>
-    <div class="wkt-content-block" [class.darken]="contentStyle === 'draken'" #contentBlock>
+    <div class="wkt-content-block" [class.hide]="hideOther" [class.darken]="contentStyle === 'draken'" #contentBlock>
         <button type="button" class="wkt-close"  *ngIf="hasCloseButton" (click)="close()">✖</button>
         <div class="wkt-content">
             <p *ngIf="contentText">{{contentText}}</p>
@@ -13,7 +13,7 @@
             <button type="button" class="wkt-finish-link" *ngIf="hasFinish" (click)="close()">{{text.close}}</button>
         </div>
     </div>
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" *ngIf="hasArrow">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" *ngIf="hasArrow" [class.hide]="hideOther">
         <defs>
             <marker id="wkt-arrow" viewBox="0 0 10 10" refX="8" refY="5"
                     markerUnits="strokeWidth" orient="auto" markerWidth="10" markerHeight="10">

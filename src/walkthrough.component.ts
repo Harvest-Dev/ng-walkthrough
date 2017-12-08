@@ -55,6 +55,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     @Input() arrowColor: string;
 
+    @Input() animation: 'none' | 'linear' = 'none';
+    @Input() animationDelays = 0;
+
     @Input()
     get id() { return this._id; }
     set id(value: string) { this._id = value || this._uid; }
@@ -313,19 +316,35 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _setFocus() {
         const instance = WalkthroughComponent._walkthroughContainer.instance;
         if (instance) {
-            if (this._focusElement && instance.zone) {
-                instance.hightlightZone(this._offsetCoordinates);
-            }
-            if (!this._show) {
-                this._attachContentTemplate();
-
-                this._initContentTemplate(instance);
-            }
+            const scrollY = window.pageXOffset;
+            this._initStylingTemplate(instance);
             setTimeout(() => {
-                instance.hightlightZoneStyling(this._focusElement);
-                this._updateElementPositions(instance);
-            }, 0);
+                if (this._focusElement && instance.zone) {
+                    instance.hightlightZone(
+                        this._offsetCoordinates,
+                        scrollY - window.pageXOffset,
+                        this.animation,
+                        this.animationDelays,
+                        this._setFocusContinue.bind(this)
+                    );
+                } else {
+                    this._setFocusContinue();
+                }
+            }, 20);
         }
+    }
+
+    private _setFocusContinue() {
+        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        if (!this._show) {
+            this._attachContentTemplate();
+
+            this._initContentTemplate(instance);
+        }
+        setTimeout(() => {
+            instance.hightlightZoneStyling(this._focusElement);
+            this._updateElementPositions(instance);
+        }, 0);
     }
 
     private _updateElementPositions(instance: WalkthroughContainerComponent) {
@@ -350,9 +369,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * init all datas of the contenaire
+     * init a partof styles of the contenaire
      */
-    private _initContentTemplate(instance: WalkthroughContainerComponent) {
+    private _initStylingTemplate(instance: WalkthroughContainerComponent) {
         const hasHighlightZone = this._focusElement !== null;
 
         instance.parent = this;
@@ -362,6 +381,16 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasHighlight = hasHighlightZone && this._hasHighlightAnimation;
         instance.hasBackdrop = this._hasBackdrop;
         instance.hasGlow = hasHighlightZone && this._hasGlow;
+
+    }
+
+
+    /**
+     * init all datas of the contenaire
+     */
+    private _initContentTemplate(instance: WalkthroughContainerComponent) {
+        const hasHighlightZone = this._focusElement !== null;
+
         instance.hasPrevious = !!this.previousStep;
         instance.hasNext = !!this.nextStep;
         instance.hasCloseButton = this._hasCloseButton;

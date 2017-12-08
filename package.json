@@ -19,7 +19,7 @@
 		"start": "webpack-dev-server --open --config ./webpack/webpack.dev.js",
 		"tagVersion": "node ./tasks/tag-version",
 		"test": "node ./tasks/test",
-		"publish" : "npm publish ./dist --tag latest"
+		"publish": "npm publish ./dist --tag latest"
 	},
 	"keywords": [
 		"walkthrough",
