@@ -2,27 +2,45 @@
   "name": "angular-walkthrough",
   "version": "0.5.0",
   "description": "Walkthrough, an Angular library",
-  "main": "./bundles/ng-walkthrough.umd.js",
+  "baseUrl": "./",
+  "author": "Célian Veyssière",
+  "main": "./bundles/angular-walkthrough.umd.js",
+  "module": "./angular-walkthrough.es5.js",
+  "es2015": "./angular-walkthrough.js",
+  "typings": "./angular-walkthrough.d.ts",
+  "license": "MIT",
+  "private": false,
   "scripts": {
-    "test": "node ./tasks/test",
     "build": "node ./tasks/build",
-    "g": "node ./node_modules/angular-librarian",
     "lint": "tslint ./src/**/*.ts",
     "postbuild": "rimraf build",
     "posttagVersion": "npm run build && npm publish dist",
     "prebuild": "rimraf dist out-tsc",
     "start": "webpack-dev-server --open --config ./webpack/webpack.dev.js",
-    "tagVersion": "node ./tasks/tag-version"
+    "tagVersion": "node ./tasks/tag-version",
+    "test": "node ./tasks/test",
+    "publish": "npm publish ./dist --tag latest"
   },
-  "keywords": [],
-  "author": "Célian Veyssière",
-  "license": "MIT",
-  "devDependencies": {
+  "keywords": [
+    "walkthrough",
+    "angular"
+  ],
+  "dependencies": {
     "@angular/cdk": "^5.0.0",
-    "angular-librarian": "1.0.0",
+    "@angular/common": "^5.0.0",
+    "@angular/compiler": "^5.0.0",
+    "@angular/core": "^5.0.0",
+    "@angular/platform-browser": "^5.0.0",
+    "@angular/platform-browser-dynamic": "^5.0.0",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.5.2",
+    "zone.js": "^0.8.14"
+  },
+  "devDependencies": {
     "@angular/compiler-cli": "^5.0.0",
     "@types/jasmine": "^2.0.0",
     "@types/node": "^8.0.0",
+    "angular-librarian": "1.0.0",
     "angular2-template-loader": "0.6.0",
     "awesome-typescript-loader": "^3.0.0",
     "codelyzer": "^4.0.0",
@@ -42,7 +60,8 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.0",
-    "node-sass": "^4.0.0",
+    "node-sass": "^4.1.1",
+    "np": "^2.12.0",
     "phantomjs-prebuilt": "^2.1.7",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.3",
@@ -65,20 +84,8 @@
     "webpack-merge": "^0.14.0",
     "webpack-node-externals": "^1.5.4"
   },
-  "module": "./angular-walkthrough.es5.js",
-  "es2015": "./angular-walkthrough.js",
-  "typings": "./ng-walkthrough.d.ts",
-  "dependencies": {
-    "@angular/common": "^5.0.0",
-    "@angular/compiler": "^5.0.0",
-    "@angular/core": "^5.0.0",
-    "@angular/platform-browser": "^5.0.0",
-    "@angular/platform-browser-dynamic": "^5.0.0",
-    "core-js": "^2.4.1",
-    "rxjs": "^5.5.2",
-    "zone.js": "^0.8.14"
-  },
   "repository": {
+    "type": "git",
     "url": "git+https://github.com/Zefling/ng-walkthrough.git"
   },
   "publishConfig": {
