@@ -13,14 +13,14 @@ import { WalkthroughContainerComponent } from './walkthrough-container.component
         WalkthroughComponent,
         WalkthroughContainerComponent
     ],
-    imports: [
-        CommonModule,
-        PortalModule
-    ],
     exports: [
         WalkthroughFlowComponent,
         WalkthroughComponent,
         WalkthroughContainerComponent
+    ],
+    imports: [
+        CommonModule,
+        PortalModule
     ],
     entryComponents: [
         WalkthroughContainerComponent
