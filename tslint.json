@@ -28,7 +28,20 @@
         "member-ordering": [
             true,
             "static-before-instance",
-            "variables-before-functions"
+            "variables-before-functions",
+            {
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "public-constructor",
+                    "private-static-field",
+                    "private-instance-field",
+                    "private-constructor",
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
         ],
         "no-arg": true,
         "no-bitwise": true,
@@ -70,21 +83,22 @@
         ],
         "radix": true,
         "semicolon": [
+            true,
             "always"
         ],
         "triple-equals": [
-        true,
+            true,
             "allow-null-check"
         ],
         "typedef-whitespace": [
-        true,
-        {
-            "call-signature": "nospace",
-            "index-signature": "nospace",
-            "parameter": "nospace",
-            "property-declaration": "nospace",
-            "variable-declaration": "nospace"
-        }
+            true,
+            {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            }
         ],
         "typeof-compare": true,
         "unified-signatures": true,
@@ -97,7 +111,7 @@
             "check-separator",
             "check-type"
         ],
-
+        
         "directive-selector": [true, "attribute", "", "camelCase"],
         "component-selector": [true, "element", "", "kebab-case"],
         "use-input-property-decorator": true,

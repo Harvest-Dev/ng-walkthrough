@@ -98,21 +98,21 @@ published to NPM. The basic structure of a published library is:
 
 ```
 |__bundles/
-   |__walkthrough.umd.js
-   |__walkthrough.umd.js.map
-   |__walkthrough.umd.min.js
-   |__walkthrough.bundle.min.js.map
+   |__angular-walkthrough.umd.js
+   |__angular-walkthrough.umd.js.map
+   |__angular-walkthrough.umd.min.js
+   |__angular-walkthrough.bundle.min.js.map
 |__index.d.ts
 |__package.json
 |__README.md
 |__*.d.ts
-|__walkthrough.d.ts
-|__walkthrough.module.d.ts
-|__walkthrough.es5.js
-|__walkthrough.es5.js.map
-|__walkthrough.js
-|__walkthrough.js.map
-|__walkthrough.metadata.json
+|__angular-walkthrough.d.ts
+|__angular-walkthrough.module.d.ts
+|__angular-walkthrough.es5.js
+|__angular-walkthrough.es5.js.map
+|__angular-walkthrough.js
+|__angular-walkthrough.js.map
+|__angular-walkthrough.metadata.json
 ```
 
 As you can see, the packaging removes any files specific to developing your

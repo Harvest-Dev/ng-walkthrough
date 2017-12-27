@@ -37,7 +37,7 @@ let nextUniqueId = 0;
 })
 export class WalkthroughComponent implements OnInit, AfterViewInit {
 
-    private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent>;
+    private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
 
     @Input() focusElementSelector: string;
