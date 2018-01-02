@@ -12,7 +12,7 @@ npm install angular-walkthrough
 
 ## Requirements
 
-- Angular 4.0.0 and more
+- Angular 5.0.0 and more
 - Angular/cdk 2.0.0-beta.12
 
 ## Demo
