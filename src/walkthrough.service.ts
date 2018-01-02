@@ -46,6 +46,19 @@ export class WalkthroughService {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
     }
 
+    getDocumentHeight() {
+        // Height of entire body : https://stackoverflow.com/a/1147768
+        const body_height = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+
+        return Math.max(this.getHeightOfPage() + this.getTop(), body_height);
+    }
+
     scrollIntoViewIfOutOfView(element: HTMLElement) {
         const topOfPage = this.getTop();
         const heightOfPage = this.getHeightOfPage();

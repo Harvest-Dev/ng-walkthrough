@@ -155,7 +155,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     setHeight(): void {
-        this._renderer.setStyle(this._el.nativeElement, 'height', Math.max(this._walkthroughService.getHeightOfPage() + this._walkthroughService.getTop(), document.body.offsetHeight) + 'px');
+        this._renderer.setStyle(this._el.nativeElement, 'height', this._walkthroughService.getDocumentHeight() + 'px');
     }
 
     hightlightZone(
