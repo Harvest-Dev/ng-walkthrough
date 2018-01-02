@@ -12,7 +12,7 @@ import {
     HostListener,
     OnInit,
     AfterViewInit,
-    Renderer2, 
+    Renderer2,
     EventEmitter
 } from '@angular/core';
 
@@ -25,7 +25,7 @@ export interface WalkthroughElementCoordinate {
     top: number;
     left: number;
     height: number;
-    width: number
+    width: number;
 }
 
 export const booleanValue = (value: string | boolean) => {
@@ -190,7 +190,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     loadPrevioustStep() {
         setTimeout(() => {
             this.previousStep.open();
-        }, 0)
+        }, 0);
     }
 
     loadNextStep() {
@@ -205,7 +205,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     hide() {
         this._show = false;
-        
+
         // add CSS to focusElement
         if (this.focusElementCSSClass) {
             this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);

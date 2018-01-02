@@ -92,7 +92,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         return !this.show;
     }
 
-
     @HostBinding('class.cursor')
     get cursor() {
         return this.hasCloseAnywhere;
@@ -161,7 +160,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hightlightZone(
         coordinate: WalkthroughElementCoordinate,
         scrollDiff: number,
-        animation: string,
+        animation: 'none' | 'linear',
         animationDelays: number,
         continueFunction: () => {}
     ) {
@@ -169,7 +168,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const element = (this.zone.nativeElement as HTMLElement);
         const zoneStyle = element.style;
         const style = window.getComputedStyle(element, null);
-        if (animationDelays > 0 && style.left !== 'auto') {
+
+        if (animation === 'linear' && animationDelays > 0 && style.left !== 'auto') {
             this.hideOther = true;
             const fragment = 20;
             const intervale = animationDelays / fragment;
@@ -301,7 +301,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             endLeft += coordinate.width / 2;
 
             if (this._contentPosition === 'bottom') {
-                endTop += coordinate.height
+                endTop += coordinate.height;
             }
 
             centerLeft = (startLeft + endLeft) / 2;

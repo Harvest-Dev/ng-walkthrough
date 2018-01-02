@@ -20,7 +20,7 @@ export class WalkthroughService {
             this._preventDefault(e);
             return false;
         }
-    }).bind(this)
+    }).bind(this);
 
     disableScroll() {
         window.addEventListener('wheel', this._preventDefault, false);
@@ -33,11 +33,16 @@ export class WalkthroughService {
         window.removeEventListener('touchmove', this._preventDefault);
         document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
     }
-    
+
     retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
 
-        const coordinates = {top: clientrect.top, height: clientrect.height, width: clientrect.width, left: clientrect.left}
+        const coordinates = {
+            top: clientrect.top,
+            height: clientrect.height,
+            width: clientrect.width,
+            left: clientrect.left
+        };
         coordinates.top += this.getTop();
         return coordinates;
     }
