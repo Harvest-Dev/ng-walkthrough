@@ -8,7 +8,8 @@ import {
     EmbeddedViewRef,
     ComponentRef,
     HostBinding,
-    HostListener
+    HostListener,
+    Renderer2
 } from '@angular/core';
 import {
     BasePortalHost,
@@ -107,7 +108,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     constructor(
         public viewContainerRef: ViewContainerRef,
-        private _walkthroughService: WalkthroughService
+        private _walkthroughService: WalkthroughService,
+        private _renderer: Renderer2,
+        private _el: ElementRef
     ) {
         super();
     }
@@ -149,6 +152,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
         // this._savePreviouslyFocusedElement();
         return this._portalHost.attachTemplatePortal(portal);
+    }
+
+    setHeight(): void {
+        this._renderer.setStyle(this._el.nativeElement, 'height', this._walkthroughService.getDocumentHeight() + 'px');
     }
 
     hightlightZone(
@@ -228,7 +235,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
 
-        const height = element.getBoundingClientRect().height
+        const height = this._walkthroughService.retrieveCoordinates(element).height
             + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom, 10);
 
         // position of content left/center/right
@@ -239,7 +246,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         if (position === 'left') {
             element.style.left = '0';
         } else if (position === 'center') {
-            element.style.left = (window.innerWidth / 2 - element.getBoundingClientRect().width / 2) + 'px';
+            element.style.left = (window.innerWidth / 2 - this._walkthroughService.retrieveCoordinates(element).width / 2) + 'px';
         } else if (position === 'right') {
             element.style.right = '0';
         }
@@ -248,7 +255,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
             // for arrow possition
 
-            const contentBlockCoordinates = element.getBoundingClientRect();
+            const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(element);
             const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
 
 
@@ -277,7 +284,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     arrowPosition(coordinate: WalkthroughElementCoordinate) {
 
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
-        const contentBlockCoordinates = contentBlockElement.getBoundingClientRect();
+        const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
         const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
         let startTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
@@ -320,7 +327,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         // show
         this.show = true;
         // scroll
-        this._walkthroughService.disableScroll();
+        // this._walkthroughService.disableScroll();
     }
 
     previous() {
@@ -340,7 +347,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this.show = false;
         this.parent.hide();
         // scroll
-        this._walkthroughService.enableScroll();
+        // this._walkthroughService.enableScroll();
     }
 
 }

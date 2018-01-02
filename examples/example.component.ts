@@ -29,4 +29,8 @@ export class ExampleComponent {
         contenaire.next();
     }
 
+    walk3IsReady() {
+        window.alert('walk3 is ready');
+    }
+
 }

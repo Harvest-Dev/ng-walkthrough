@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WalkthroughElementCoordinate } from './walkthrough.component';
 
 @Injectable()
 export class WalkthroughService {
@@ -32,9 +33,34 @@ export class WalkthroughService {
         window.removeEventListener('touchmove', this._preventDefault);
         document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
     }
+    
+    retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
+        const clientrect: ClientRect = element.getBoundingClientRect();
+
+        const coordinates = {top: clientrect.top, height: clientrect.height, width: clientrect.width, left: clientrect.left}
+        coordinates.top += this.getTop();
+        return coordinates;
+    }
+
+    getTop(): number {
+        return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    }
+
+    getDocumentHeight() {
+        // Height of entire body : https://stackoverflow.com/a/1147768
+        const body_height = Math.max(
+            document.body.scrollHeight,
+            document.body.offsetHeight,
+            document.documentElement.clientHeight,
+            document.documentElement.scrollHeight,
+            document.documentElement.offsetHeight
+        );
+
+        return Math.max(this.getHeightOfPage() + this.getTop(), body_height);
+    }
 
     scrollIntoViewIfOutOfView(element: HTMLElement) {
-        const topOfPage = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        const topOfPage = this.getTop();
         const heightOfPage = this.getHeightOfPage();
         let elementY = 0;
         let elementH = 0;

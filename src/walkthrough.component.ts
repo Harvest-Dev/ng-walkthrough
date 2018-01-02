@@ -2,6 +2,7 @@ import {
     Type,
     TemplateRef,
     Input,
+    Output,
     Component,
     ComponentFactoryResolver,
     EmbeddedViewRef,
@@ -10,7 +11,9 @@ import {
     Injector,
     HostListener,
     OnInit,
-    AfterViewInit
+    AfterViewInit,
+    Renderer2, 
+    EventEmitter
 } from '@angular/core';
 
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
@@ -39,6 +42,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
+
+    @Output() ready: EventEmitter<void> = new EventEmitter();
+    @Input() focusElementCSSClass: string = undefined;
 
     @Input() focusElementSelector: string;
     @Input() typeSelector: 'element' | 'zone' = 'element';
@@ -152,6 +158,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         private _componentFactoryResolver: ComponentFactoryResolver,
         private _applicationRef: ApplicationRef,
         private _injector: Injector,
+        private _renderer: Renderer2,
         private _walkthroughService: WalkthroughService
     ) { }
 
@@ -198,6 +205,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     hide() {
         this._show = false;
+        
+        // add CSS to focusElement
+        if (this.focusElementCSSClass) {
+            this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);
+        }
     }
 
     private _appendComponentToBody<T>(component: Type<T>): ComponentRef<T> {
@@ -243,10 +255,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            this._offsetCoordinates = element.getBoundingClientRect();
+            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._focusElementEnd.getBoundingClientRect();
+                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
                 this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
                 this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
@@ -353,6 +365,17 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             if (this._focusElement !== null && this._hasArrow) {
                 instance.arrowPosition(this._offsetCoordinates);
             }
+
+            // add CSS to focusElement
+            if (this.focusElementCSSClass) {
+                this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
+            }
+
+
+            setTimeout( () => {
+                WalkthroughComponent._walkthroughContainer.instance.setHeight();
+                this.ready.emit();
+            }, 50);
         }, 0);
     }
 
