@@ -320,7 +320,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         // show
         this.show = true;
         // scroll
-        this._walkthroughService.disableScroll();
+        // this._walkthroughService.disableScroll();
     }
 
     previous() {
@@ -340,7 +340,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this.show = false;
         this.parent.hide();
         // scroll
-        this._walkthroughService.enableScroll();
+        // this._walkthroughService.enableScroll();
     }
 
 }

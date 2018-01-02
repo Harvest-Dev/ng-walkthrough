@@ -2,6 +2,7 @@ import {
     Type,
     TemplateRef,
     Input,
+    Output,
     Component,
     ComponentFactoryResolver,
     EmbeddedViewRef,
@@ -11,7 +12,8 @@ import {
     HostListener,
     OnInit,
     AfterViewInit,
-    Renderer2
+    Renderer2, 
+    EventEmitter
 } from '@angular/core';
 
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
@@ -41,6 +43,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
 
+    @Output() ready: EventEmitter<void> = new EventEmitter();
     @Input() focusElementCSSClass: string = undefined;
 
     @Input() focusElementSelector: string;
@@ -367,6 +370,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             if (this.focusElementCSSClass) {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
+
+            setTimeout( () => {
+                this.ready.emit();
+            }, 50);
         }, 0);
     }
 

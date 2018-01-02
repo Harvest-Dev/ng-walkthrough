@@ -131,7 +131,7 @@
     [contentTemplate]="step3"
     [previousStep]="walk2"
     [nextStep]="walk4"
-
+    (ready)="walk3IsReady()"
     closeButton="true"
     closeAnywhere="false"
     showArrow="true"
