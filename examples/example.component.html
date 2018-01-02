@@ -126,10 +126,12 @@
 <ng-walkthrough #walk3
     id="wt-test3"
     focusElementSelector="#test3"
+    focusElementCSSClass="redbutton"
     focusBackdrop="true"
     [contentTemplate]="step3"
     [previousStep]="walk2"
     [nextStep]="walk4"
+
     closeButton="true"
     closeAnywhere="false"
     showArrow="true"
