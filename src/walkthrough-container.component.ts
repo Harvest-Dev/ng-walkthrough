@@ -8,7 +8,8 @@ import {
     EmbeddedViewRef,
     ComponentRef,
     HostBinding,
-    HostListener
+    HostListener,
+    Renderer2
 } from '@angular/core';
 import {
     BasePortalHost,
@@ -107,7 +108,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     constructor(
         public viewContainerRef: ViewContainerRef,
-        private _walkthroughService: WalkthroughService
+        private _walkthroughService: WalkthroughService,
+        private _renderer: Renderer2,
+        private _el: ElementRef
     ) {
         super();
     }
@@ -149,6 +152,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
         // this._savePreviouslyFocusedElement();
         return this._portalHost.attachTemplatePortal(portal);
+    }
+
+    setHeight(): void {
+        this._renderer.setStyle(this._el.nativeElement, 'height', Math.max(this._walkthroughService.getHeightOfPage() + this._walkthroughService.getTop(), document.body.offsetHeight) + 'px');
     }
 
     hightlightZone(

@@ -38,12 +38,16 @@ export class WalkthroughService {
         const clientrect: ClientRect = element.getBoundingClientRect();
 
         const coordinates = {top: clientrect.top, height: clientrect.height, width: clientrect.width, left: clientrect.left}
-        coordinates.top += window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        coordinates.top += this.getTop();
         return coordinates;
     }
 
+    getTop(): number {
+        return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    }
+
     scrollIntoViewIfOutOfView(element: HTMLElement) {
-        const topOfPage = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        const topOfPage = this.getTop();
         const heightOfPage = this.getHeightOfPage();
         let elementY = 0;
         let elementH = 0;

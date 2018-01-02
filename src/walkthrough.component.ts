@@ -371,7 +371,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
 
+
             setTimeout( () => {
+                WalkthroughComponent._walkthroughContainer.instance.setHeight();
                 this.ready.emit();
             }, 50);
         }, 0);
