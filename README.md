@@ -27,8 +27,12 @@ All attributes are optional.
 
 - `id`: HTML id.
 
+**Output events** 
+- `ready` : fired when the walkthrough is completely ready
+
 **Focus zone**:
 - `focusElementSelector`: CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
+- `focusElementCSSClass`: Add a class on focusElement (optional)
 - `focusHighlightAnimation`: `true` for show highlight animation on the focus element. By defaut `false`.
 - `focusBackdrop`: `true` for show a dark backdrop around the focus element. By defaut `false`.
 - `focusGlow`: `true` for show a glow on the focus element. By defaut `false`.
