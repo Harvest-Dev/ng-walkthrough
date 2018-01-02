@@ -228,7 +228,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const element = this.contentBlock.nativeElement as HTMLElement;
         const elementStyle = window.getComputedStyle(element, null);
 
-        const height = element.getBoundingClientRect().height
+        const height = this._walkthroughService.retrieveCoordinates(element).height
             + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom, 10);
 
         // position of content left/center/right
@@ -239,7 +239,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         if (position === 'left') {
             element.style.left = '0';
         } else if (position === 'center') {
-            element.style.left = (window.innerWidth / 2 - element.getBoundingClientRect().width / 2) + 'px';
+            element.style.left = (window.innerWidth / 2 - this._walkthroughService.retrieveCoordinates(element).width / 2) + 'px';
         } else if (position === 'right') {
             element.style.right = '0';
         }
@@ -248,7 +248,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
             // for arrow possition
 
-            const contentBlockCoordinates = element.getBoundingClientRect();
+            const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(element);
             const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
 
 
@@ -277,7 +277,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     arrowPosition(coordinate: WalkthroughElementCoordinate) {
 
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
-        const contentBlockCoordinates = contentBlockElement.getBoundingClientRect();
+        const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
         const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
         let startTop = contentBlockCoordinates.top + contentBlockCoordinates.height;

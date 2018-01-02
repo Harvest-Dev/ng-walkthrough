@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WalkthroughElementCoordinate } from './walkthrough.component';
 
 @Injectable()
 export class WalkthroughService {
@@ -31,6 +32,14 @@ export class WalkthroughService {
         window.removeEventListener('wheel', this._preventDefault);
         window.removeEventListener('touchmove', this._preventDefault);
         document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
+    }
+    
+    retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
+        const clientrect: ClientRect = element.getBoundingClientRect();
+
+        const coordinates = {top: clientrect.top, height: clientrect.height, width: clientrect.width, left: clientrect.left}
+        coordinates.top += window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        return coordinates;
     }
 
     scrollIntoViewIfOutOfView(element: HTMLElement) {

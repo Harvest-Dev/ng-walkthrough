@@ -243,10 +243,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            this._offsetCoordinates = element.getBoundingClientRect();
+            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._focusElementEnd.getBoundingClientRect();
+                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
                 this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
                 this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
