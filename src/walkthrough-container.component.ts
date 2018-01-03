@@ -301,7 +301,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             endLeft += coordinate.width / 2;
 
             if (this._contentPosition === 'bottom') {
-                endTop += coordinate.height;
+                endTop += coordinate.height + 6;
+            } else {
+                endTop -= 6;
             }
 
             centerLeft = (startLeft + endLeft) / 2;
