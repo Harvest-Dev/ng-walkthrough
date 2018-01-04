@@ -43,6 +43,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
 
+    @Output() closed: EventEmitter<void> = new EventEmitter();
+    @Output() finished: EventEmitter<void> = new EventEmitter();
     @Output() ready: EventEmitter<void> = new EventEmitter();
     @Input() focusElementCSSClass: string = undefined;
 
@@ -183,19 +185,29 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         }
     }
 
+    private next(closedEvent: EventEmitter<void> = undefined, finishedEvent: EventEmitter<void> = undefined) {
+        if (closedEvent) {
+            this.closed = closedEvent;
+        }
+        if (finishedEvent) {
+            this.finished = finishedEvent;
+        }
+        this.open();
+    }
+
     open() {
         this._elementLocations();
     }
 
     loadPrevioustStep() {
         setTimeout(() => {
-            this.previousStep.open();
+            this.previousStep.next(this.closed, this.finished);
         }, 0);
     }
 
     loadNextStep() {
         setTimeout(() => {
-            this.nextStep.open();
+            this.nextStep.next(this.closed, this.finished);
         }, 0);
     }
 
@@ -203,12 +215,23 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._show = true;
     }
 
-    hide() {
+    hide(closingWalkthrough: boolean = false, finished: boolean = false) {
         this._show = false;
 
         // add CSS to focusElement
         if (this.focusElementCSSClass) {
             this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);
+        }
+
+        if (closingWalkthrough) {
+            setTimeout(() => {
+                // emit closed event
+                this.closed.emit();
+                if (finished) {
+                    // emit finished event
+                    this.finished.emit();
+                }
+            }, 20);
         }
     }
 

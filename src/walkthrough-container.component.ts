@@ -116,7 +116,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     @HostListener('click')
     click() {
-        if (this.hasCloseAnywhere) {
+        if (this.hasCloseAnywhere && this.show) {
             this.close();
         }
     }
@@ -333,21 +333,21 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     previous() {
-        this.close();
+        this.close(false);
         this.parent.loadPrevioustStep();
     }
 
     next() {
-        this.close();
+        this.close(false);
         this.parent.loadNextStep();
     }
 
-    close() {
+    close(closingWalkthrough: boolean = true) {
         // remove content
         this._portalHost.dispose();
         // hide
         this.show = false;
-        this.parent.hide();
+        this.parent.hide(closingWalkthrough, this.hasFinish);
         // scroll
         // this._walkthroughService.enableScroll();
     }

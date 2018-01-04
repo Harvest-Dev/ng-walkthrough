@@ -53,6 +53,8 @@
     focusGlow="true"
     [contentTemplate]="step1"
     [nextStep]="walk1b"
+    (closed)="walk1Closed()"
+    (finished)="walk1Finished()"
     closeButton="true"
     closeAnywhere="false"
     [focusClick]="focusClickAction">
