@@ -33,4 +33,11 @@ export class ExampleComponent {
         window.alert('walk3 is ready');
     }
 
+    walk1Closed() {
+        window.alert('walk1 has been closed');
+    }
+
+    walk1Finished() {
+        window.alert('walk1 has been finished');
+    }
 }
