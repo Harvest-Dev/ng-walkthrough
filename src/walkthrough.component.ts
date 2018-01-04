@@ -215,7 +215,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._show = true;
     }
 
-    hide(closingWalkthrough: boolean = false, finished: boolean = false) {
+    hide(closingWalkthrough = false, finished = false) {
         this._show = false;
 
         // add CSS to focusElement
