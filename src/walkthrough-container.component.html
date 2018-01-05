@@ -10,7 +10,7 @@
         <div class="wkt-navigate" *ngIf="hasPrevious||hasNext||hasFinish">
             <button type="button" class="wkt-previous-link" *ngIf="hasPrevious" (click)="previous()">{{text.previous}}</button>
             <button type="button" class="wkt-next-link" *ngIf="hasNext" (click)="next()">{{text.next}}</button>
-            <button type="button" class="wkt-finish-link" *ngIf="hasFinish" (click)="close()">{{text.close}}</button>
+            <button type="button" class="wkt-finish-link" *ngIf="hasFinish" (click)="finish()">{{text.close}}</button>
         </div>
     </div>
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" *ngIf="hasArrow" [class.hide]="hideOther">
