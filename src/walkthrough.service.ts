@@ -22,18 +22,6 @@ export class WalkthroughService {
         }
     }).bind(this);
 
-    disableScroll() {
-        window.addEventListener('wheel', this._preventDefault, false);
-        window.addEventListener('touchmove', this._preventDefault, false);
-        document.addEventListener('keydown', this._preventDefaultForScrollKeys, false);
-    }
-
-    enableScroll() {
-        window.removeEventListener('wheel', this._preventDefault);
-        window.removeEventListener('touchmove', this._preventDefault);
-        document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
-    }
-
     retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
 
@@ -94,6 +82,16 @@ export class WalkthroughService {
                 }
                 current = parent;
             }
+        }
+    }
+
+    scrollToTopElement(element1: HTMLElement, element2: HTMLElement) {
+        if (element1 && element2) {
+            const element1Position = this.retrieveCoordinates(element1);
+            const element2Position = this.retrieveCoordinates(element2);
+            const minX = Math.min(element1Position.left, element2Position.left);
+            const minY = Math.min(element1Position.top, element2Position.top);
+            window.scrollTo(minX - 20, minY - 20);
         }
     }
 

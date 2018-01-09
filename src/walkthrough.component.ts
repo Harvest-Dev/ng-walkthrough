@@ -42,8 +42,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
+    private _readyHasBeenEmited = false;
 
-    @Output() closed: EventEmitter<void> = new EventEmitter();
+    @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() finished: EventEmitter<void> = new EventEmitter();
     @Output() ready: EventEmitter<void> = new EventEmitter();
     @Input() focusElementCSSClass: string = undefined;
@@ -185,7 +186,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private next(closedEvent: EventEmitter<void> = undefined, finishedEvent: EventEmitter<void> = undefined) {
+    private next(closedEvent: EventEmitter<boolean> = undefined, finishedEvent: EventEmitter<void> = undefined) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -215,7 +216,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._show = true;
     }
 
-    hide(closingWalkthrough = false, finished = false) {
+    hide(finishLink = false, closeWalkthrough = true) {
         this._show = false;
 
         // add CSS to focusElement
@@ -223,11 +224,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);
         }
 
-        if (closingWalkthrough) {
+        if (closeWalkthrough) {
             setTimeout(() => {
                 // emit closed event
-                this.closed.emit();
-                if (finished) {
+                this.closed.emit(finishLink);
+                if (!this.nextStep) {
                     // emit finished event
                     this.finished.emit();
                 }
@@ -273,8 +274,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         this._getFocusElement();
 
-        // get focus elements datas
-
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
@@ -287,7 +286,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
                     + offsetEndCoordinatesEnd.width;
             }
-
         } else {
             this._offsetCoordinates = null;
         }
@@ -394,10 +392,18 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
 
-
             setTimeout( () => {
                 WalkthroughComponent._walkthroughContainer.instance.setHeight();
-                this.ready.emit();
+
+                if (!this._readyHasBeenEmited) {
+                    this._readyHasBeenEmited = true;
+                    this.ready.emit();
+                }
+
+                this._walkthroughService.scrollToTopElement(
+                    this._focusElement,
+                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
+                );
             }, 50);
         }, 0);
     }

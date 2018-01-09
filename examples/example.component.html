@@ -53,7 +53,7 @@
     focusGlow="true"
     [contentTemplate]="step1"
     [nextStep]="walk1b"
-    (closed)="walk1Closed()"
+    (closed)="walk1Closed($event)"
     (finished)="walk1Finished()"
     closeButton="true"
     closeAnywhere="false"
@@ -77,7 +77,8 @@
     [previousStep]="walk1"
     [nextStep]="walk1c"
     closeButton="true"
-    closeAnywhere="false">
+    closeAnywhere="false"
+    finishStep="true">
     <ng-template #step1b>
         <p>
             1b. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet
@@ -209,7 +210,9 @@
     arrowColor="#000"
     showArrow="true"
     radius="auto"
-    [texts]="frenchText">
+    [texts]="frenchText"
+    (closed)="flowClosed($event)"
+    (finished)="flowFinished()">
     <ng-walkthrough
         id="wt-test1-flow"
         focusElementSelector="#test1"

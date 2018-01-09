@@ -33,11 +33,19 @@ export class ExampleComponent {
         window.alert('walk3 is ready');
     }
 
-    walk1Closed() {
-        window.alert('walk1 has been closed');
+    walk1Closed(finishButton: boolean) {
+        window.alert('walk1 has been closed with value : ' + (finishButton ? 'true' : 'false'));
     }
 
     walk1Finished() {
         window.alert('walk1 has been finished');
+    }
+
+    flowClosed(finishButton: boolean) {
+        window.alert('flow has been closed with value : ' + (finishButton ? 'true' : 'false'));
+    }
+
+    flowFinished() {
+        window.alert('flow has been finished');
     }
 }

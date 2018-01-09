@@ -29,6 +29,8 @@ All attributes are optional.
 
 **Output events** 
 - `ready` : fired when the walkthrough is completely ready
+- `closed` : fired when the walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishStep" button.
+- `finished` : fired when the walkthrough has been finished, which means : closed on last step.
 
 **Focus zone**:
 - `focusElementSelector`: CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
@@ -63,6 +65,10 @@ All attributes are optional.
 All attributes are optional and not overriding the subcomponents attributes except `previousStep`, `nextStep` and `finishStep` that will be ignored.
 
 - `id`: HTML id.
+
+**Output events** 
+- `closed` : fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishStep" button.
+- `finished` : fired when the last walkthrough has been closed.
 
 **Focus zone**:
 - `focusHighlightAnimation`: `true` for show highlight animation on the focus element.

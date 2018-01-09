@@ -328,28 +328,24 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     open() {
         // show
         this.show = true;
-        // scroll
-        // this._walkthroughService.disableScroll();
     }
 
     previous() {
-        this.close(false);
+        this.close(false, false);
         this.parent.loadPrevioustStep();
     }
 
     next() {
-        this.close(false);
+        this.close(false, false);
         this.parent.loadNextStep();
     }
 
-    close(closingWalkthrough = true) {
+    close(finishLink = false, closeWalkthrough = true) {
         // remove content
         this._portalHost.dispose();
         // hide
         this.show = false;
-        this.parent.hide(closingWalkthrough, this.hasFinish);
-        // scroll
-        // this._walkthroughService.enableScroll();
+        this.parent.hide(finishLink, closeWalkthrough);
     }
 
 }
