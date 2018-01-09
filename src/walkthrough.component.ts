@@ -20,6 +20,7 @@ import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
+import { setTimeout } from 'timers';
 
 export interface WalkthroughElementCoordinate {
     top: number;
@@ -42,6 +43,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
+    private _readyHasBeenEmited = false;
 
     @Output() closed: EventEmitter<void> = new EventEmitter();
     @Output() finished: EventEmitter<void> = new EventEmitter();
@@ -273,8 +275,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         this._getFocusElement();
 
-        // get focus elements datas
-
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
@@ -287,7 +287,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
                     + offsetEndCoordinatesEnd.width;
             }
-
         } else {
             this._offsetCoordinates = null;
         }
@@ -394,10 +393,20 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
 
-
             setTimeout( () => {
                 WalkthroughComponent._walkthroughContainer.instance.setHeight();
-                this.ready.emit();
+
+                if (!this._readyHasBeenEmited) {
+                    this._readyHasBeenEmited = true;
+                    this.ready.emit();
+                }
+
+                setTimeout( () => {
+                    this._walkthroughService.scrollToTopElement(
+                        this._focusElement,
+                        <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
+                    );
+                }, 20);
             }, 50);
         }, 0);
     }

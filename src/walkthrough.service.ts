@@ -34,7 +34,7 @@ export class WalkthroughService {
         document.removeEventListener('keydown', this._preventDefaultForScrollKeys);
     }
 
-    retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
+    retrieveCoordinates(element: HTMLElement, withoutScroll = false): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
 
         const coordinates = {
@@ -43,7 +43,9 @@ export class WalkthroughService {
             width: clientrect.width,
             left: clientrect.left
         };
-        coordinates.top += this.getTop();
+        if (!withoutScroll) {
+            coordinates.top += this.getTop();
+        }
         return coordinates;
     }
 
@@ -94,6 +96,16 @@ export class WalkthroughService {
                 }
                 current = parent;
             }
+        }
+    }
+
+    scrollToTopElement(focusElement: HTMLElement, containerElement: HTMLElement) {
+        if (focusElement && containerElement) {
+            const elementPosition = this.retrieveCoordinates(focusElement);
+            const containerPosition = this.retrieveCoordinates(containerElement);
+            const minX = Math.min(elementPosition.left, containerPosition.left);
+            const minY = Math.min(elementPosition.top, containerPosition.top);
+            window.scrollTo(minX - 20, minY - 20);
         }
     }
 
