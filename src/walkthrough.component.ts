@@ -44,7 +44,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private static _walkthroughContainerCreating = false;
     private _readyHasBeenEmited = false;
 
-    @Output() closed: EventEmitter<void> = new EventEmitter();
+    @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() finished: EventEmitter<void> = new EventEmitter();
     @Output() ready: EventEmitter<void> = new EventEmitter();
     @Input() focusElementCSSClass: string = undefined;
@@ -186,7 +186,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private next(closedEvent: EventEmitter<void> = undefined, finishedEvent: EventEmitter<void> = undefined) {
+    private next(closedEvent: EventEmitter<boolean> = undefined, finishedEvent: EventEmitter<void> = undefined) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -227,8 +227,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         if (closingWalkthrough) {
             setTimeout(() => {
                 // emit closed event
-                this.closed.emit();
-                if (!this.nextStep || finishingWalkthrough) {
+                this.closed.emit(finishingWalkthrough);
+                if (!this.nextStep) {
                     // emit finished event
                     this.finished.emit();
                 }

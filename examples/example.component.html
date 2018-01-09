@@ -53,7 +53,7 @@
     focusGlow="true"
     [contentTemplate]="step1"
     [nextStep]="walk1b"
-    (closed)="walk1Closed()"
+    (closed)="walk1Closed($event)"
     (finished)="walk1Finished()"
     closeButton="true"
     closeAnywhere="false"
