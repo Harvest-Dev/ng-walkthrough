@@ -20,7 +20,6 @@ import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
-import { setTimeout } from 'timers';
 
 export interface WalkthroughElementCoordinate {
     top: number;
