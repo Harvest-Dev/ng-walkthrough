@@ -216,7 +216,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         this._show = true;
     }
 
-    hide(closingWalkthrough = false, finishingWalkthrough = false) {
+    hide(finishLink = false, closeWalkthrough = true) {
         this._show = false;
 
         // add CSS to focusElement
@@ -224,10 +224,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
             this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);
         }
 
-        if (closingWalkthrough) {
+        if (closeWalkthrough) {
             setTimeout(() => {
                 // emit closed event
-                this.closed.emit(finishingWalkthrough);
+                this.closed.emit(finishLink);
                 if (!this.nextStep) {
                     // emit finished event
                     this.finished.emit();
@@ -400,12 +400,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                     this.ready.emit();
                 }
 
-                setTimeout( () => {
-                    this._walkthroughService.scrollToTopElement(
-                        this._focusElement,
-                        <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
-                    );
-                }, 20);
+                this._walkthroughService.scrollToTopElement(
+                    this._focusElement,
+                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
+                );
             }, 50);
         }, 0);
     }
