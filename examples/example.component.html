@@ -210,7 +210,9 @@
     arrowColor="#000"
     showArrow="true"
     radius="auto"
-    [texts]="frenchText">
+    [texts]="frenchText"
+    (closed)="flowClosed($event)"
+    (finished)="flowFinished()">
     <ng-walkthrough
         id="wt-test1-flow"
         focusElementSelector="#test1"

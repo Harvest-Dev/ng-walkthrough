@@ -66,6 +66,10 @@ All attributes are optional and not overriding the subcomponents attributes exce
 
 - `id`: HTML id.
 
+**Output events** 
+- `closed` : fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishStep" button.
+- `finished` : fired when the last walkthrough has been closed.
+
 **Focus zone**:
 - `focusHighlightAnimation`: `true` for show highlight animation on the focus element.
 - `focusBackdrop`: `true` for show a dark backdrop around the focus element.

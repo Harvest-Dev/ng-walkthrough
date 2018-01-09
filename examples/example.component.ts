@@ -40,4 +40,12 @@ export class ExampleComponent {
     walk1Finished() {
         window.alert('walk1 has been finished');
     }
+
+    flowClosed(finishButton: boolean) {
+        window.alert('flow has been closed with value : ' + (finishButton ? 'true' : 'false'));
+    }
+
+    flowFinished() {
+        window.alert('flow has been finished');
+    }
 }

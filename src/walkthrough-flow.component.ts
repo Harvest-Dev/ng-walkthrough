@@ -3,7 +3,9 @@ import {
     Input,
     ContentChildren,
     QueryList,
-    AfterViewInit
+    AfterViewInit,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughComponent, booleanValue } from './walkthrough.component';
@@ -22,6 +24,8 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     get id() { return this._id; }
     set id(value: string) { this._id = value || this._uid; }
 
+    @Output() closed: EventEmitter<boolean> = new EventEmitter();
+    @Output() finished: EventEmitter<void> = new EventEmitter();
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
@@ -62,6 +66,12 @@ export class WalkthroughFlowComponent implements AfterViewInit {
 
             // transmition (only if different from default)
 
+            if (this.closed) {
+                walkthrough.closed = this.closed;
+            }
+            if (this.finished) {
+                walkthrough.finished = this.finished;
+            }
             if (!walkthrough.contentStyle && this.contentStyle) {
                 walkthrough.contentStyle = this.contentStyle;
             }
