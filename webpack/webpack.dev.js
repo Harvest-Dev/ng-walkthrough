@@ -18,59 +18,60 @@ const examplePath = function examples() {
         webpackUtils.rootPath,
         'examples',
         arguments
-    );
+        );
 };
 
 module.exports = webpackCommon('dev', {
-    devServer: {
-        contentBase: webpackUtils.rootPath('dist'),
-        port: 9000
+    devServer : {
+        contentBase : webpackUtils.rootPath('dist'),
+        host : 'localhost',
+        port : 9000
     },
-    devtool: 'cheap-module-eval-source-map',
-    entry: {
-        app: [ examplePath('example.main') ],
-        scripts: [],
-        vendor: [ webpackUtils.srcPath('vendor') ],
-        styles: [ examplePath('styles.scss') ]
+    devtool : 'cheap-module-eval-source-map',
+    entry : {
+        app : [examplePath('example.main')],
+        scripts : [],
+        vendor : [webpackUtils.srcPath('vendor')],
+        styles : [examplePath('styles.scss')]
     },
-    module: {
-        rules: webpackUtils.buildRules({
-            cssExtract: examplePath(),
-            sassLoader: examplePath('styles.scss')
+    module : {
+        rules : webpackUtils.buildRules({
+            cssExtract : examplePath(),
+            sassLoader : examplePath('styles.scss')
         }, {
-            include: examplePath(),
-            test: /styles\.scss$/,
-            use: ['style-loader', 'css-loader', 'sass-loader']
+            include : examplePath(),
+            test : /styles\.scss$/,
+            use : ['style-loader', 'css-loader', 'sass-loader']
         })
     },
-    output: {
-        filename: '[name].bundle.js',
-        path: webpackUtils.rootPath('dist')
+    output : {
+        filename : '[name].bundle.js',
+        path : webpackUtils.rootPath('dist')
     },
-    plugins: [
+    plugins : [
         new ChunkWebpack({
-            filename: 'vendor.bundle.js',
-            minChunks: Infinity,
-            name: 'vendor'
+            filename : 'vendor.bundle.js',
+            minChunks : Infinity,
+            name : 'vendor'
         }),
         new HtmlWebpack({
             // shameless/shamefully stolen from Angular CLI
-            chunksSortMode: function(left, right) {
+            chunksSortMode : function (left, right) {
                 const leftIndex = entryPoints.indexOf(left.names[0]);
                 const rightIndex = entryPoints.indexOf(right.names[0]);
                 let direction = 0;
 
-                if (leftIndex > rightIndex) {
+                if(leftIndex > rightIndex) {
                     direction = 1;
-                } else if (leftIndex < rightIndex) {
+                } else if(leftIndex < rightIndex) {
                     direction = -1;
                 }
 
                 return direction;
             },
-            filename: 'index.html',
-            inject: 'body',
-            template: examplePath('index.html')
+            filename : 'index.html',
+            inject : 'body',
+            template : examplePath('index.html')
         })
     ]
 });
