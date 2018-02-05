@@ -157,3 +157,9 @@ svg {
         box-shadow: 0 0 0 8800px rgba(0, 0, 0, 0.6);
     }
 }
+
+// [HACK] Safari 9+ (non-iOS) : box-shadow sizes over 2000px can be unpredictable
+
+_:default:not(:root:root), .wkt-zone.backdrop {
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6) !important;
+}
