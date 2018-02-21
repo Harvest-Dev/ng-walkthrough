@@ -24,8 +24,8 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     get id() { return this._id; }
     set id(value: string) { this._id = value || this._uid; }
 
-    @Output() closed: EventEmitter<boolean> = new EventEmitter();
-    @Output() finished: EventEmitter<void> = new EventEmitter();
+    @Output() closed: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() finished: EventEmitter<void> = new EventEmitter<void>();
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
@@ -43,8 +43,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
 
-    constructor(
-    ) { }
+    constructor() { }
 
     ngAfterViewInit() {
         setTimeout(() => {
