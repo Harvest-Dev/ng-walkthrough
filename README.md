@@ -7,7 +7,7 @@ This Angular model is inspired in part by [ng-walkthrough](https://github.com/so
 ## Installation
 
 ```
-npm install angular-walkthrough
+npm i angular-walkthrough --save
 ```
 
 ## Requirements
