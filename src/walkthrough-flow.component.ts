@@ -8,7 +8,7 @@ import {
     EventEmitter
 } from '@angular/core';
 import { WalkthroughText } from './walkthrough-text';
-import { WalkthroughComponent, booleanValue } from './walkthrough.component';
+import { WalkthroughComponent, booleanValue, WalkthroughEvent } from './walkthrough.component';
 
 let nextUniqueId = 0;
 
@@ -25,7 +25,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     set id(value: string) { this._id = value || this._uid; }
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() finished: EventEmitter<void> = new EventEmitter<void>();
+    @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;

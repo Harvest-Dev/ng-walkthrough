@@ -32,6 +32,13 @@ export const booleanValue = (value: string | boolean) => {
     return value === 'true' || value === true;
 };
 
+export class WalkthroughEvent {
+    constructor(
+        public component: WalkthroughComponent,
+        public focusElement: HTMLElement
+    ) { }
+}
+
 let nextUniqueId = 0;
 
 @Component({
@@ -45,8 +52,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _readyHasBeenEmited = false;
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
-    @Output() finished: EventEmitter<void> = new EventEmitter();
-    @Output() ready: EventEmitter<void> = new EventEmitter();
+    @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
+    @Output() ready: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Input() focusElementCSSClass: string = undefined;
 
     @Input() focusElementSelector: string;
@@ -62,7 +69,16 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() contentText: string;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
-    @Input() arrowColor: string;
+    @Input()
+    get arrowColor() { return this._arrowColor; }
+    set arrowColor(color: string) {
+        if (this._arrowColor !== color) {
+            this._arrowColor = color;
+            if (this._getInstance()) {
+                this._getInstance().arrowColor = this._arrowColor;
+            }
+        }
+    }
 
     @Input() animation: 'none' | 'linear' = 'none';
     @Input() animationDelays = 0;
@@ -78,8 +94,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     set justifyContent(value: 'left' | 'center' | 'right') {
         if (this._justifyContent !== value) {
             this._justifyContent = value;
-            if (WalkthroughComponent._walkthroughContainer && WalkthroughComponent._walkthroughContainer.instance) {
-                this._updateElementPositions(WalkthroughComponent._walkthroughContainer.instance);
+            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
+                this._updateElementPositions(this._getInstance());
             }
         } else {
             this._justifyContent = value;
@@ -152,6 +168,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasArrow = false;
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
+    private _arrowColor: string;
     private _justifyContent: 'left' | 'center' | 'right' = 'left';
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
@@ -186,7 +203,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private next(closedEvent: EventEmitter<boolean> = undefined, finishedEvent: EventEmitter<void> = undefined) {
+    private next(
+        closedEvent: EventEmitter<boolean> = undefined,
+        finishedEvent: EventEmitter<WalkthroughEvent> = undefined
+    ) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -230,10 +250,16 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this.closed.emit(finishLink);
                 if (!this.nextStep) {
                     // emit finished event
-                    this.finished.emit();
+                    this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
         }
+    }
+
+    private _getInstance(): WalkthroughContainerComponent {
+        return WalkthroughComponent._walkthroughContainer
+            ? WalkthroughComponent._walkthroughContainer.instance
+            : null;
     }
 
     private _appendComponentToBody<T>(component: Type<T>): ComponentRef<T> {
@@ -347,7 +373,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
      * get instance, hightlight the focused element et show the template
      */
     private _setFocus() {
-        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        const instance = this._getInstance();
         if (instance) {
             const scrollY = window.pageXOffset;
             this._initStylingTemplate(instance);
@@ -368,7 +394,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     private _setFocusContinue() {
-        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        const instance = this._getInstance();
         if (!this._show) {
             this._attachContentTemplate();
 
@@ -392,12 +418,12 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
 
-            setTimeout( () => {
-                WalkthroughComponent._walkthroughContainer.instance.setHeight();
+            setTimeout(() => {
+                this._getInstance().setHeight();
 
                 if (!this._readyHasBeenEmited) {
                     this._readyHasBeenEmited = true;
-                    this.ready.emit();
+                    this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                 }
 
                 this._walkthroughService.scrollToTopElement(
@@ -415,7 +441,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         if (this.contentTemplate) {
             this._attachWalkthroughContent(
                 this.contentTemplate,
-                WalkthroughComponent._walkthroughContainer.instance
+                this._getInstance()
             );
         }
     }
