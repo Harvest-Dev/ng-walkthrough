@@ -32,11 +32,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
-    private _readyHasBeenEmited = false;
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Output() ready: EventEmitter<WalkthroughEvent> = new EventEmitter();
+
     @Input() focusElementCSSClass: string = undefined;
 
     @Input() focusElementSelector: string;
@@ -158,6 +158,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
+    private _readyHasBeenEmited = false;
     private _show = false;
     private _hasHighlightAnimation = false;
     private _hasBackdrop = false;
@@ -173,6 +174,22 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
+
+    static walkthroughStop() {
+        WalkthroughComponent._walkthroughContainer.instance.stop();
+    }
+
+    static walkthroughHasShow(): boolean {
+        return WalkthroughComponent._walkthroughContainer.instance.show;
+    }
+
+    static walkthroughHasPause(): boolean {
+        return WalkthroughComponent._walkthroughContainer.instance.pause;
+    }
+
+    static walkthroughContinue() {
+        WalkthroughComponent._walkthroughContainer.instance.continue();
+    }
 
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
@@ -217,7 +234,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     open() {
-        this._elementLocations();
+        if (!this._getInstance().pause) {
+            this._elementLocations();
+        } else {
+            console.warn('Another walkthrough is in pause. Please close it before.');
+        }
     }
 
     loadPrevioustStep() {
@@ -494,6 +515,5 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         this.show();
     }
-
 
 }

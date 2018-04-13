@@ -103,6 +103,14 @@ WalkthroughText {
 }
 ```
 
+### Statics methods
+
+`WalkthroughComponent.walkthroughStop()` : hide and stop the current walkthrough (impossible to open a new walkthrough).
+Does not work if no walkthrough is showed.
+`WalkthroughComponent.walkthroughContinue()` : show and continue the current walkthrough. Does not work if no walkthrough is paused.
+`WalkthroughComponent.walkthroughHasShow()` : if the a walkthrough is currently showing.
+`WalkthroughComponent.walkthroughHasPause`()` : if the a walkthrough is currently in pause.
+
 ### Example
 
 Highlighting `#selectorId` element with example text in `ng-template`.
