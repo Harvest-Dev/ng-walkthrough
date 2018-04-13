@@ -7,8 +7,10 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
+
+import { booleanValue, WalkthroughEvent } from './walkthrough-tools';
 import { WalkthroughText } from './walkthrough-text';
-import { WalkthroughComponent, booleanValue, WalkthroughEvent } from './walkthrough.component';
+import { WalkthroughComponent } from './walkthrough.component';
 
 let nextUniqueId = 0;
 
@@ -29,10 +31,11 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
-    @Input() showArrow: boolean | boolean;
+    @Input() marginZone: string | null = null;
+    @Input() showArrow: string | boolean;
 
-    @Input() closeButton: boolean | boolean;
-    @Input() closeAnywhere: boolean | boolean;
+    @Input() closeButton: string | boolean;
+    @Input() closeAnywhere: string | boolean;
 
     @Input() focusBackdrop: string | boolean;
     @Input() focusGlow: string | boolean;
@@ -76,6 +79,9 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             }
             if (!walkthrough.arrowColor && this.arrowColor) {
                 walkthrough.arrowColor = this.arrowColor;
+            }
+            if (!walkthrough.marginZone && this.marginZone) {
+                walkthrough.marginZone = this.marginZone;
             }
             if (!walkthrough.showArrow && booleanValue(this.showArrow)) {
                 walkthrough.showArrow = this.showArrow;

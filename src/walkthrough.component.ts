@@ -20,24 +20,7 @@ import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
-
-export interface WalkthroughElementCoordinate {
-    top: number;
-    left: number;
-    height: number;
-    width: number;
-}
-
-export const booleanValue = (value: string | boolean) => {
-    return value === 'true' || value === true;
-};
-
-export class WalkthroughEvent {
-    constructor(
-        public component: WalkthroughComponent,
-        public focusElement: HTMLElement
-    ) { }
-}
+import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 let nextUniqueId = 0;
 
@@ -68,6 +51,21 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() contentTemplate: TemplateRef<any>;
     @Input() contentText: string;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
+
+    @Input()
+    get marginZone() { return this._marginZone; }
+    set marginZone(points: string | null) {
+        if (this._marginZone !== points) {
+            if (points === null) {
+                this._marginZone = null;
+            }
+
+            this._marginZonePx = WalkthroughMargin.parsePoints(points);
+            if (this._marginZonePx !== null) {
+                this._marginZone = points;
+            }
+        }
+    }
 
     @Input()
     get arrowColor() { return this._arrowColor; }
@@ -169,6 +167,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
     private _arrowColor: string;
+    private _marginZone: string;
+    private _marginZonePx = new WalkthroughMargin();
     private _justifyContent: 'left' | 'center' | 'right' = 'left';
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
@@ -303,13 +303,19 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
+            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element, this._marginZonePx);
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
-                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
+                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(
+                    this._focusElementEnd,
+                    this._marginZonePx
+                );
+
+                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top
+                    - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
-                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
+                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left
+                    - this._offsetCoordinates.left
                     + offsetEndCoordinatesEnd.width;
             }
         } else {
@@ -428,7 +434,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
                 this._walkthroughService.scrollToTopElement(
                     this._focusElement,
-                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
+                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block'),
+                    this._marginZonePx
                 );
             }, 50);
         }, 0);
@@ -477,6 +484,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasArrow = hasHighlightZone && this._hasArrow;
         instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
+        instance.marginZone = this._marginZone ? this._marginZone.replace(/(\d+)/g, '$1px') : null;
+        instance.marginZonePx = this._marginZonePx;
         instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts
@@ -485,5 +494,6 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
         this.show();
     }
+
 
 }

@@ -41,6 +41,7 @@ All attributes are optional.
 - `focusAction`: add an action `click` on the highlight zone.
 - `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
 - `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
+- `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`,  `12 15` for `12px 15px 12px 15px`,  `12` for `12px 12px 12px 12px`.
 
 **Content**:
 - `contentTemplate`: add a `ng-template` with your description.
@@ -75,6 +76,8 @@ All attributes are optional and not overriding the subcomponents attributes exce
 - `focusBackdrop`: `true` for show a dark backdrop around the focus element.
 - `focusGlow`: `true` for show a glow on the focus element.
 - `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes.
+- `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`,  `12 15` for `12px 15px 12px 15px`,  `12` for `12px 12px 12px 12px`.
+
 
 **Content**:
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`.

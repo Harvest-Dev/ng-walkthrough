@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WalkthroughElementCoordinate } from './walkthrough.component';
+import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 @Injectable()
 export class WalkthroughService {
@@ -22,14 +22,14 @@ export class WalkthroughService {
         }
     }).bind(this);
 
-    retrieveCoordinates(element: HTMLElement): WalkthroughElementCoordinate {
+    retrieveCoordinates(element: HTMLElement, margin?: WalkthroughMargin): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
 
         const coordinates = {
-            top: clientrect.top,
+            top: clientrect.top - (margin ? margin.top : 0),
             height: clientrect.height,
             width: clientrect.width,
-            left: clientrect.left
+            left: clientrect.left - (margin ? margin.left : 0)
         };
         coordinates.top += this.getTop();
         return coordinates;
@@ -85,10 +85,10 @@ export class WalkthroughService {
         }
     }
 
-    scrollToTopElement(element1: HTMLElement, element2: HTMLElement) {
+    scrollToTopElement(element1: HTMLElement, element2: HTMLElement, margin: WalkthroughMargin) {
         if (element1 && element2) {
-            const element1Position = this.retrieveCoordinates(element1);
-            const element2Position = this.retrieveCoordinates(element2);
+            const element1Position = this.retrieveCoordinates(element1, margin);
+            const element2Position = this.retrieveCoordinates(element2, margin);
             const minX = Math.min(element1Position.left, element2Position.left);
             const minY = Math.min(element1Position.top, element2Position.top);
             window.scrollTo(minX - 20, minY - 20);
