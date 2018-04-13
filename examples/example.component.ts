@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { WalkthroughText, WalkthroughContainerComponent } from '../src';
+import { WalkthroughText, WalkthroughContainerComponent, WalkthroughEvent } from '../src';
 
 @Component({
     selector: 'example-root',
@@ -13,10 +13,10 @@ export class ExampleComponent {
         previous: 'Précédent',
         next: 'Suivant',
         close: 'Fermer'
-    }
+    };
 
     testClickCount = 0;
-    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!']
+    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
 
     buttonAction() {
@@ -29,8 +29,17 @@ export class ExampleComponent {
         contenaire.next();
     }
 
-    walk3IsReady() {
-        window.alert('walk3 is ready');
+    walk3IsReady(event: WalkthroughEvent) {
+        console.log('walk3IsReady', event);
+        setTimeout(() => {
+            event.component.arrowColor = 'red';
+        }, 1000);
+        setTimeout(() => {
+            event.component.arrowColor = 'blue';
+        }, 2000);
+        setTimeout(() => {
+            event.component.arrowColor = 'yellow';
+        }, 3000);
     }
 
     walk1Closed(finishButton: boolean) {
