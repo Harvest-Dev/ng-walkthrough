@@ -6,6 +6,8 @@
                 (click)="walkTable.open()">Test Table</button>
         <button id="testFlow"
                 (click)="walkFlow.start()">Test Flow</button>
+        <button id="hiddenTimer"
+                (click)="hideWalkthrough()">{{hideCount > 0 ? 'Hide walkthrough in '+ hideCount+ 's' : 'Continue'}}</button>
         <button id="test3"
                 (click)="walk3.open()">Test 3</button>
     </div>

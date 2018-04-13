@@ -28,7 +28,8 @@ export function throwWalkthroughContentAlreadyAttachedError() {
 })
 export class WalkthroughContainerComponent extends BasePortalHost {
 
-    show: boolean;
+    show = false;
+    pause = false;
     parent: WalkthroughComponent;
 
     // highlight zone
@@ -324,6 +325,26 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         }
     }
 
+    /**
+     * stop the walkthrough : hide the container and change to pause at true
+     */
+    stop() {
+        if (this.parent && !this.pause) {
+            this.show = false;
+            this.pause = true;
+        }
+    }
+
+    /**
+     * stop the walkthrough : show the container and change to pause at false
+     */
+    continue() {
+        if (this.parent && this.pause) {
+            this.show = true;
+            this.pause = false;
+        }
+    }
+
     open() {
         // show
         this.show = true;
@@ -344,7 +365,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this._portalHost.dispose();
         // hide
         this.show = false;
-        this.parent.hide(finishLink, closeWalkthrough);
+        if (this.parent) {
+            this.parent.hide(finishLink, closeWalkthrough);
+        }
     }
 
 }

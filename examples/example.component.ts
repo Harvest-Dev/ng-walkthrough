@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { WalkthroughText, WalkthroughContainerComponent, WalkthroughEvent } from '../src';
+import { WalkthroughText, WalkthroughContainerComponent, WalkthroughEvent, WalkthroughComponent } from '../src';
 
 @Component({
     selector: 'example-root',
@@ -19,6 +19,10 @@ export class ExampleComponent {
     testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
 
+    hideCount = 3;
+    private _count = 3;
+    private _start = false;
+
     buttonAction() {
         if (this.testClickCount < this.testClickTexts.length - 1) {
             this.testClickCount++;
@@ -30,6 +34,7 @@ export class ExampleComponent {
     }
 
     walk3IsReady(event: WalkthroughEvent) {
+        // tslint:disable-next-line:no-console
         console.log('walk3IsReady', event);
         setTimeout(() => {
             event.component.arrowColor = 'red';
@@ -42,19 +47,46 @@ export class ExampleComponent {
         }, 3000);
     }
 
+    hideWalkthrough() {
+        if (this.hideCount === this._count && !this._start) {
+            this._start = true;
+            const int = setInterval(() => {
+                this.hideCount--;
+                if (this.hideCount === 0) {
+                    clearInterval(int);
+                    if (WalkthroughComponent.walkthroughHasShow() && !WalkthroughComponent.walkthroughHasPause()) {
+                        WalkthroughComponent.walkthroughStop();
+                    } else {
+                        console.warn('Not walkthrough showing');
+                        this._start = false;
+                        this.hideCount = this._count;
+                    }
+                }
+            }, 1000);
+        } else if (this.hideCount === 0) {
+            this._start = false;
+            this.hideCount = this._count;
+            WalkthroughComponent.walkthroughContinue();
+        }
+    }
+
     walk1Closed(finishButton: boolean) {
-        window.alert('walk1 has been closed with value : ' + (finishButton ? 'true' : 'false'));
+        // tslint:disable-next-line:no-console
+        console.log('walk1 has been closed with value : ' + (finishButton ? 'true' : 'false'));
     }
 
     walk1Finished() {
-        window.alert('walk1 has been finished');
+        // tslint:disable-next-line:no-console
+        console.log('walk1 has been finished');
     }
 
     flowClosed(finishButton: boolean) {
-        window.alert('flow has been closed with value : ' + (finishButton ? 'true' : 'false'));
+        // tslint:disable-next-line:no-console
+        console.log('flow has been closed with value : ' + (finishButton ? 'true' : 'false'));
     }
 
     flowFinished() {
-        window.alert('flow has been finished');
+        // tslint:disable-next-line:no-console
+        console.log('flow has been finished');
     }
 }
