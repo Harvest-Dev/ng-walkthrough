@@ -7,8 +7,10 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
+
+import { booleanValue, WalkthroughEvent } from './walkthrough-tools';
 import { WalkthroughText } from './walkthrough-text';
-import { WalkthroughComponent, booleanValue } from './walkthrough.component';
+import { WalkthroughComponent } from './walkthrough.component';
 
 let nextUniqueId = 0;
 
@@ -24,15 +26,16 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     get id() { return this._id; }
     set id(value: string) { this._id = value || this._uid; }
 
-    @Output() closed: EventEmitter<boolean> = new EventEmitter();
-    @Output() finished: EventEmitter<void> = new EventEmitter();
+    @Output() closed: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input() arrowColor: string;
-    @Input() showArrow: boolean | boolean;
+    @Input() marginZone: string | null = null;
+    @Input() showArrow: string | boolean;
 
-    @Input() closeButton: boolean | boolean;
-    @Input() closeAnywhere: boolean | boolean;
+    @Input() closeButton: string | boolean;
+    @Input() closeAnywhere: string | boolean;
 
     @Input() focusBackdrop: string | boolean;
     @Input() focusGlow: string | boolean;
@@ -43,8 +46,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
 
-    constructor(
-    ) { }
+    constructor() { }
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -77,6 +79,9 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             }
             if (!walkthrough.arrowColor && this.arrowColor) {
                 walkthrough.arrowColor = this.arrowColor;
+            }
+            if (!walkthrough.marginZone && this.marginZone) {
+                walkthrough.marginZone = this.marginZone;
             }
             if (!walkthrough.showArrow && booleanValue(this.showArrow)) {
                 walkthrough.showArrow = this.showArrow;

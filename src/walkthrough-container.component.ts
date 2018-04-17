@@ -1,4 +1,3 @@
-
 import {
     Component,
     TemplateRef,
@@ -11,13 +10,10 @@ import {
     HostListener,
     Renderer2
 } from '@angular/core';
-import {
-    BasePortalHost,
-    ComponentPortal,
-    PortalHostDirective,
-    TemplatePortal
-} from '@angular/cdk/portal';
-import { WalkthroughComponent, WalkthroughElementCoordinate } from './walkthrough.component';
+import { BasePortalHost, ComponentPortal, PortalHostDirective, TemplatePortal } from '@angular/cdk/portal';
+
+import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
+import { WalkthroughComponent } from './walkthrough.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
 
@@ -32,7 +28,8 @@ export function throwWalkthroughContentAlreadyAttachedError() {
 })
 export class WalkthroughContainerComponent extends BasePortalHost {
 
-    show: boolean;
+    show = false;
+    pause = false;
     parent: WalkthroughComponent;
 
     // highlight zone
@@ -64,6 +61,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     contentStyle: string;
     radius: string;
     arrowColor: string;
+    marginZone: string | null;
+    marginZonePx = new WalkthroughMargin();
 
     // content
 
@@ -160,7 +159,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hightlightZone(
         coordinate: WalkthroughElementCoordinate,
         scrollDiff: number,
-        animation: 'none' | 'linear',
+        animation: 'none' | 'linear',
         animationDelays: number,
         continueFunction: () => {}
     ) {
@@ -236,7 +235,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const elementStyle = window.getComputedStyle(element, null);
 
         const height = this._walkthroughService.retrieveCoordinates(element).height
-            + parseInt(elementStyle.marginTop, 10) + parseInt(elementStyle.marginBottom, 10);
+            + parseInt(elementStyle.marginTop, 10)
+            + parseInt(elementStyle.marginBottom, 10);
 
         // position of content left/center/right
 
@@ -291,7 +291,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         let centerTop: number;
         let centerLeft: number;
         let endLeft = coordinate.left;
-        let endTop = coordinate.top;
+        let endTop = coordinate.top + this.marginZonePx.top;
 
         if (this._contentPosition === 'bottom') {
             startTop -= contentBlockCoordinates.height;
@@ -325,6 +325,26 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         }
     }
 
+    /**
+     * stop the walkthrough : hide the container and change to pause at true
+     */
+    stop() {
+        if (this.parent && !this.pause) {
+            this.show = false;
+            this.pause = true;
+        }
+    }
+
+    /**
+     * stop the walkthrough : show the container and change to pause at false
+     */
+    continue() {
+        if (this.parent && this.pause) {
+            this.show = true;
+            this.pause = false;
+        }
+    }
+
     open() {
         // show
         this.show = true;
@@ -345,7 +365,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         this._portalHost.dispose();
         // hide
         this.show = false;
-        this.parent.hide(finishLink, closeWalkthrough);
+        if (this.parent) {
+            this.parent.hide(finishLink, closeWalkthrough);
+        }
     }
 
 }

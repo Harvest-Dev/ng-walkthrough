@@ -1,9 +1,11 @@
-/deep/ html,
-/deep/ body {
-    height: 100%;
-    width: 100%;
-    padding:0;
-    margin:0;
+/deep/ {
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 :host,
@@ -29,7 +31,7 @@ button {
 .bigger {
     height: 100%;
     width: 100%;
-    position:relative;
+    position: relative;
 }
 
 #test3 {
@@ -39,7 +41,7 @@ button {
     width: 50px;
     height: 50px;
     border-radius: 25% 50% 25% 40%;
-    z-index:1;
+    z-index: 1;
 }
 
 #test4 {
@@ -47,7 +49,7 @@ button {
     position: absolute;
 }
 
-.redbutton{
+.redbutton {
     background: #F00;
     color: #FFF;
 }

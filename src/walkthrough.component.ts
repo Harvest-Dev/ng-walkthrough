@@ -20,17 +20,7 @@ import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
-
-export interface WalkthroughElementCoordinate {
-    top: number;
-    left: number;
-    height: number;
-    width: number;
-}
-
-export const booleanValue = (value: string | boolean) => {
-    return value === 'true' || value === true;
-};
+import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 let nextUniqueId = 0;
 
@@ -42,11 +32,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
-    private _readyHasBeenEmited = false;
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
-    @Output() finished: EventEmitter<void> = new EventEmitter();
-    @Output() ready: EventEmitter<void> = new EventEmitter();
+    @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
+    @Output() ready: EventEmitter<WalkthroughEvent> = new EventEmitter();
+
     @Input() focusElementCSSClass: string = undefined;
 
     @Input() focusElementSelector: string;
@@ -62,7 +52,31 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     @Input() contentText: string;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
-    @Input() arrowColor: string;
+    @Input()
+    get marginZone() { return this._marginZone; }
+    set marginZone(points: string | null) {
+        if (this._marginZone !== points) {
+            if (points === null) {
+                this._marginZone = null;
+            }
+
+            this._marginZonePx = WalkthroughMargin.parsePoints(points);
+            if (this._marginZonePx !== null) {
+                this._marginZone = points;
+            }
+        }
+    }
+
+    @Input()
+    get arrowColor() { return this._arrowColor; }
+    set arrowColor(color: string) {
+        if (this._arrowColor !== color) {
+            this._arrowColor = color;
+            if (this._getInstance()) {
+                this._getInstance().arrowColor = this._arrowColor;
+            }
+        }
+    }
 
     @Input() animation: 'none' | 'linear' = 'none';
     @Input() animationDelays = 0;
@@ -78,8 +92,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     set justifyContent(value: 'left' | 'center' | 'right') {
         if (this._justifyContent !== value) {
             this._justifyContent = value;
-            if (WalkthroughComponent._walkthroughContainer && WalkthroughComponent._walkthroughContainer.instance) {
-                this._updateElementPositions(WalkthroughComponent._walkthroughContainer.instance);
+            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
+                this._updateElementPositions(this._getInstance());
             }
         } else {
             this._justifyContent = value;
@@ -144,6 +158,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
+    private _readyHasBeenEmited = false;
     private _show = false;
     private _hasHighlightAnimation = false;
     private _hasBackdrop = false;
@@ -152,10 +167,29 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _hasArrow = false;
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
+    private _arrowColor: string;
+    private _marginZone: string;
+    private _marginZonePx = new WalkthroughMargin();
     private _justifyContent: 'left' | 'center' | 'right' = 'left';
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
+
+    static walkthroughStop() {
+        WalkthroughComponent._walkthroughContainer.instance.stop();
+    }
+
+    static walkthroughHasShow(): boolean {
+        return WalkthroughComponent._walkthroughContainer.instance.show;
+    }
+
+    static walkthroughHasPause(): boolean {
+        return WalkthroughComponent._walkthroughContainer.instance.pause;
+    }
+
+    static walkthroughContinue() {
+        WalkthroughComponent._walkthroughContainer.instance.continue();
+    }
 
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
@@ -186,7 +220,10 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private next(closedEvent: EventEmitter<boolean> = undefined, finishedEvent: EventEmitter<void> = undefined) {
+    private next(
+        closedEvent: EventEmitter<boolean> = undefined,
+        finishedEvent: EventEmitter<WalkthroughEvent> = undefined
+    ) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -197,7 +234,11 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     open() {
-        this._elementLocations();
+        if (!this._getInstance().pause) {
+            this._elementLocations();
+        } else {
+            console.warn('Another walkthrough is in pause. Please close it before.');
+        }
     }
 
     loadPrevioustStep() {
@@ -230,10 +271,16 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this.closed.emit(finishLink);
                 if (!this.nextStep) {
                     // emit finished event
-                    this.finished.emit();
+                    this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
         }
+    }
+
+    private _getInstance(): WalkthroughContainerComponent {
+        return WalkthroughComponent._walkthroughContainer
+            ? WalkthroughComponent._walkthroughContainer.instance
+            : null;
     }
 
     private _appendComponentToBody<T>(component: Type<T>): ComponentRef<T> {
@@ -277,13 +324,19 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
+            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element, this._marginZonePx);
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
-                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top - this._offsetCoordinates.top
+                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(
+                    this._focusElementEnd,
+                    this._marginZonePx
+                );
+
+                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top
+                    - this._offsetCoordinates.top
                     + offsetEndCoordinatesEnd.height;
-                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left - this._offsetCoordinates.left
+                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left
+                    - this._offsetCoordinates.left
                     + offsetEndCoordinatesEnd.width;
             }
         } else {
@@ -347,7 +400,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
      * get instance, hightlight the focused element et show the template
      */
     private _setFocus() {
-        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        const instance = this._getInstance();
         if (instance) {
             const scrollY = window.pageXOffset;
             this._initStylingTemplate(instance);
@@ -368,7 +421,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     }
 
     private _setFocusContinue() {
-        const instance = WalkthroughComponent._walkthroughContainer.instance;
+        const instance = this._getInstance();
         if (!this._show) {
             this._attachContentTemplate();
 
@@ -392,17 +445,18 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
                 this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
             }
 
-            setTimeout( () => {
-                WalkthroughComponent._walkthroughContainer.instance.setHeight();
+            setTimeout(() => {
+                this._getInstance().setHeight();
 
                 if (!this._readyHasBeenEmited) {
                     this._readyHasBeenEmited = true;
-                    this.ready.emit();
+                    this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                 }
 
                 this._walkthroughService.scrollToTopElement(
                     this._focusElement,
-                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block')
+                    <HTMLElement>document.querySelector('walkthrough-container .wkt-content-block'),
+                    this._marginZonePx
                 );
             }, 50);
         }, 0);
@@ -415,7 +469,7 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         if (this.contentTemplate) {
             this._attachWalkthroughContent(
                 this.contentTemplate,
-                WalkthroughComponent._walkthroughContainer.instance
+                this._getInstance()
             );
         }
     }
@@ -451,6 +505,8 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
         instance.hasArrow = hasHighlightZone && this._hasArrow;
         instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
+        instance.marginZone = this._marginZone ? this._marginZone.replace(/(\d+)/g, '$1px') : null;
+        instance.marginZonePx = this._marginZonePx;
         instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts

@@ -7,13 +7,13 @@ This Angular model is inspired in part by [ng-walkthrough](https://github.com/so
 ## Installation
 
 ```
-npm install angular-walkthrough
+npm i angular-walkthrough --save
 ```
 
 ## Requirements
 
 - Angular 5.0.0 and more
-- Angular/cdk 2.0.0-beta.12
+- Angular/cdk 5.0.0 and more
 
 ## Demo
 
@@ -41,6 +41,7 @@ All attributes are optional.
 - `focusAction`: add an action `click` on the highlight zone.
 - `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
 - `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
+- `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`,  `12 15` for `12px 15px 12px 15px`,  `12` for `12px 12px 12px 12px`.
 
 **Content**:
 - `contentTemplate`: add a `ng-template` with your description.
@@ -75,6 +76,8 @@ All attributes are optional and not overriding the subcomponents attributes exce
 - `focusBackdrop`: `true` for show a dark backdrop around the focus element.
 - `focusGlow`: `true` for show a glow on the focus element.
 - `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes.
+- `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`,  `12 15` for `12px 15px 12px 15px`,  `12` for `12px 12px 12px 12px`.
+
 
 **Content**:
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`.
@@ -99,6 +102,14 @@ WalkthroughText {
     close    = 'Close';
 }
 ```
+
+### Statics methods
+
+- `WalkthroughComponent.walkthroughStop()` : hide and stop the current walkthrough (impossible to open a new walkthrough).
+Does not work if no walkthrough is showed.
+- `WalkthroughComponent.walkthroughContinue()` : show and continue the current walkthrough. Does not work if no walkthrough is paused.
+- `WalkthroughComponent.walkthroughHasShow()` : if the a walkthrough is currently showing.
+- `WalkthroughComponent.walkthroughHasPause()` : if the a walkthrough is currently in pause.
 
 ### Example
 
