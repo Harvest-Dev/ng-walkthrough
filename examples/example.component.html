@@ -55,6 +55,11 @@
         <button id="test4"
                 (click)="walk4.open()">Test 4</button>
     </div>
+
+    <div class="bigger">
+        <button id="valign"
+                (click)="valign.open()">verticalAlignContent and contentSpacing</button>
+    </div>
 </div>
 
 <ng-walkthrough #walk1
@@ -181,6 +186,29 @@
     </ng-template>
 </ng-walkthrough>
 
+<ng-walkthrough #valign
+                id="wt-valign"
+                focusElementSelector="#valign"
+                focusBackdrop="true"
+                [contentTemplate]="valignContent"
+                finishStep="true"
+                [texts]="frenchText"
+                showArrow="true"
+                verticalAlignContent="top"
+                alignContent="right"
+                contentSpacing="200">
+    <ng-template #valignContent>
+        <p>
+            verticalAlignContent. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum
+            eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse
+            potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus
+            varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus
+            urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit
+            augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+        </p>
+    </ng-template>
+</ng-walkthrough>
+
 <ng-walkthrough #walkTable
                 id="wt-testTable"
                 focusElementSelector="table th:nth-child(2), table td:nth-child(2)"
@@ -191,7 +219,7 @@
                 radius="5"
                 closeButton="true"
                 closeAnywhere="false"
-                [justifyContent]="testPosition">
+                [alignContent]="testPosition">
     <ng-template #testTable>
         <p>
             Look this.

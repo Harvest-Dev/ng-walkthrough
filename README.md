@@ -47,7 +47,9 @@ All attributes are optional.
 - `contentTemplate`: add a `ng-template` with your description.
 - `contentText`: show a simple description without formating in content.
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`. By defaut : `darken`.
-- `justifyContent`: align the `contentTemplate`. Possible values: `left`, `center` or `right`. By defaut : `left`.
+- `alignContent`: align the `contentTemplate` horizontally. Possible values: `left`, `center` or `right`. By defaut : `left`.
+- `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By defaut : `top`.
+- `contentSpacing`: The maximum space which separates the content to the focus zone, default is 0 (ignored)
 
 **Navigation**:
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.

@@ -86,17 +86,47 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     set id(value: string) { this._id = value || this._uid; }
 
     @Input()
-    get justifyContent() {
-        return this._justifyContent;
+    get alignContent() {
+        return this._alignContent;
     }
-    set justifyContent(value: 'left' | 'center' | 'right') {
-        if (this._justifyContent !== value) {
-            this._justifyContent = value;
+    set alignContent(value: 'left' | 'center' | 'right') {
+        if (this._alignContent !== value) {
+            this._alignContent = value;
             if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
                 this._updateElementPositions(this._getInstance());
             }
         } else {
-            this._justifyContent = value;
+            this._alignContent = value;
+        }
+    }
+
+    @Input()
+    get verticalAlignContent() {
+        return this._verticalAlignContent;
+    }
+    set verticalAlignContent(value: 'above' | 'top' | 'center' | 'bottom' | 'below') {
+        if (this._verticalAlignContent !== value) {
+            this._verticalAlignContent = value;
+            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
+                this._updateElementPositions(this._getInstance());
+            }
+        } else {
+            this._verticalAlignContent = value;
+        }
+    }
+
+    @Input()
+    get contentSpacing() {
+        return this._contentSpacing;
+    }
+    set contentSpacing(value: number) {
+        if (this._contentSpacing !== value) {
+            this._contentSpacing = value * 1;
+            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
+                this._updateElementPositions(this._getInstance());
+            }
+        } else {
+            this._contentSpacing = value * 1;
         }
     }
 
@@ -170,7 +200,9 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
-    private _justifyContent: 'left' | 'center' | 'right' = 'left';
+    private _alignContent: 'left' | 'center' | 'right' = 'left';
+    private _verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below' = 'top';
+    private _contentSpacing = 0;
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
@@ -435,7 +467,12 @@ export class WalkthroughComponent implements OnInit, AfterViewInit {
 
     private _updateElementPositions(instance: WalkthroughContainerComponent) {
         setTimeout(() => {
-            instance.contentBlockPosition(this._offsetCoordinates, this._justifyContent);
+            instance.contentBlockPosition(
+                this._offsetCoordinates,
+                this._alignContent,
+                this._verticalAlignContent,
+                this._contentSpacing
+            );
             if (this._focusElement !== null && this._hasArrow) {
                 instance.arrowPosition(this._offsetCoordinates);
             }
