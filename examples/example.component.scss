@@ -6,6 +6,10 @@
         padding: 0;
         margin: 0;
     }
+
+    .wkt-content-block .wkt-content {
+        width: 400px;
+    }
 }
 
 :host,
@@ -46,6 +50,13 @@ button {
 
 #test4 {
     bottom: 1em;
+    position: absolute;
+}
+
+#valign {
+    height: 600px;
+    left: 30%;
+    bottom: 500px;
     position: absolute;
 }
 
