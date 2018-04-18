@@ -246,7 +246,7 @@ export class WalkthroughComponent implements AfterViewInit {
     static walkthroughPrevious() {
         WalkthroughComponent._walkthroughContainer.instance.previous();
     }
-
+  
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
         private _applicationRef: ApplicationRef,
@@ -271,6 +271,19 @@ export class WalkthroughComponent implements AfterViewInit {
                     this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
             }, 0);
         }
+    }
+
+    private next(
+        closedEvent: EventEmitter<boolean> = undefined,
+        finishedEvent: EventEmitter<WalkthroughEvent> = undefined
+    ) {
+        if (closedEvent) {
+            this.closed = closedEvent;
+        }
+        if (finishedEvent) {
+            this.finished = finishedEvent;
+        }
+        this.open();
     }
 
     open() {
