@@ -54,7 +54,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasArrow = false;
     arrowPath: string;
     arrowMarkerDist = 7;
-    arrowMargin = 30;
 
     // styling
 
@@ -234,25 +233,34 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         coordinate: WalkthroughElementCoordinate,
         alignContent: 'left' | 'center' | 'right',
         verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
-        contentSpacing: number) {
+        contentSpacing: number,
+        verticalContentSpacing: number) {
         const element = this.contentBlock.nativeElement as HTMLElement;
-        const elementStyle = window.getComputedStyle(element, null);
 
-        const width = this._walkthroughService.retrieveCoordinates(element).width;
-        const height = this._walkthroughService.retrieveCoordinates(element).height
-            + parseInt(elementStyle.marginTop, 10)
-            + parseInt(elementStyle.marginBottom, 10);
+        const elementSize = this._walkthroughService.retrieveCoordinates(element);
+        const width = elementSize.width + elementSize.margin.left + elementSize.margin.right;
+        const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
 
         // check if we've got the space to respect the alignContent attribute
         const spaceLeft = coordinate.left;
-        if (alignContent === 'left' && spaceLeft < width) {
-            alignContent = 'right';
-        }
         const spaceRight = window.innerWidth - coordinate.left - coordinate.width;
-        if (alignContent === 'right' && spaceRight < width) {
-            alignContent = 'left';
+        let notEnoughSpace = false;
+        if (spaceLeft < width && spaceRight < width) {
+            notEnoughSpace = true;
         }
-        if (window.innerWidth < coordinate.width + width) {
+
+        // alignContent center + verticalAlignContent top | center | bottom not compatible
+        if ((verticalAlignContent === 'top' ||
+            verticalAlignContent === 'center' ||
+            verticalAlignContent === 'bottom') && !notEnoughSpace) {
+            if (alignContent === 'left' && spaceLeft < width ||
+                alignContent === 'right' && spaceRight < width) {
+                verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
+            }
+        }
+
+        // if not enough space on screen width, we center the content
+        if (notEnoughSpace) {
             alignContent = 'center';
         }
 
@@ -290,27 +298,23 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             // for arrow position
             const startLeft = this._walkthroughService.retrieveCoordinates(element).left + width / 2;
 
-            this._arrowPosition = startLeft > coordinate.left - this.arrowMargin
-                && startLeft < coordinate.left + coordinate.width + this.arrowMargin
+            this._arrowPosition = startLeft > (coordinate.left - verticalContentSpacing)
+                && startLeft < (coordinate.left + coordinate.width + verticalContentSpacing)
                 ? 'topBottom' : 'leftRight';
 
-            const margin = this.arrowMargin + 30;
-
             // if there is enough place on the left or on the right, we consider verticalAlignContent, otherwise, we ignore it
-            if (verticalAlignContent && (
-                coordinate.left > width + margin ||
-                window.innerWidth - coordinate.left - coordinate.width > width + margin)
-            ) {
+            if (verticalAlignContent && !notEnoughSpace) {
                 let space = 0;
                 this._contentPosition = verticalAlignContent;
                 switch (verticalAlignContent) {
                     case 'above':
                         space = coordinate.top;
-                        if (contentSpacing && space > contentSpacing) {
-                            element.style.top = (coordinate.top - height - contentSpacing) + 'px';
+                        if (space > verticalContentSpacing) {
+                            element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
                         } else {
                             element.style.top = '0';
                         }
+                        this._arrowPosition = 'topBottom';
                         break;
                     case 'top':
                         element.style.top = (coordinate.top) + 'px';
@@ -323,20 +327,21 @@ export class WalkthroughContainerComponent extends BasePortalHost {
                         break;
                     case 'below':
                         space = this._walkthroughService.getDocumentHeight() - coordinate.top + coordinate.height;
-                        if (contentSpacing && space > contentSpacing) {
-                            element.style.top = (coordinate.top + coordinate.height + contentSpacing) + 'px';
+                        if (space > verticalContentSpacing) {
+                            element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
                         } else {
                             element.style.top = (this._walkthroughService.getDocumentHeight() - height) + 'px';
                         }
+                        this._arrowPosition = 'topBottom';
                         break;
                 }
             } else {
                 // position of content top/bottom
-                if (coordinate.top < height) {
-                    element.style.top = (coordinate.top + coordinate.height + margin) + 'px';
+                if (verticalAlignContent === 'below' || coordinate.top < height) {
+                    element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
                     this._contentPosition = 'below';
                 } else {
-                    element.style.top = (coordinate.top - height - margin) + 'px';
+                    element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
                     this._contentPosition = 'above';
                 }
             }
@@ -346,7 +351,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     }
 
-    arrowPosition(coordinate: WalkthroughElementCoordinate) {
+    arrowPosition(coordinate: WalkthroughElementCoordinate, verticalContentSpacing: number) {
 
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
@@ -359,8 +364,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         let endTop = coordinate.top + this.marginZonePx.top;
 
         switch (this._contentPosition) {
-            case 'above':
-                break;
             case 'top':
             case 'center':
             case 'bottom':
@@ -400,7 +403,27 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
             endTop += coordinate.height / 2;
 
-            this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
+            centerLeft = (startLeft + endLeft) / 2;
+            centerTop = (startTop + endTop) / 2;
+
+            let directStartLeft: number = startLeft;
+            let directStartTop: number = startTop;
+            if (this._contentPosition === 'top' || this._contentPosition === 'bottom') {
+                directStartLeft = contentBlockCoordinates.left + (contentBlockCoordinates.width / 2);
+                if (this._contentPosition === 'top' && contentBlockCoordinates.height < coordinate.height) {
+                    directStartTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
+                } else {
+                    directStartTop = contentBlockCoordinates.top;
+                }
+            }
+            // we don't use direct curve if not enough space, using double curved
+            if (Math.abs(directStartTop - endTop) < verticalContentSpacing) {
+                this.arrowPath = `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} `
+                    + `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
+            } else {
+                this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
+            }
+
         }
     }
 

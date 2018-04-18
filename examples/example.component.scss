@@ -6,10 +6,6 @@
         padding: 0;
         margin: 0;
     }
-
-    .wkt-content-block .wkt-content {
-        width: 400px;
-    }
 }
 
 :host,
@@ -53,11 +49,31 @@ button {
     position: absolute;
 }
 
+.valign-container {
+    position: relative;
+    height: 2000px;
+}
+
 #valign {
-    height: 600px;
+    top: 500px;
     left: 30%;
-    bottom: 500px;
     position: absolute;
+}
+
+#valign-content button {
+    margin: 0;
+}
+
+#increase {
+    top: 500px;
+    position: absolute;
+    left: 0;
+}
+
+#decrease {
+    top: 530px;
+    position: absolute;
+    left: 0;
 }
 
 .redbutton {

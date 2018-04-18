@@ -36,6 +36,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
 
     @Input() closeButton: string | boolean;
     @Input() closeAnywhere: string | boolean;
+    @Input() finishButton: string | boolean;
 
     @Input() focusBackdrop: string | boolean;
     @Input() focusGlow: string | boolean;
@@ -92,6 +93,9 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             if (walkthrough.closeAnywhere && !booleanValue(this.closeAnywhere)) {
                 walkthrough.closeAnywhere = this.closeAnywhere;
             }
+            if (!walkthrough.finishButton && booleanValue(this.finishButton)) {
+                walkthrough.finishButton = this.finishButton;
+            }
             if (!walkthrough.focusBackdrop && booleanValue(this.focusBackdrop)) {
                 walkthrough.focusBackdrop = this.focusBackdrop;
             }
@@ -107,7 +111,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
 
         });
         // navigation auto (close on last step)
-        prevComp.finishStep = true;
+        prevComp.finishButton = true;
     }
 
     start() {

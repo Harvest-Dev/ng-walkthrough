@@ -18,6 +18,9 @@ export class ExampleComponent {
     testClickCount = 0;
     testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
+    alignContent = 'left';
+    verticalAlignContent = 'top';
+    valignHeight = '600px';
 
     hideCount = 3;
     private _count = 3;

@@ -56,9 +56,17 @@
                 (click)="walk4.open()">Test 4</button>
     </div>
 
-    <div class="bigger">
+    <div class="valign-container">
         <button id="valign"
-                (click)="valign.open()">verticalAlignContent and contentSpacing</button>
+                (click)="valign.open()"
+                [style.height]="valignHeight">alignContent
+            <br>and
+            <br>contentSpacing</button>
+
+        <button id="increase"
+                (click)="valignHeight = '1500px'">increase height</button>
+        <button id="decrease"
+                (click)="valignHeight = '600px'">decrease height</button>
     </div>
 </div>
 
@@ -92,7 +100,7 @@
                 [nextStep]="walk1c"
                 closeButton="true"
                 closeAnywhere="false"
-                finishStep="true">
+                finishButton="true">
     <ng-template #step1b>
         <p>
             1b. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
@@ -171,7 +179,7 @@
                 [contentTemplate]="step4"
                 contentStyle="none"
                 [previousStep]="walk3"
-                finishStep="true"
+                finishButton="true"
                 [texts]="frenchText"
                 showArrow="true">
     <ng-template #step4>
@@ -191,21 +199,34 @@
                 focusElementSelector="#valign"
                 focusBackdrop="true"
                 [contentTemplate]="valignContent"
-                finishStep="true"
+                finishButton="true"
                 [texts]="frenchText"
                 showArrow="true"
-                verticalAlignContent="top"
-                alignContent="right"
-                contentSpacing="200">
+                [verticalAlignContent]="verticalAlignContent"
+                [alignContent]="alignContent"
+                contentSpacing="200"
+                verticalContentSpacing="50"
+                closeAnywhere="false">
     <ng-template #valignContent>
-        <p>
-            verticalAlignContent. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum
-            eros vulputate sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse
-            potenti. Integer porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus
-            varius. Donec vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus
-            urna a leo consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit
-            augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
-        </p>
+        <div id="valign-content">
+            <p>alignContent {{ alignContent }}</p>
+            <p>verticalAlignContent {{ verticalAlignContent }}</p>
+            <p>contentSpacing 200</p>
+            <p>verticalContentSpacing 50</p>
+            alignContent value :
+            <div>
+                <button (click)="alignContent ='left'">left</button>
+                <button (click)="alignContent ='right'">right</button>
+            </div>
+            verticalAlignContent value :
+            <div>
+                <button (click)="verticalAlignContent ='above'">above</button>
+                <button (click)="verticalAlignContent ='top'">top</button>
+                <button (click)="verticalAlignContent ='center'">center</button>
+                <button (click)="verticalAlignContent ='bottom'">bottom</button>
+                <button (click)="verticalAlignContent ='below'">below</button>
+            </div>
+        </div>
     </ng-template>
 </ng-walkthrough>
 
