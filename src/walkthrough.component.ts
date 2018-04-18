@@ -92,9 +92,8 @@ export class WalkthroughComponent implements AfterViewInit {
     set alignContent(value: 'left' | 'center' | 'right') {
         if (this._alignContent !== value) {
             this._alignContent = value;
-            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
-                this._updateElementPositions(this._getInstance());
-            }
+            this._updateElementPositions(this._getInstance());
+
         } else {
             this._alignContent = value;
         }
@@ -107,9 +106,7 @@ export class WalkthroughComponent implements AfterViewInit {
     set verticalAlignContent(value: 'above' | 'top' | 'center' | 'bottom' | 'below') {
         if (this._verticalAlignContent !== value) {
             this._verticalAlignContent = value;
-            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
-                this._updateElementPositions(this._getInstance());
-            }
+            this._updateElementPositions(this._getInstance());
         } else {
             this._verticalAlignContent = value;
         }
@@ -122,9 +119,7 @@ export class WalkthroughComponent implements AfterViewInit {
     set contentSpacing(value: number) {
         if (this._contentSpacing !== value) {
             this._contentSpacing = value * 1;
-            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
-                this._updateElementPositions(this._getInstance());
-            }
+            this._updateElementPositions(this._getInstance());
         } else {
             this._contentSpacing = value * 1;
         }
@@ -137,9 +132,7 @@ export class WalkthroughComponent implements AfterViewInit {
     set verticalContentSpacing(value: number) {
         if (this._verticalContentSpacing !== value) {
             this._verticalContentSpacing = value * 1;
-            if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
-                this._updateElementPositions(this._getInstance());
-            }
+            this._updateElementPositions(this._getInstance());
         } else {
             this._verticalContentSpacing = value * 1;
         }
@@ -246,7 +239,7 @@ export class WalkthroughComponent implements AfterViewInit {
     static walkthroughPrevious() {
         WalkthroughComponent._walkthroughContainer.instance.previous();
     }
-  
+
     constructor(
         private _componentFactoryResolver: ComponentFactoryResolver,
         private _applicationRef: ApplicationRef,
@@ -509,37 +502,39 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     private _updateElementPositions(instance: WalkthroughContainerComponent) {
-        setTimeout(() => {
-            instance.contentBlockPosition(
-                this._offsetCoordinates,
-                this._alignContent,
-                this._verticalAlignContent,
-                this._contentSpacing,
-                this._verticalContentSpacing
-            );
-            if (this._focusElement !== null && this._hasArrow) {
-                instance.arrowPosition(
+        if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
+            setTimeout(() => {
+                instance.contentBlockPosition(
                     this._offsetCoordinates,
+                    this._alignContent,
+                    this._verticalAlignContent,
+                    this._contentSpacing,
                     this._verticalContentSpacing
                 );
-            }
-
-            // add CSS to focusElement
-            if (this.focusElementCSSClass) {
-                this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
-            }
-
-            setTimeout(() => {
-                this._getInstance().setHeight();
-
-                if (!this._readyHasBeenEmited) {
-                    this._readyHasBeenEmited = true;
-                    this.ready.emit(new WalkthroughEvent(this, this._focusElement));
+                if (this._focusElement !== null && this._hasArrow) {
+                    instance.arrowPosition(
+                        this._offsetCoordinates,
+                        this._verticalContentSpacing
+                    );
                 }
 
-                this._walkthroughService.scrollIntoViewIfOutOfView(instance.contentBlock.nativeElement);
-            }, 50);
-        }, 0);
+                // add CSS to focusElement
+                if (this.focusElementCSSClass) {
+                    this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
+                }
+
+                setTimeout(() => {
+                    this._getInstance().setHeight();
+
+                    if (!this._readyHasBeenEmited) {
+                        this._readyHasBeenEmited = true;
+                        this.ready.emit(new WalkthroughEvent(this, this._focusElement));
+                    }
+
+                    this._walkthroughService.scrollIntoViewIfOutOfView(instance.contentBlock.nativeElement);
+                }, 50);
+            }, 0);
+        }
     }
 
     /**
