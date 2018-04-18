@@ -242,20 +242,21 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
 
         // check if we've got the space to respect the alignContent attribute
-        const spaceLeft = coordinate.left;
-        const spaceRight = window.innerWidth - coordinate.left - coordinate.width;
         let notEnoughSpace = false;
-        if (spaceLeft < width && spaceRight < width) {
-            notEnoughSpace = true;
-        }
-
-        // alignContent center + verticalAlignContent top | center | bottom not compatible
-        if ((verticalAlignContent === 'top' ||
-            verticalAlignContent === 'center' ||
-            verticalAlignContent === 'bottom') && !notEnoughSpace) {
-            if (alignContent === 'left' && spaceLeft < width ||
-                alignContent === 'right' && spaceRight < width) {
-                verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
+        if (this.hasHighlightZone) {
+            const spaceLeft = coordinate.left;
+            const spaceRight = window.innerWidth - coordinate.left - coordinate.width;
+            if (spaceLeft < width && spaceRight < width) {
+                notEnoughSpace = true;
+            }
+            // alignContent center + verticalAlignContent top | center | bottom not compatible
+            if ((verticalAlignContent === 'top' ||
+                verticalAlignContent === 'center' ||
+                verticalAlignContent === 'bottom') && !notEnoughSpace) {
+                if (alignContent === 'left' && spaceLeft < width ||
+                    alignContent === 'right' && spaceRight < width) {
+                    verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
+                }
             }
         }
 
@@ -269,28 +270,32 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         element.style.left = '';
         if (alignContent === 'left') {
             element.style.left = '0';
-            const space = coordinate.left - width;
-            // handle contentSpacing
-            if (contentSpacing && space > contentSpacing) {
-                element.style.left = (
-                    coordinate.left -
-                    width -
-                    contentSpacing
-                ) + 'px';
+            if (this.hasHighlightZone) {
+                const space = coordinate.left - width;
+                // handle contentSpacing
+                if (contentSpacing && space > contentSpacing) {
+                    element.style.left = (
+                        coordinate.left -
+                        width -
+                        contentSpacing
+                    ) + 'px';
+                }
             }
         } else if (alignContent === 'center') {
             element.style.left = (window.innerWidth / 2 - width / 2) + 'px';
         } else if (alignContent === 'right') {
             element.style.right = '0';
-            const space = window.innerWidth - coordinate.left - coordinate.width - width;
-            // handle contentSpacing
-            if (contentSpacing && space > contentSpacing) {
-                element.style.right = '';
-                element.style.left = (
-                    coordinate.left +
-                    coordinate.width +
-                    contentSpacing
-                ) + 'px';
+            if (this.hasHighlightZone) {
+                const space = window.innerWidth - coordinate.left - coordinate.width - width;
+                // handle contentSpacing
+                if (contentSpacing && space > contentSpacing) {
+                    element.style.right = '';
+                    element.style.left = (
+                        coordinate.left +
+                        coordinate.width +
+                        contentSpacing
+                    ) + 'px';
+                }
             }
         }
 
