@@ -26,10 +26,6 @@ export class ExampleComponent {
     private _count = 3;
     private _start = false;
 
-    hideCount = 3;
-    private _count = 3;
-    private _start = false;
-
     buttonAction() {
         if (this.testClickCount < this.testClickTexts.length - 1) {
             this.testClickCount++;
