@@ -24,12 +24,19 @@ export class WalkthroughService {
 
     retrieveCoordinates(element: HTMLElement, margin?: WalkthroughMargin): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
+        const style = window.getComputedStyle(element);
 
         const coordinates = {
             top: clientrect.top - (margin ? margin.top : 0),
             height: clientrect.height,
             width: clientrect.width,
-            left: clientrect.left - (margin ? margin.left : 0)
+            left: clientrect.left - (margin ? margin.left : 0),
+            margin: {
+                top: parseFloat(style.marginTop),
+                right: parseFloat(style.marginRight),
+                bottom: parseFloat(style.marginBottom),
+                left: parseFloat(style.marginLeft),
+            }
         };
         coordinates.top += this.getTop();
         return coordinates;
@@ -52,7 +59,7 @@ export class WalkthroughService {
         return Math.max(this.getHeightOfPage() + this.getTop(), body_height);
     }
 
-    scrollIntoViewIfOutOfView(element: HTMLElement) {
+    scrollIntoViewIfOutOfView(element: HTMLElement, marginTop = 0) {
         const topOfPage = this.getTop();
         const heightOfPage = this.getHeightOfPage();
         let elementY = 0;
@@ -69,6 +76,7 @@ export class WalkthroughService {
             element.scrollIntoView(false);
         } else if (elementY < topOfPage) {
             element.scrollIntoView(true);
+            window.scrollBy(0, -30);
         } else {
             // test of overflow element
             let current = element;
@@ -78,6 +86,7 @@ export class WalkthroughService {
                     current.offsetLeft + current.offsetWidth - parent.scrollLeft > parent.offsetWidth) {
 
                     element.scrollIntoView();
+                    window.scrollBy(0, -30);
                     break;
                 }
                 current = parent;

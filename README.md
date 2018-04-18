@@ -29,7 +29,7 @@ All attributes are optional.
 
 **Output events** 
 - `ready` : fired when the walkthrough is completely ready
-- `closed` : fired when the walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishStep" button.
+- `closed` : fired when the walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
 - `finished` : fired when the walkthrough has been finished, which means : closed on last step.
 
 **Focus zone**:
@@ -47,14 +47,17 @@ All attributes are optional.
 - `contentTemplate`: add a `ng-template` with your description.
 - `contentText`: show a simple description without formating in content.
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`. By defaut : `darken`.
-- `justifyContent`: align the `contentTemplate`. Possible values: `left`, `center` or `right`. By defaut : `left`.
+- `alignContent`: align the `contentTemplate` horizontally. Possible values: `left`, `center` or `right`. By defaut : `left`.
+- `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By defaut : `top`.
+- `contentSpacing`: The max space which separates the content to the focus zone horizontally, default is 0 (opposite of the focusZone)
+- `verticalContentSpacing`: The max space which separates the content to the focus zone vertically, default is 50
 
 **Navigation**:
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.
 - `nextStep`: add a ling to go to the next `ng-walkthrough`.
 - `closeButton`: `true` for show the button. By defaut `false`.
 - `closeAnywhere`: `false` for click anywhere to close. By defaut `true`.
-- `finishStep`: `true` for show a link to exit. By defaut `false`.
+- `finishButton`: `true` for show a link to exit. By defaut `false`.
 - `texts`: change texts. It's a overlay of `WalkthroughText`.
 
 **Arrow**:
@@ -63,12 +66,12 @@ All attributes are optional.
 
 ### `ng-walkthrough-flow` attributes
 
-All attributes are optional and not overriding the subcomponents attributes except `previousStep`, `nextStep` and `finishStep` that will be ignored.
+All attributes are optional and not overriding the subcomponents attributes except `previousStep`, `nextStep` that will be ignored.
 
 - `id`: HTML id.
 
 **Output events** 
-- `closed` : fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishStep" button.
+- `closed` : fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
 - `finished` : fired when the last walkthrough has been closed.
 
 **Focus zone**:
@@ -86,6 +89,7 @@ All attributes are optional and not overriding the subcomponents attributes exce
 - `closeButton`: `true` for show the button.
 - `closeAnywhere`: `false` for for click anywhere to close.
 - `texts`: change texts. It's a overlay of `WalkthroughText`.
+- `finishButton`: `true` for show a link to exit. By defaut `false`. Always `true` on the last step.
 
 **Arrow**:
 - `showArrow`: `true` for show the arrow. By defaut `false`.

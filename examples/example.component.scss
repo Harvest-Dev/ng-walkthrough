@@ -49,6 +49,33 @@ button {
     position: absolute;
 }
 
+.valign-container {
+    position: relative;
+    height: 2000px;
+}
+
+#valign {
+    top: 500px;
+    left: 30%;
+    position: absolute;
+}
+
+#valign-content button {
+    margin: 0;
+}
+
+#increase {
+    top: 500px;
+    position: absolute;
+    left: 0;
+}
+
+#decrease {
+    top: 530px;
+    position: absolute;
+    left: 0;
+}
+
 .redbutton {
     background: #F00;
     color: #FFF;

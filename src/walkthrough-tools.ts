@@ -5,6 +5,13 @@ export interface WalkthroughElementCoordinate {
     left: number;
     height: number;
     width: number;
+    margin: Margin;
+}
+export interface Margin {
+    top: number;
+    left: number;
+    right: number;
+    bottom: number;
 }
 
 export const booleanValue = (value: string | boolean) => {

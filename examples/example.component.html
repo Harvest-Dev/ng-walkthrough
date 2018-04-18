@@ -55,6 +55,19 @@
         <button id="test4"
                 (click)="walk4.open()">Test 4</button>
     </div>
+
+    <div class="valign-container">
+        <button id="valign"
+                (click)="valign.open()"
+                [style.height]="valignHeight">alignContent
+            <br>and
+            <br>contentSpacing</button>
+
+        <button id="increase"
+                (click)="valignHeight = '1500px'">increase height</button>
+        <button id="decrease"
+                (click)="valignHeight = '600px'">decrease height</button>
+    </div>
 </div>
 
 <ng-walkthrough #walk1
@@ -87,7 +100,7 @@
                 [nextStep]="walk1c"
                 closeButton="true"
                 closeAnywhere="false"
-                finishStep="true">
+                finishButton="true">
     <ng-template #step1b>
         <p>
             1b. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
@@ -166,7 +179,7 @@
                 [contentTemplate]="step4"
                 contentStyle="none"
                 [previousStep]="walk3"
-                finishStep="true"
+                finishButton="true"
                 [texts]="frenchText"
                 showArrow="true">
     <ng-template #step4>
@@ -181,6 +194,42 @@
     </ng-template>
 </ng-walkthrough>
 
+<ng-walkthrough #valign
+                id="wt-valign"
+                focusElementSelector="#valign"
+                focusBackdrop="true"
+                [contentTemplate]="valignContent"
+                finishButton="true"
+                [texts]="frenchText"
+                showArrow="true"
+                [verticalAlignContent]="verticalAlignContent"
+                [alignContent]="alignContent"
+                contentSpacing="200"
+                verticalContentSpacing="50"
+                closeAnywhere="false">
+    <ng-template #valignContent>
+        <div id="valign-content">
+            <p>alignContent {{ alignContent }}</p>
+            <p>verticalAlignContent {{ verticalAlignContent }}</p>
+            <p>contentSpacing 200</p>
+            <p>verticalContentSpacing 50</p>
+            alignContent value :
+            <div>
+                <button (click)="alignContent ='left'">left</button>
+                <button (click)="alignContent ='right'">right</button>
+            </div>
+            verticalAlignContent value :
+            <div>
+                <button (click)="verticalAlignContent ='above'">above</button>
+                <button (click)="verticalAlignContent ='top'">top</button>
+                <button (click)="verticalAlignContent ='center'">center</button>
+                <button (click)="verticalAlignContent ='bottom'">bottom</button>
+                <button (click)="verticalAlignContent ='below'">below</button>
+            </div>
+        </div>
+    </ng-template>
+</ng-walkthrough>
+
 <ng-walkthrough #walkTable
                 id="wt-testTable"
                 focusElementSelector="table th:nth-child(2), table td:nth-child(2)"
@@ -191,7 +240,7 @@
                 radius="5"
                 closeButton="true"
                 closeAnywhere="false"
-                [justifyContent]="testPosition">
+                [alignContent]="testPosition">
     <ng-template #testTable>
         <p>
             Look this.

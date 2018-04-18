@@ -54,7 +54,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasArrow = false;
     arrowPath: string;
     arrowMarkerDist = 7;
-    arrowMargin = 30;
 
     // styling
 
@@ -101,7 +100,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         return !this.hasHighlightZone && this.hasBackdrop;
     }
 
-    private _contentPosition: 'top' | 'bottom';
+    private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below';
     private _arrowPosition: 'topBottom' | 'leftRight';
 
     constructor(
@@ -230,77 +229,160 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         }
     }
 
-    contentBlockPosition(coordinate: WalkthroughElementCoordinate, position: 'left' | 'center' | 'right') {
+    contentBlockPosition(
+        coordinate: WalkthroughElementCoordinate,
+        alignContent: 'left' | 'center' | 'right',
+        verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
+        contentSpacing: number,
+        verticalContentSpacing: number) {
         const element = this.contentBlock.nativeElement as HTMLElement;
-        const elementStyle = window.getComputedStyle(element, null);
 
-        const height = this._walkthroughService.retrieveCoordinates(element).height
-            + parseInt(elementStyle.marginTop, 10)
-            + parseInt(elementStyle.marginBottom, 10);
+        const elementSize = this._walkthroughService.retrieveCoordinates(element);
+        const width = elementSize.width + elementSize.margin.left + elementSize.margin.right;
+        const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
+
+        // check if we've got the space to respect the alignContent attribute
+        const spaceLeft = coordinate.left;
+        const spaceRight = window.innerWidth - coordinate.left - coordinate.width;
+        let notEnoughSpace = false;
+        if (spaceLeft < width && spaceRight < width) {
+            notEnoughSpace = true;
+        }
+
+        // alignContent center + verticalAlignContent top | center | bottom not compatible
+        if ((verticalAlignContent === 'top' ||
+            verticalAlignContent === 'center' ||
+            verticalAlignContent === 'bottom') && !notEnoughSpace) {
+            if (alignContent === 'left' && spaceLeft < width ||
+                alignContent === 'right' && spaceRight < width) {
+                verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
+            }
+        }
+
+        // if not enough space on screen width, we center the content
+        if (notEnoughSpace) {
+            alignContent = 'center';
+        }
 
         // position of content left/center/right
-
         element.style.right = '';
         element.style.left = '';
-
-        if (position === 'left') {
+        if (alignContent === 'left') {
             element.style.left = '0';
-        } else if (position === 'center') {
-            element.style.left = (window.innerWidth / 2 - this._walkthroughService.retrieveCoordinates(element).width / 2) + 'px';
-        } else if (position === 'right') {
+            const space = coordinate.left - width;
+            // handle contentSpacing
+            if (contentSpacing && space > contentSpacing) {
+                element.style.left = (
+                    coordinate.left -
+                    width -
+                    contentSpacing
+                ) + 'px';
+            }
+        } else if (alignContent === 'center') {
+            element.style.left = (window.innerWidth / 2 - width / 2) + 'px';
+        } else if (alignContent === 'right') {
             element.style.right = '0';
+            const space = window.innerWidth - coordinate.left - coordinate.width - width;
+            // handle contentSpacing
+            if (contentSpacing && space > contentSpacing) {
+                element.style.right = '';
+                element.style.left = (
+                    coordinate.left +
+                    coordinate.width +
+                    contentSpacing
+                ) + 'px';
+            }
         }
 
         if (this.hasHighlightZone) {
+            // for arrow position
+            const startLeft = this._walkthroughService.retrieveCoordinates(element).left + width / 2;
 
-            // for arrow possition
-
-            const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(element);
-            const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
-
-
-            this._arrowPosition = startLeft > coordinate.left - this.arrowMargin
-                && startLeft < coordinate.left + coordinate.width + this.arrowMargin
+            this._arrowPosition = startLeft > (coordinate.left - verticalContentSpacing)
+                && startLeft < (coordinate.left + coordinate.width + verticalContentSpacing)
                 ? 'topBottom' : 'leftRight';
 
-            const margin = this._arrowPosition === 'topBottom' ? this.arrowMargin : 0;
-
-            // position of content top/bottom
-
-            if (coordinate.top < height) {
-                element.style.top = (coordinate.top + coordinate.height + margin) + 'px';
-                this._contentPosition = 'bottom';
+            // if there is enough place on the left or on the right, we consider verticalAlignContent, otherwise, we ignore it
+            if (verticalAlignContent && !notEnoughSpace) {
+                let space = 0;
+                this._contentPosition = verticalAlignContent;
+                switch (verticalAlignContent) {
+                    case 'above':
+                        space = coordinate.top;
+                        if (space > verticalContentSpacing) {
+                            element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
+                        } else {
+                            element.style.top = '0';
+                        }
+                        this._arrowPosition = 'topBottom';
+                        break;
+                    case 'top':
+                        element.style.top = (coordinate.top) + 'px';
+                        break;
+                    case 'center':
+                        element.style.top = (coordinate.top + (coordinate.height / 2) - (height / 2)) + 'px';
+                        break;
+                    case 'bottom':
+                        element.style.top = (coordinate.top + coordinate.height - height) + 'px';
+                        break;
+                    case 'below':
+                        space = this._walkthroughService.getDocumentHeight() - coordinate.top + coordinate.height;
+                        if (space > verticalContentSpacing) {
+                            element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
+                        } else {
+                            element.style.top = (this._walkthroughService.getDocumentHeight() - height) + 'px';
+                        }
+                        this._arrowPosition = 'topBottom';
+                        break;
+                }
             } else {
-                element.style.top = (coordinate.top - height - margin) + 'px';
-                this._contentPosition = 'top';
+                // position of content top/bottom
+                if (verticalAlignContent === 'below' || coordinate.top < height) {
+                    element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
+                    this._contentPosition = 'below';
+                } else {
+                    element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
+                    this._contentPosition = 'above';
+                }
             }
-
         } else {
             element.style.top = (this._walkthroughService.getHeightOfPage() / 2 - height / 2) + 'px';
         }
 
     }
 
-    arrowPosition(coordinate: WalkthroughElementCoordinate) {
+    arrowPosition(coordinate: WalkthroughElementCoordinate, verticalContentSpacing: number) {
 
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
-        const startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
+        let startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
         let startTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
         let centerTop: number;
         let centerLeft: number;
         let endLeft = coordinate.left;
         let endTop = coordinate.top + this.marginZonePx.top;
 
-        if (this._contentPosition === 'bottom') {
-            startTop -= contentBlockCoordinates.height;
+        switch (this._contentPosition) {
+            case 'top':
+            case 'center':
+            case 'bottom':
+                if (contentBlockCoordinates.left > coordinate.left) {
+                    startLeft = contentBlockCoordinates.left;
+                } else {
+                    startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width;
+                }
+                startTop -= contentBlockCoordinates.height / 2;
+                break;
+            case 'below':
+                startTop -= contentBlockCoordinates.height;
+                break;
         }
 
         if (this._arrowPosition === 'topBottom') {
             endLeft += coordinate.width / 2;
 
-            if (this._contentPosition === 'bottom') {
+            if (this._contentPosition === 'below') {
                 endTop += coordinate.height + 6;
             } else {
                 endTop -= 6;
@@ -321,7 +403,47 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
             endTop += coordinate.height / 2;
 
-            this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${endTop} ${endLeft},${endTop}`;
+            centerLeft = (startLeft + endLeft) / 2;
+            centerTop = (startTop + endTop) / 2;
+
+            let directStartLeft: number = startLeft;
+            let directStartTop: number = startTop;
+            if (this._contentPosition === 'top' || this._contentPosition === 'bottom') {
+                directStartLeft = contentBlockCoordinates.left + (contentBlockCoordinates.width / 2);
+                if (this._contentPosition === 'top' && contentBlockCoordinates.height < coordinate.height) {
+                    directStartTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
+                } else {
+                    directStartTop = contentBlockCoordinates.top;
+                }
+            }
+            // we don't use direct curve if not enough space, using double curved
+            if (Math.abs(directStartTop - endTop) < verticalContentSpacing) {
+                this.arrowPath = `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} `
+                    + `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
+            } else {
+                this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
+            }
+
+        }
+    }
+
+    /**
+     * stop the walkthrough : hide the container and change to pause at true
+     */
+    stop() {
+        if (this.parent && !this.pause) {
+            this.show = false;
+            this.pause = true;
+        }
+    }
+
+    /**
+     * stop the walkthrough : show the container and change to pause at false
+     */
+    continue() {
+        if (this.parent && this.pause) {
+            this.show = true;
+            this.pause = false;
         }
     }
 
