@@ -194,6 +194,27 @@ export class WalkthroughComponent implements AfterViewInit {
         this._hasGlow = booleanValue(value);
     }
 
+    @Input()
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value: boolean) {
+        this._disabled = value;
+
+        const instance = this._getInstance();
+        if (instance) {
+            setTimeout(() => {
+                instance.hasPrevious = this._hasPreviousStep(instance);
+                instance.hasNext = this._hasNextStep(instance);
+                if (!instance.hasNext) {
+                    instance.hasFinish = true;
+                } else {
+                    instance.hasFinish = <boolean>instance.parent.finishButton;
+                }
+            }, 50);
+        }
+    }
+
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
     private _readyHasBeenEmited = false;
@@ -205,6 +226,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _hasArrow = false;
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
+    private _disabled = false;
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
@@ -572,11 +594,11 @@ export class WalkthroughComponent implements AfterViewInit {
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
         const hasHighlightZone = this._focusElement !== null;
 
-        instance.hasPrevious = !!this.previousStep;
-        instance.hasNext = !!this.nextStep;
+        instance.hasPrevious = this._hasPreviousStep(instance);
+        instance.hasNext = this._hasNextStep(instance);
         instance.hasCloseButton = this._hasCloseButton;
         instance.hasCloseAnywhere = this._hasCloseAnywhere;
-        instance.hasFinish = this._hasFinish;
+        instance.hasFinish = this._hasFinish || !instance.hasNext;
         instance.hasArrow = hasHighlightZone && this._hasArrow;
         instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
@@ -591,4 +613,33 @@ export class WalkthroughComponent implements AfterViewInit {
         this._show();
     }
 
+    /**
+     * check if there is a previous step enabled
+     */
+    private _hasPreviousStep(instance: WalkthroughContainerComponent): boolean {
+        let current = instance.parent.previousStep;
+        while (current) {
+            if (!current.disabled) {
+                return true;
+            }
+            current = current.previousStep;
+        }
+
+        return false;
+    }
+
+    /**
+     * check if there is a next step enabled
+     */
+    private _hasNextStep(instance: WalkthroughContainerComponent): boolean {
+        let current = instance.parent.nextStep;
+        while (current) {
+            if (!current.disabled) {
+                return true;
+            }
+            current = current.nextStep;
+        }
+
+        return false;
+    }
 }

@@ -54,6 +54,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasArrow = false;
     arrowPath: string;
     arrowMarkerDist = 7;
+    minimalMargin = 30;
 
     // styling
 
@@ -303,8 +304,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             // for arrow position
             const startLeft = this._walkthroughService.retrieveCoordinates(element).left + width / 2;
 
-            this._arrowPosition = startLeft > (coordinate.left - verticalContentSpacing)
-                && startLeft < (coordinate.left + coordinate.width + verticalContentSpacing)
+            this._arrowPosition = startLeft > (coordinate.left - this.minimalMargin)
+                && startLeft < (coordinate.left + coordinate.width + this.minimalMargin)
                 ? 'topBottom' : 'leftRight';
 
             // if there is enough place on the left or on the right, we consider verticalAlignContent, otherwise, we ignore it
@@ -343,10 +344,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             } else {
                 // position of content top/bottom
                 if (verticalAlignContent === 'below' || coordinate.top < height) {
-                    element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
+                    element.style.top = (coordinate.top + coordinate.height + this.minimalMargin) + 'px';
                     this._contentPosition = 'below';
                 } else {
-                    element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
+                    element.style.top = (coordinate.top - height - this.minimalMargin) + 'px';
                     this._contentPosition = 'above';
                 }
             }
@@ -420,15 +421,20 @@ export class WalkthroughContainerComponent extends BasePortalHost {
                 } else {
                     directStartTop = contentBlockCoordinates.top;
                 }
-            }
-            // we don't use direct curve if not enough space, using double curved
-            if (Math.abs(directStartTop - endTop) < verticalContentSpacing) {
-                this.arrowPath = `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} `
-                    + `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
+
+                // we use direct curve only if the arrow don't cross the content, otherwise, we use double curved
+                if (
+                    (this._contentPosition === 'top' && directStartTop < (endTop - this.minimalMargin)) ||
+                    (this._contentPosition === 'bottom' && directStartTop > (endTop + this.minimalMargin))
+                ) {
+                    this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
+                } else {
+                    this.arrowPath = `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} `
+                        + `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
+                }
             } else {
                 this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
             }
-
         }
     }
 
@@ -459,12 +465,44 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     previous() {
         this.close(false, false);
-        this.parent.loadPrevioustStep();
+
+        // we check if previous walkthrough is not disabled
+        let current = this.parent;
+        while (current) {
+            if (current.previousStep && !current.previousStep.disabled) {
+                current.loadPrevioustStep();
+                return;
+            } else {
+                if (!current.previousStep) {
+                    break;
+                }
+                current = current.previousStep;
+            }
+        }
+        // no more previous walkthrough enabled, we quit the walkthrough
+        this.parent = current;
+        this.close(true, true);
     }
 
     next() {
         this.close(false, false);
-        this.parent.loadNextStep();
+
+        // we check if next walkthrough is not disabled
+        let current = this.parent;
+        while (current) {
+            if (current.nextStep && !current.nextStep.disabled) {
+                current.loadNextStep();
+                return;
+            } else {
+                if (!current.nextStep) {
+                    break;
+                }
+                current = current.nextStep;
+            }
+        }
+        // no more next walkthrough enabled, we quit the walkthrough
+        this.parent = current;
+        this.close(true, true);
     }
 
     close(finishLink = false, closeWalkthrough = true) {

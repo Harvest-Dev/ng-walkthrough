@@ -21,6 +21,13 @@ export class ExampleComponent {
     alignContent = 'left';
     verticalAlignContent = 'top';
     valignHeight = '600px';
+    contentSpacing = '200';
+    verticalContentSpacing = '50';
+
+    // disabled flags
+    step1flowDisabled = false;
+    step2flowDisabled = false;
+    step3flowDisabled = false;
 
     hideCount = 3;
     private _count = 3;
