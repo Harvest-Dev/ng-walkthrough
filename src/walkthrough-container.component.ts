@@ -415,11 +415,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             let directStartTop: number = startTop;
             if (this._contentPosition === 'top' || this._contentPosition === 'bottom') {
                 directStartLeft = contentBlockCoordinates.left + (contentBlockCoordinates.width / 2);
-                if (this._contentPosition === 'top' && contentBlockCoordinates.height < coordinate.height) {
-                    directStartTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
-                } else {
-                    directStartTop = contentBlockCoordinates.top;
-                }
+                directStartTop = (this._contentPosition === 'top') ?
+                    (contentBlockCoordinates.top + contentBlockCoordinates.height) :
+                    (contentBlockCoordinates.top);
 
                 // we use direct curve only if the arrow don't cross the content, otherwise, we use double curved
                 if (
