@@ -21,8 +21,8 @@ export class ExampleComponent {
     alignContent = 'left';
     verticalAlignContent = 'top';
     valignHeight = '600px';
-    contentSpacing = '200';
-    verticalContentSpacing = '50';
+    contentSpacing = 200;
+    verticalContentSpacing = 50;
 
     // disabled flags
     step1flowDisabled = false;

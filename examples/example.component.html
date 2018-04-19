@@ -213,14 +213,16 @@
             <p>contentSpacing
                 <input #spacingValue
                        [value]="contentSpacing"
-                       (blur)="contentSpacing = spacingValue.value"
-                       type="text" />
+                       (change)="contentSpacing = spacingValue.value"
+                       type="number"
+                       min="0" />
             </p>
             <p>verticalContentSpacing
                 <input #verticalSpacingValue
                        [value]="verticalContentSpacing"
-                       (blur)="verticalContentSpacing = verticalSpacingValue.value"
-                       type="text" />
+                       (change)="verticalContentSpacing = verticalSpacingValue.value"
+                       type="number"
+                       min="0" />
             </p>
             alignContent value :
             <div>
