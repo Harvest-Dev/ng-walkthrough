@@ -203,15 +203,25 @@
                 showArrow="true"
                 [verticalAlignContent]="verticalAlignContent"
                 [alignContent]="alignContent"
-                contentSpacing="200"
-                verticalContentSpacing="50"
+                [contentSpacing]="contentSpacing"
+                [verticalContentSpacing]="verticalContentSpacing"
                 closeAnywhere="false">
     <ng-template #valignContent>
         <div id="valign-content">
             <p>alignContent {{ alignContent }}</p>
             <p>verticalAlignContent {{ verticalAlignContent }}</p>
-            <p>contentSpacing 200</p>
-            <p>verticalContentSpacing 50</p>
+            <p>contentSpacing
+                <input #spacingValue
+                       [value]="contentSpacing"
+                       (blur)="contentSpacing = spacingValue.value"
+                       type="text" />
+            </p>
+            <p>verticalContentSpacing
+                <input #verticalSpacingValue
+                       [value]="verticalContentSpacing"
+                       (blur)="verticalContentSpacing = verticalSpacingValue.value"
+                       type="text" />
+            </p>
             alignContent value :
             <div>
                 <button (click)="alignContent ='left'">left</button>
