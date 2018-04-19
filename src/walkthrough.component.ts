@@ -32,6 +32,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
+    public static minimalMargin = 30;
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
@@ -117,6 +118,7 @@ export class WalkthroughComponent implements AfterViewInit {
         return this._contentSpacing;
     }
     set contentSpacing(value: number) {
+        value = Math.max(WalkthroughComponent.minimalMargin, value);
         if (this._contentSpacing !== value) {
             this._contentSpacing = value * 1;
             this._updateElementPositions(this._getInstance());
@@ -130,6 +132,7 @@ export class WalkthroughComponent implements AfterViewInit {
         return this._verticalContentSpacing;
     }
     set verticalContentSpacing(value: number) {
+        value = Math.max(WalkthroughComponent.minimalMargin, value);
         if (this._verticalContentSpacing !== value) {
             this._verticalContentSpacing = value * 1;
             this._updateElementPositions(this._getInstance());

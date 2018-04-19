@@ -54,7 +54,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     hasArrow = false;
     arrowPath: string;
     arrowMarkerDist = 7;
-    minimalMargin = 30;
 
     // styling
 
@@ -304,8 +303,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             // for arrow position
             const startLeft = this._walkthroughService.retrieveCoordinates(element).left + width / 2;
 
-            this._arrowPosition = startLeft > (coordinate.left - this.minimalMargin)
-                && startLeft < (coordinate.left + coordinate.width + this.minimalMargin)
+            this._arrowPosition = startLeft > (coordinate.left - WalkthroughComponent.minimalMargin)
+                && startLeft < (coordinate.left + coordinate.width + WalkthroughComponent.minimalMargin)
                 ? 'topBottom' : 'leftRight';
 
             // if there is enough place on the left or on the right, we consider verticalAlignContent, otherwise, we ignore it
@@ -344,10 +343,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             } else {
                 // position of content top/bottom
                 if (verticalAlignContent === 'below' || coordinate.top < height) {
-                    element.style.top = (coordinate.top + coordinate.height + this.minimalMargin) + 'px';
+                    element.style.top = (coordinate.top + coordinate.height + WalkthroughComponent.minimalMargin) + 'px';
                     this._contentPosition = 'below';
                 } else {
-                    element.style.top = (coordinate.top - height - this.minimalMargin) + 'px';
+                    element.style.top = (coordinate.top - height - WalkthroughComponent.minimalMargin) + 'px';
                     this._contentPosition = 'above';
                 }
             }
@@ -416,16 +415,14 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             let directStartTop: number = startTop;
             if (this._contentPosition === 'top' || this._contentPosition === 'bottom') {
                 directStartLeft = contentBlockCoordinates.left + (contentBlockCoordinates.width / 2);
-                if (this._contentPosition === 'top' && contentBlockCoordinates.height < coordinate.height) {
-                    directStartTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
-                } else {
-                    directStartTop = contentBlockCoordinates.top;
-                }
+                directStartTop = (this._contentPosition === 'top') ?
+                    (contentBlockCoordinates.top + contentBlockCoordinates.height) :
+                    (contentBlockCoordinates.top);
 
                 // we use direct curve only if the arrow don't cross the content, otherwise, we use double curved
                 if (
-                    (this._contentPosition === 'top' && directStartTop < (endTop - this.minimalMargin)) ||
-                    (this._contentPosition === 'bottom' && directStartTop > (endTop + this.minimalMargin))
+                    (this._contentPosition === 'top' && directStartTop < (endTop - WalkthroughComponent.minimalMargin)) ||
+                    (this._contentPosition === 'bottom' && directStartTop > (endTop + WalkthroughComponent.minimalMargin))
                 ) {
                     this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
                 } else {
