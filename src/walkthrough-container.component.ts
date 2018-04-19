@@ -459,12 +459,44 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     previous() {
         this.close(false, false);
-        this.parent.loadPrevioustStep();
+
+        // we check if previous walkthrough is not disabled
+        let current = this.parent;
+        while (current) {
+            if (current.previousStep && !current.previousStep.disabled) {
+                current.loadPrevioustStep();
+                return;
+            } else {
+                if (!current.previousStep) {
+                    break;
+                }
+                current = current.previousStep;
+            }
+        }
+        // no more previous walkthrough enabled, we quit the walkthrough
+        this.parent = current;
+        this.close(true, true);
     }
 
     next() {
         this.close(false, false);
-        this.parent.loadNextStep();
+
+        // we check if next walkthrough is not disabled
+        let current = this.parent;
+        while (current) {
+            if (current.nextStep && !current.nextStep.disabled) {
+                current.loadNextStep();
+                return;
+            } else {
+                if (!current.nextStep) {
+                    break;
+                }
+                current = current.nextStep;
+            }
+        }
+        // no more next walkthrough enabled, we quit the walkthrough
+        this.parent = current;
+        this.close(true, true);
     }
 
     close(finishLink = false, closeWalkthrough = true) {

@@ -58,6 +58,7 @@ All attributes are optional.
 - `closeButton`: `true` for show the button. By defaut `false`.
 - `closeAnywhere`: `false` for click anywhere to close. By defaut `true`.
 - `finishButton`: `true` for show a link to exit. By defaut `false`.
+- `disabled`: `true` for ignoring the walkthrough based on a boolean flag. By defaut `false`.
 - `texts`: change texts. It's a overlay of `WalkthroughText`.
 
 **Arrow**:
@@ -113,7 +114,8 @@ WalkthroughText {
 Does not work if no walkthrough is showed.
 - `WalkthroughComponent.walkthroughContinue()` : show and continue the current walkthrough. Does not work if no walkthrough is paused.
 - `WalkthroughComponent.walkthroughHasShow()` : if the a walkthrough is currently showing.
-- `WalkthroughComponent.walkthroughHasPause()` : if the a walkthrough is currently in pause.
+- `WalkthroughComponent.walkthroughNext()` : to load the next walkthrough.
+- `WalkthroughComponent.walkthroughPrevious()` : to load the previous walkthrough.
 
 ### Example
 

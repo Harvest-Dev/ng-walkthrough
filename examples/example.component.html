@@ -269,8 +269,15 @@
                      (finished)="flowFinished()">
     <ng-walkthrough id="wt-test1-flow"
                     focusElementSelector="#test1"
-                    [contentTemplate]="step1flow">
+                    [contentTemplate]="step1flow"
+                    [disabled]="step1flowDisabled">
         <ng-template #step1flow>
+            <p>
+                This step is {{ step1flowDisabled ? 'disabled' : 'enabled' }}
+            </p>
+            <p>
+                <button (click)="step2flowDisabled = !step2flowDisabled">Next step is {{ step2flowDisabled ? 'disabled' : 'enabled' }}</button>
+            </p>
             <p>
                 1f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
                 sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer
@@ -283,8 +290,18 @@
     </ng-walkthrough>
     <ng-walkthrough id="wt-test2-flow"
                     focusElementSelector="#test2"
-                    [contentTemplate]="step2flow">
+                    [contentTemplate]="step2flow"
+                    [disabled]="step2flowDisabled">
         <ng-template #step2flow>
+            <p>
+                This step is {{ step2flowDisabled ? 'disabled' : 'enabled' }}
+            </p>
+            <p>
+                <button (click)="step1flowDisabled = !step1flowDisabled">Previous step is {{ step1flowDisabled ? 'disabled' : 'enabled' }}</button>
+            </p>
+            <p>
+                <button (click)="step3flowDisabled = !step3flowDisabled">Next step is {{ step3flowDisabled ? 'disabled' : 'enabled' }}</button>
+            </p>
             <p>
                 2f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
                 sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer
@@ -299,8 +316,15 @@
                     focusElementSelector="#test3"
                     [contentTemplate]="step3flow"
                     closeButton="true"
-                    arrowColor="yellow">
+                    arrowColor="yellow"
+                    [disabled]="step3flowDisabled">
         <ng-template #step3flow>
+            <p>
+                This step is {{ step3flowDisabled ? 'disabled' : 'enabled' }}
+            </p>
+            <p>
+                <button (click)="step2flowDisabled = !step2flowDisabled">Previous step is {{ step2flowDisabled ? 'disabled' : 'enabled' }}</button>
+            </p>
             <p>
                 3f. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
                 sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer

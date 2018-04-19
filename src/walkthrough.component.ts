@@ -194,6 +194,14 @@ export class WalkthroughComponent implements AfterViewInit {
         this._hasGlow = booleanValue(value);
     }
 
+    @Input()
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value: boolean) {
+        this._disabled = value;
+    }
+
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
     private _readyHasBeenEmited = false;
@@ -205,6 +213,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _hasArrow = false;
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
+    private _disabled = false;
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
@@ -572,11 +581,11 @@ export class WalkthroughComponent implements AfterViewInit {
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
         const hasHighlightZone = this._focusElement !== null;
 
-        instance.hasPrevious = !!this.previousStep;
-        instance.hasNext = !!this.nextStep;
+        instance.hasPrevious = !!this.previousStep && !this.previousStep.disabled;
+        instance.hasNext = !!this.nextStep && !this.nextStep.disabled;
         instance.hasCloseButton = this._hasCloseButton;
         instance.hasCloseAnywhere = this._hasCloseAnywhere;
-        instance.hasFinish = this._hasFinish;
+        instance.hasFinish = this._hasFinish || this._isLastStep(instance);
         instance.hasArrow = hasHighlightZone && this._hasArrow;
         instance.arrowColor = this.arrowColor;
         instance.radius = this.radius;
@@ -589,6 +598,21 @@ export class WalkthroughComponent implements AfterViewInit {
             : new WalkthroughText();
 
         this._show();
+    }
+
+    /**
+     * if all next steps are disabled, i'm the last step
+     */
+    private _isLastStep(instance: WalkthroughContainerComponent): boolean {
+        let current = instance.parent.nextStep;
+        while (current) {
+            if (!current.disabled) {
+                return false;
+            }
+            current = current.nextStep;
+        }
+
+        return true;
     }
 
 }
