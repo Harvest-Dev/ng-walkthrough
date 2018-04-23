@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.4 (2018-04-23)
+
+### Correction
+
+- Fix javascript error in console (#16)
+
 ## V0.6.3 (2018-04-19)
 
 ### New features
