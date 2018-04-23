@@ -620,12 +620,14 @@ export class WalkthroughComponent implements AfterViewInit {
      * check if there is a previous step enabled
      */
     private _hasPreviousStep(instance: WalkthroughContainerComponent): boolean {
-        let current = instance.parent.previousStep;
-        while (current) {
-            if (!current.disabled) {
-                return true;
+        if (instance.parent) {
+            let current = instance.parent.previousStep;
+            while (current) {
+                if (!current.disabled) {
+                    return true;
+                }
+                current = current.previousStep;
             }
-            current = current.previousStep;
         }
 
         return false;
@@ -635,12 +637,14 @@ export class WalkthroughComponent implements AfterViewInit {
      * check if there is a next step enabled
      */
     private _hasNextStep(instance: WalkthroughContainerComponent): boolean {
-        let current = instance.parent.nextStep;
-        while (current) {
-            if (!current.disabled) {
-                return true;
+        if (instance.parent) {
+            let current = instance.parent.nextStep;
+            while (current) {
+                if (!current.disabled) {
+                    return true;
+                }
+                current = current.nextStep;
             }
-            current = current.nextStep;
         }
 
         return false;
