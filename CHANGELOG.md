@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.5 (2018-04-24)
+
+### Correction
+
+- Fix arrow for IE11 and Safari
+
 ## V0.6.4 (2018-04-23)
 
 ### Correction
