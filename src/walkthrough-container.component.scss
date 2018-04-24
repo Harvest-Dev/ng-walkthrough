@@ -12,7 +12,7 @@
     }
 
     &.cursor {
-        cursor:pointer;
+        cursor: pointer;
     }
 
     &.backdrop {
@@ -32,17 +32,21 @@ button {
     position: absolute;
 
     &.hide {
-        display:none;
+        display: none;
     }
+
     &.backdrop {
         box-shadow: 0 0 0 2200px rgba(0, 0, 0, 0.6);
     }
+
     &.glow {
         box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;
     }
+
     &.clickable {
-        cursor:pointer;
+        cursor: pointer;
     }
+
     &.highlight {
         -webkit-animation: highlight .45s 4;
         animation: highlight .45s 4;
@@ -54,6 +58,7 @@ button {
 .wkt-container {
     position: relative;
 }
+
 .wkt-content-block {
     position: absolute;
     margin: 1em;
@@ -63,12 +68,14 @@ button {
     min-width: calc(320px - 2em);
 
     &.hide {
-        display:none;
+        display: none;
     }
 }
+
 .wkt-content-block.darken {
-    background-color: rgba(0,0,0, .6);
+    background-color: rgba(0, 0, 0, 0.6);
 }
+
 .wkt-close + .wkt-content {
     margin-top: 1.3em;
 }
@@ -78,7 +85,7 @@ button {
 .wkt-close {
     position: absolute;
     right: 1em;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .wkt-navigate {
@@ -91,20 +98,21 @@ button {
         font-size: 120%;
 
         &:hover {
-            cursor:pointer;
+            cursor: pointer;
             text-decoration: underline;
         }
     }
 }
-.wkt-previous-link::before {
-    content : '<< ';
-}
-.wkt-next-link::after{
-    content : ' >>';
-}
-.wkt-finish-link{
 
+.wkt-previous-link::before {
+    content: '<< ';
 }
+
+.wkt-next-link::after {
+    content: ' >>';
+}
+
+.wkt-finish-link {}
 
 // arrow
 
@@ -116,7 +124,7 @@ svg {
     border: 1px solid transparent;
 
     &.hide {
-        display:none;
+        display: none;
     }
 }
 
@@ -129,16 +137,32 @@ svg {
     fill: none;
 }
 
-
 @-webkit-keyframes highlight {
-    0% { background-color: none;}
-    50% { background-color: rgba(255,255,255,.8); }
-    100% { background-color: none; }
+    0% {
+        background-color: none;
+    }
+
+    50% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        background-color: none;
+    }
 }
+
 @keyframes highlight {
-    0% { background-color: none;}
-    50% { background-color: rgba(255,255,255,.8); }
-    100% { background-color: none; }
+    0% {
+        background-color: none;
+    }
+
+    50% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        background-color: none;
+    }
 }
 
 // For > HD (4K screen)
