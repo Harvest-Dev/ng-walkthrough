@@ -242,27 +242,39 @@ export class WalkthroughComponent implements AfterViewInit {
     private _offsetCoordinates: WalkthroughElementCoordinate;
 
     static walkthroughStop() {
-        WalkthroughComponent._walkthroughContainer.instance.stop();
+        if (WalkthroughComponent._walkthroughContainer) {
+            WalkthroughComponent._walkthroughContainer.instance.stop();
+        }
     }
 
     static walkthroughHasShow(): boolean {
-        return WalkthroughComponent._walkthroughContainer.instance.show;
+        return WalkthroughComponent._walkthroughContainer
+            ? WalkthroughComponent._walkthroughContainer.instance.show
+            : false;
     }
 
     static walkthroughHasPause(): boolean {
-        return WalkthroughComponent._walkthroughContainer.instance.pause;
+        return WalkthroughComponent._walkthroughContainer
+            ? WalkthroughComponent._walkthroughContainer.instance.pause
+            : false;
     }
 
     static walkthroughContinue() {
-        WalkthroughComponent._walkthroughContainer.instance.continue();
+        if (WalkthroughComponent._walkthroughContainer) {
+            WalkthroughComponent._walkthroughContainer.instance.continue();
+        }
     }
 
     static walkthroughNext() {
-        WalkthroughComponent._walkthroughContainer.instance.next();
+        if (WalkthroughComponent._walkthroughContainer) {
+            WalkthroughComponent._walkthroughContainer.instance.next();
+        }
     }
 
     static walkthroughPrevious() {
-        WalkthroughComponent._walkthroughContainer.instance.previous();
+        if (WalkthroughComponent._walkthroughContainer) {
+            WalkthroughComponent._walkthroughContainer.instance.previous();
+        }
     }
 
     constructor(
