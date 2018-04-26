@@ -1,5 +1,13 @@
 # Changelog of ng-walkthrough
 
+## V0.6.9 (2018-04-26)
+
+### Correction
+
+- Improve content positioning:  
+when `verticalAlignContent = top | center | bottom`, if there is enough space on the side but we can't respect the `alignContent center` attribute, we rollback to `left` or `right` (where there is more space)
+- Improve scroll positioning
+
 ## V0.6.8 (2018-04-26)
 
 ### Correction

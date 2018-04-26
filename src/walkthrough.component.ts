@@ -568,7 +568,36 @@ export class WalkthroughComponent implements AfterViewInit {
                         this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                     }
 
-                    this._walkthroughService.scrollIntoViewIfOutOfView(instance.contentBlock.nativeElement);
+                    if (this._focusElement != null) {
+                        const coordinatesContent = this._walkthroughService.retrieveCoordinates(instance.contentBlock.nativeElement);
+                        const coordinatesFocus = this._walkthroughService.retrieveCoordinates(this._focusElement);
+                        // is content + focus higher than window ?
+                        if (coordinatesContent.height + coordinatesFocus.height > window.innerHeight) {
+                            // we scroll on content
+                            instance.contentBlock.nativeElement.scrollIntoView(true);
+                            // we offset the window half of the content height
+                            if (coordinatesContent.top > coordinatesFocus.top) {
+                                // content below focusZone
+                                window.scrollBy(0, -(coordinatesContent.height / 2));
+                            } else {
+                                // content above focusZone
+                                window.scrollBy(0, +(coordinatesContent.height / 2));
+                            }
+                        } else {
+                            // scroll on element higher minus minimal margin
+                            if (coordinatesContent.top > coordinatesFocus.top) {
+                                this._focusElement.scrollIntoView(true);
+                                window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                            } else {
+                                instance.contentBlock.nativeElement.scrollIntoView(true);
+                                window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                            }
+                        }
+                    } else {
+                        // no focus zone, scroll on content minus margin
+                        instance.contentBlock.nativeElement.scrollIntoView(true);
+                        window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                    }
                 }, 50);
             }, 0);
         }
