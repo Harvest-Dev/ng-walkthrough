@@ -1,6 +1,6 @@
 # Changelog of ng-walkthrough
 
-## V0.6.6 (2018-04-26)
+## V0.6.8 (2018-04-26)
 
 ### Correction
 
