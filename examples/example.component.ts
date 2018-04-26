@@ -33,6 +33,10 @@ export class ExampleComponent {
     private _count = 3;
     private _start = false;
 
+    get isMobile(): boolean {
+        return window.innerWidth < 768;
+    }
+
     buttonAction() {
         if (this.testClickCount < this.testClickTexts.length - 1) {
             this.testClickCount++;

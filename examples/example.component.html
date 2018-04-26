@@ -4,6 +4,8 @@
                 (click)="walk1.open()">Test 1</button>
         <button id="testTable"
                 (click)="walkTable.open()">Test Table</button>
+        <button id="testSelectorChange"
+                (click)="walkSelectorChange.open()">Test Selector change</button>
         <button id="testFlow"
                 (click)="walkFlow.start()">Test Flow</button>
         <button id="hiddenTimer"
@@ -264,6 +266,23 @@
             <button (click)="testPosition ='center'">Center</button>
             <button (click)="testPosition ='right'">Right</button>
         </div>
+    </ng-template>
+</ng-walkthrough>
+
+<ng-walkthrough #walkSelectorChange
+                id="wt-testSelectorChange"
+                [focusElementSelector]="isMobile ? 'table th:first-child, table td:first-child' : 'table th:nth-child(2), table td:nth-child(2)'"
+                typeSelector="zone"
+                focusBackdrop="true"
+                [contentTemplate]="testSelectorChange"
+                showArrow="true"
+                closeAnywhere="false"
+                [alignContent]="testPosition">
+    <ng-template #testSelectorChange>
+        <p>
+            mobile: win &lt; 768px ; desktop: win &ge; 768px
+            <br> current: {{isMobile ? 'mobile' : 'desktop' }}
+        </p>
     </ng-template>
 </ng-walkthrough>
 
