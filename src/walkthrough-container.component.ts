@@ -249,11 +249,18 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             if (spaceLeft < width && spaceRight < width) {
                 notEnoughSpace = true;
             }
-            // alignContent center + verticalAlignContent top | center | bottom not compatible
+            // if not enough space to respect the alignContent, content goes above/below
             if ((verticalAlignContent === 'top' ||
                 verticalAlignContent === 'center' ||
                 verticalAlignContent === 'bottom') && !notEnoughSpace) {
-                if (alignContent === 'left' && spaceLeft < width ||
+
+                // change align center to left or right if not enough space to align center
+                if (alignContent === 'center') {
+                    const maxSpace = Math.max(spaceRight, spaceLeft);
+                    if (maxSpace < width + ((window.innerWidth - width) / 2)) {
+                        alignContent = spaceRight > spaceLeft ? 'right' : 'left';
+                    }
+                } else if (alignContent === 'left' && spaceLeft < width ||
                     alignContent === 'right' && spaceRight < width) {
                     verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
                 }
