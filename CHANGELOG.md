@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.6 (2018-04-26)
+
+### Correction
+
+- Fix crash on static method with IE11 
+
 ## V0.6.5 (2018-04-24)
 
 ### Correction
