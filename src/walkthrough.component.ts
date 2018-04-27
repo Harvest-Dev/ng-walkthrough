@@ -586,7 +586,7 @@ export class WalkthroughComponent implements AfterViewInit {
                         } else {
                             // scroll on element higher minus minimal margin
                             if (coordinatesContent.top > coordinatesFocus.top) {
-                                this._focusElement.scrollIntoView(true);
+                                window.scrollTo(coordinatesFocus.left, coordinatesFocus.top);
                                 window.scrollBy(0, -WalkthroughComponent.minimalMargin);
                             } else {
                                 instance.contentBlock.nativeElement.scrollIntoView(true);
