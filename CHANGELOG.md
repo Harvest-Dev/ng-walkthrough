@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.10 (2018-04-27)
+
+### Correction
+
+- Fix a bug of positioning while scrolling
+
 ## V0.6.9 (2018-04-26)
 
 ### Correction
