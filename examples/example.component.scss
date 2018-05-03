@@ -8,6 +8,20 @@
     }
 }
 
+.avalaible {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+
+    & > button {
+        min-width: 200px;
+        margin: 0;
+    }
+}
+
 :host,
 :host > div {
     display: block;

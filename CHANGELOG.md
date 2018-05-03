@@ -1,14 +1,22 @@
 # Changelog of ng-walkthrough
 
+## V0.6.11 (2018-05-03)
+
+### Corrections
+
+- Add verifications on `walkthroughContinue` : 
+  - check if `focusElementSelector` still exists. If not, we close the walkthrough (without emitting `closed` and `finished` events)
+  - otherwise, refresh elements positioning
+
 ## V0.6.10 (2018-04-27)
 
-### Correction
+### Corrections
 
 - Fix a bug of positioning while scrolling
 
 ## V0.6.9 (2018-04-26)
 
-### Correction
+### Corrections
 
 - Improve content positioning:  
 when `verticalAlignContent = top | center | bottom`, if there is enough space on the side but we can't respect the `alignContent center` attribute, we rollback to `left` or `right` (where there is more space)
@@ -16,19 +24,19 @@ when `verticalAlignContent = top | center | bottom`, if there is enough space on
 
 ## V0.6.8 (2018-04-26)
 
-### Correction
+### Corrections
 
 - Fix crash on static method with IE11 
 
 ## V0.6.5 (2018-04-24)
 
-### Correction
+### Corrections
 
 - Fix arrow for IE11 and Safari
 
 ## V0.6.4 (2018-04-23)
 
-### Correction
+### Corrections
 
 - Fix javascript error in console (#16)
 
@@ -39,13 +47,13 @@ when `verticalAlignContent = top | center | bottom`, if there is enough space on
 - Add `disabled` attribut on `ng-walkghrough`.
 - Add static variable `minimalMargin`on `WalkthroughComponent`
 
-### Correction
+### Corrections
 
 - Fix arrow position
 
 ## V0.6.1 (2018-04-18)
 
-### Correction
+### Corrections
 
 - Fix crash
 
@@ -76,13 +84,13 @@ If there is not not enough place to place the content that way, it rollbacks to 
 
 ## V0.5.6 (2018-02-21)
 
-### Correction
+### Corrections
 
 - Fix import
 
 ## V0.5.5 (2018-02-05)
 
-### Correction
+### Corrections
 
 - Fix CSS for Safari
 

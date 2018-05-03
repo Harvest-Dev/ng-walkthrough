@@ -103,4 +103,23 @@ export class ExampleComponent {
         // tslint:disable-next-line:no-console
         console.log('flow has been finished');
     }
+
+    pause() {
+        WalkthroughComponent.walkthroughStop();
+    }
+
+    continue() {
+        WalkthroughComponent.walkthroughContinue();
+    }
+
+    rename() {
+        const list: any = document.querySelectorAll('.rename');
+        list.forEach((elt: HTMLElement) => {
+            if (elt.id.endsWith('-rename')) {
+                elt.id = elt.id.replace('-rename', '');
+            } else {
+                elt.id += '-rename';
+            }
+        });
+    }
 }

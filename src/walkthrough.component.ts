@@ -316,6 +316,12 @@ export class WalkthroughComponent implements AfterViewInit {
         this.open();
     }
 
+    refresh() {
+        if (!this._getInstance().pause) {
+            this._elementLocations();
+        }
+    }
+
     open() {
         if (!this._getInstance().pause) {
             this._elementLocations();
