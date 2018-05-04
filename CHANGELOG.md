@@ -1,5 +1,12 @@
 # Changelog of ng-walkthrough
 
+## V0.6.12 (2018-05-04)
+
+### Corrections
+
+- fix crash on IE11 in certain circumstances
+- fix issue when using stop/continue container methods outisde of library
+
 ## V0.6.11 (2018-05-03)
 
 ### Corrections
