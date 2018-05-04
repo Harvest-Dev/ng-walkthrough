@@ -261,7 +261,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     static walkthroughContinue() {
         if (WalkthroughComponent._walkthroughContainer) {
-            WalkthroughComponent._walkthroughContainer.instance.continue();
+            WalkthroughComponent._walkthroughContainer.instance.continue(true);
         }
     }
 

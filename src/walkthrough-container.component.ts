@@ -455,16 +455,18 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     /**
      * continue the walkthrough if is stopped : show the container and change to pause at false
      */
-    continue() {
+    continue(unpause = false) {
         if (this.parent && this.pause) {
             this.show = true;
             this.pause = false;
-            // if focusElement does not exist anymore, we close the walkthrough (without emiting any event)
-            if (this.parent.focusElementSelector && !document.querySelector(this.parent.focusElementSelector)) {
-                this.close(false, false);
-            } else {
-                // we update elements positioning on the current walkthrough
-                this.parent.refresh();
+            if (unpause) {
+                // if focusElement does not exist anymore, we close the walkthrough (without emiting any event)
+                if (this.parent.focusElementSelector && !document.querySelector(this.parent.focusElementSelector)) {
+                    this.close(false, false);
+                } else {
+                    // we update elements positioning on the current walkthrough
+                    this.parent.refresh();
+                }
             }
         }
     }
