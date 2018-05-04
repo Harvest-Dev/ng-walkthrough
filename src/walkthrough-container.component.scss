@@ -112,9 +112,10 @@ button {
     content: ' >>';
 }
 
-.wkt-finish-link {}
-
 // arrow
+span.hide {
+    display: none;
+}
 
 svg {
     overflow: visible;
@@ -122,10 +123,6 @@ svg {
     top: -1px;
     left: -1px;
     border: 1px solid transparent;
-
-    &.hide {
-        display: none;
-    }
 }
 
 #wkt-arrow > path {
