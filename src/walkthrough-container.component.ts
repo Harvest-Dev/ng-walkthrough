@@ -446,7 +446,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
      * stop the walkthrough : hide the container and change to pause at true
      */
     stop() {
-        if (this.parent && !this.pause) {
+        if (this.parent && !this.pause && this.show) {
             this.show = false;
             this.pause = true;
         }
