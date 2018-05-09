@@ -573,37 +573,42 @@ export class WalkthroughComponent implements AfterViewInit {
                         this._readyHasBeenEmited = true;
                         this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                     }
+					
+                    const contentBlockNative = instance.contentBlock.nativeElement as HTMLElement;
+                    let scrollPos;
 
                     if (this._focusElement != null) {
-                        const coordinatesContent = this._walkthroughService.retrieveCoordinates(instance.contentBlock.nativeElement);
+                        const coordinatesContent = this._walkthroughService.retrieveCoordinates(contentBlockNative);
                         const coordinatesFocus = this._walkthroughService.retrieveCoordinates(this._focusElement);
                         // is content + focus higher than window ?
                         if (coordinatesContent.height + coordinatesFocus.height > window.innerHeight) {
                             // we scroll on content
-                            instance.contentBlock.nativeElement.scrollIntoView(true);
+                            contentBlockNative.scrollIntoView(true);
                             // we offset the window half of the content height
                             if (coordinatesContent.top > coordinatesFocus.top) {
                                 // content below focusZone
-                                window.scrollBy(0, -(coordinatesContent.height / 2));
+                                scrollPos = -(coordinatesContent.height / 2);
                             } else {
                                 // content above focusZone
-                                window.scrollBy(0, +(coordinatesContent.height / 2));
+                                scrollPos = +(coordinatesContent.height / 2);
                             }
                         } else {
                             // scroll on element higher minus minimal margin
                             if (coordinatesContent.top > coordinatesFocus.top) {
                                 window.scrollTo(coordinatesFocus.left, coordinatesFocus.top);
-                                window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                                scrollPos = -WalkthroughComponent.minimalMargin;
                             } else {
-                                instance.contentBlock.nativeElement.scrollIntoView(true);
-                                window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                                contentBlockNative.scrollIntoView(true);
+                                scrollPos = -WalkthroughComponent.minimalMargin;
                             }
                         }
                     } else {
                         // no focus zone, scroll on content minus margin
-                        instance.contentBlock.nativeElement.scrollIntoView(true);
-                        window.scrollBy(0, -WalkthroughComponent.minimalMargin);
+                        contentBlockNative.scrollIntoView(true);
+                        scrollPos = -WalkthroughComponent.minimalMargin;
                     }
+					
+                    window.scrollBy(0, scrollPos);
                 }, 50);
             }, 0);
         }
