@@ -303,7 +303,7 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
-    private next(
+    next(
         closedEvent: EventEmitter<boolean> = undefined,
         finishedEvent: EventEmitter<WalkthroughEvent> = undefined
     ) {
