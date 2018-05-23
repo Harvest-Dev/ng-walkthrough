@@ -287,7 +287,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     @HostListener('window:resize')
     resize() {
-        if (WalkthroughComponent._walkthroughContainer && this._display) {
+        if (WalkthroughComponent._walkthroughContainer && this._display && !WalkthroughComponent.walkthroughHasPause) {
             this._elementLocations();
         }
     }
@@ -573,7 +573,7 @@ export class WalkthroughComponent implements AfterViewInit {
                         this._readyHasBeenEmited = true;
                         this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                     }
-					
+
                     const contentBlockNative = instance.contentBlock.nativeElement as HTMLElement;
                     let scrollPos;
 
@@ -607,7 +607,7 @@ export class WalkthroughComponent implements AfterViewInit {
                         contentBlockNative.scrollIntoView(true);
                         scrollPos = -WalkthroughComponent.minimalMargin;
                     }
-					
+
                     window.scrollBy(0, scrollPos);
                 }, 50);
             }, 0);

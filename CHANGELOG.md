@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.13 (2018-05-23)
+
+### Corrections
+
+- fix walkthrough visible while on pause when `window:resize` event is fired
+
 ## V0.6.12 (2018-05-04)
 
 ### Corrections
