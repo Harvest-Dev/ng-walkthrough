@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.14 (2018-05-24)
+
+### Corrections
+
+- fix resize code not firing anymore (bug introduced in last release)
+
 ## V0.6.13 (2018-05-23)
 
 ### Corrections

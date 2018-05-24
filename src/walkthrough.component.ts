@@ -287,7 +287,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     @HostListener('window:resize')
     resize() {
-        if (WalkthroughComponent._walkthroughContainer && this._display && !WalkthroughComponent.walkthroughHasPause) {
+        if (WalkthroughComponent._walkthroughContainer && this._display && !WalkthroughComponent.walkthroughHasPause()) {
             this._elementLocations();
         }
     }
