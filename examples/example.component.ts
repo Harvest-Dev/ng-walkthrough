@@ -28,6 +28,7 @@ export class ExampleComponent {
     step1flowDisabled = false;
     step2flowDisabled = false;
     step3flowDisabled = false;
+    step4flowDisabled = false;
 
     hideCount = 3;
     private _count = 3;

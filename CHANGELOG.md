@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.15 (2018-05-28)
+
+### Corrections
+
+- fix case when a step have no `focusElementSelector` (#19)
+
 ## V0.6.14 (2018-05-24)
 
 ### Corrections
