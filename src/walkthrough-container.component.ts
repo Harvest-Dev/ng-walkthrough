@@ -207,25 +207,27 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     hightlightZoneStyling(element: HTMLElement) {
-        const zoneStyle = (this.zone.nativeElement as HTMLElement).style;
-        if (this.radius) {
-            if (Number(this.radius) === parseFloat(this.radius)) {
-                // if is numeric, change in %
-                zoneStyle.borderRadius = this.radius + '%';
-            } else if (this.radius === 'auto') {
-                // if mode auto
-                const elementStyle = window.getComputedStyle(element, null);
-                // borderRadius work only on Chrome, use TopLeft, TopRight... for Firefox/Egde/IE
-                zoneStyle.borderTopLeftRadius = elementStyle.borderTopLeftRadius;
-                zoneStyle.borderTopRightRadius = elementStyle.borderTopRightRadius;
-                zoneStyle.borderBottomLeftRadius = elementStyle.borderBottomLeftRadius;
-                zoneStyle.borderBottomRightRadius = elementStyle.borderBottomRightRadius;
+        if (element) {
+            const zoneStyle = (this.zone.nativeElement as HTMLElement).style;
+            if (this.radius) {
+                if (Number(this.radius) === parseFloat(this.radius)) {
+                    // if is numeric, change in %
+                    zoneStyle.borderRadius = this.radius + '%';
+                } else if (this.radius === 'auto') {
+                    // if mode auto
+                    const elementStyle = window.getComputedStyle(element, null);
+                    // borderRadius work only on Chrome, use TopLeft, TopRight... for Firefox/Egde/IE
+                    zoneStyle.borderTopLeftRadius = elementStyle.borderTopLeftRadius;
+                    zoneStyle.borderTopRightRadius = elementStyle.borderTopRightRadius;
+                    zoneStyle.borderBottomLeftRadius = elementStyle.borderBottomLeftRadius;
+                    zoneStyle.borderBottomRightRadius = elementStyle.borderBottomRightRadius;
+                } else {
+                    // if is numeric, change in %
+                    zoneStyle.borderRadius = this.radius;
+                }
             } else {
-                // if is numeric, change in %
-                zoneStyle.borderRadius = this.radius;
+                zoneStyle.borderRadius = '';
             }
-        } else {
-            zoneStyle.borderRadius = '';
         }
     }
 

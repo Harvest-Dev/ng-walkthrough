@@ -381,4 +381,28 @@
             </p>
         </ng-template>
     </ng-walkthrough>
+    <ng-walkthrough id="wt-test4-flow"
+                    [contentTemplate]="step4flow"
+                    closeButton="true"
+                    [disabled]="step4flowDisabled">
+        <ng-template #step4flow>
+            <p>
+                No focusElementSelector
+            </p>
+            <p>
+                This step is {{ step4flowDisabled ? 'disabled' : 'enabled' }}
+            </p>
+            <p>
+                <button (click)="step3flowDisabled = !step3flowDisabled">Previous step is {{ step3flowDisabled ? 'disabled' : 'enabled' }}</button>
+            </p>
+            <p>
+                4g. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius blandit dolor, sit amet condimentum eros vulputate
+                sed. Aenean maximus dui a lobortis pharetra. Suspendisse potenti. Nulla facilisi. Suspendisse potenti. Integer
+                porta nec arcu molestie sodales. Pellentesque et diam tellus. Quisque at nisi id neque tempus varius. Donec
+                vestibulum nisi ac risus laoreet lobortis. Cras tristique et sem mollis vehicula. Nulla maximus urna a leo
+                consectetur, at fringilla odio volutpat. Praesent ultricies nunc eget tellus convallis, non hendrerit augue
+                semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat sem.
+            </p>
+        </ng-template>
+    </ng-walkthrough>
 </ng-walkthrough-flow>
