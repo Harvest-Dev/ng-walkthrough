@@ -51,6 +51,7 @@ All attributes are optional.
 - `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By defaut : `top`.
 - `contentSpacing`: The max space which separates the content to the focus zone horizontally, default is 0 (opposite of the focusZone)
 - `verticalContentSpacing`: The max space which separates the content to the focus zone vertically, default is 50
+- `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones (facultative)
 
 **Navigation**:
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.
@@ -85,6 +86,7 @@ All attributes are optional and not overriding the subcomponents attributes exce
 
 **Content**:
 - `contentStyle`: background style for content container. Possible values: `none`, `darken`.
+- `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones (facultative)
 
 **Navigation**:
 - `closeButton`: `true` for show the button.

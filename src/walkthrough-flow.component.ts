@@ -34,6 +34,8 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     @Input() marginZone: string | null = null;
     @Input() showArrow: string | boolean;
 
+    @Input() rootElement: string;
+
     @Input() closeButton: string | boolean;
     @Input() closeAnywhere: string | boolean;
     @Input() finishButton: string | boolean;
@@ -86,6 +88,9 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             }
             if (!walkthrough.showArrow && booleanValue(this.showArrow)) {
                 walkthrough.showArrow = this.showArrow;
+            }
+            if (!walkthrough.rootElement && this.rootElement) {
+                walkthrough.rootElement = this.rootElement;
             }
             if (!walkthrough.closeButton && booleanValue(this.closeButton)) {
                 walkthrough.closeButton = this.closeButton;

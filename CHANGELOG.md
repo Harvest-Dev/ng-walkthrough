@@ -1,5 +1,14 @@
 # Changelog of ng-walkthrough
 
+## V0.6.16 (2018-06-05)
+
+### New features
+- fix hidden zones when using library with fixed elements by adding `rootElement` attribute (facultative)
+
+### Corrections
+- fix resize event fired every time the address bar display is toggled (androïd and iOS).
+Now the resize event is applied only when the width changes.
+
 ## V0.6.15 (2018-05-28)
 
 ### Corrections

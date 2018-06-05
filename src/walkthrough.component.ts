@@ -38,7 +38,8 @@ export class WalkthroughComponent implements AfterViewInit {
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Output() ready: EventEmitter<WalkthroughEvent> = new EventEmitter();
 
-    @Input() focusElementCSSClass: string = undefined;
+    @Input() focusElementCSSClass: string;
+    @Input() rootElement: string;
 
     @Input() focusElementSelector: string;
     @Input() typeSelector: 'element' | 'zone' = 'element';
@@ -240,6 +241,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
+    private _windowWidth: number;
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -287,7 +289,10 @@ export class WalkthroughComponent implements AfterViewInit {
 
     @HostListener('window:resize')
     resize() {
-        if (WalkthroughComponent._walkthroughContainer && this._display && !WalkthroughComponent.walkthroughHasPause()) {
+        if (this._display &&
+            WalkthroughComponent._walkthroughContainer &&
+            window.innerWidth !== this._windowWidth &&
+            !WalkthroughComponent.walkthroughHasPause()) {
             this._elementLocations();
         }
     }
@@ -435,6 +440,12 @@ export class WalkthroughComponent implements AfterViewInit {
         const element = this._focusElement;
         if (element) {
             this._walkthroughService.scrollIntoViewIfOutOfView(element);
+
+            // if there is a root element defined (in some cases when position fixed is used, we need to scroll on it)
+            if (this.rootElement) {
+                document.querySelector(this.rootElement).scrollIntoView(true);
+            }
+
             this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element, this._marginZonePx);
 
             if (this.typeSelector === 'zone') {
@@ -454,6 +465,7 @@ export class WalkthroughComponent implements AfterViewInit {
             this._offsetCoordinates = null;
         }
         this._setFocus();
+        this._windowWidth = window.innerWidth;
     }
 
     /**
