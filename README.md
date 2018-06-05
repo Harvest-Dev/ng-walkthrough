@@ -34,7 +34,7 @@ All attributes are optional.
 
 **Focus zone**:
 - `focusElementSelector`: CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
-- `focusElementCSSClass`: Add a class on focusElement (optional)
+- `focusElementCSSClass`: Add a class on focusElement 
 - `focusHighlightAnimation`: `true` for show highlight animation on the focus element. By defaut `false`.
 - `focusBackdrop`: `true` for show a dark backdrop around the focus element. By defaut `false`.
 - `focusGlow`: `true` for show a glow on the focus element. By defaut `false`.
@@ -51,7 +51,7 @@ All attributes are optional.
 - `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By defaut : `top`.
 - `contentSpacing`: The max space which separates the content to the focus zone horizontally, default is 0 (opposite of the focusZone)
 - `verticalContentSpacing`: The max space which separates the content to the focus zone vertically, default is 50
-- `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones (facultative)
+- `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones 
 
 **Navigation**:
 - `previousStep`: add a ling to go to the previous `ng-walkthrough`.

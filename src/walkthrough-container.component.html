@@ -36,8 +36,8 @@
                     (click)="close(true)">{{text.close}}</button>
         </div>
     </div>
-    <span *ngIf="hasArrow"
-          [class.hide]="hideOther">
+    <div *ngIf="hasArrow"
+         [class.hide]="hideOther">
         <svg version="1.1"
              xmlns="http://www.w3.org/2000/svg"
              width="100%"
@@ -61,5 +61,5 @@
                   [attr.stroke]="arrowColor || '#FFF'"
                   marker-end="url(#wkt-arrow)" />
         </svg>
-    </span>
+    </div>
 </div>

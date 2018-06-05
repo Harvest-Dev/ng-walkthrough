@@ -3,36 +3,37 @@
 ## V0.6.16 (2018-06-05)
 
 ### New features
-- fix hidden zones when using library with fixed elements by adding `rootElement` attribute (facultative)
+
+- Fix hidden zones when using library with fixed elements by adding `rootElement` attribute
 
 ### Corrections
-- fix resize event fired every time the address bar display is toggled (androïd and iOS).
-Now the resize event is applied only when the width changes.
+
+- Fix resize event fired every time the address bar display is toggled (Android and iOS). Now the resize event is applied only when the width changes.
 
 ## V0.6.15 (2018-05-28)
 
 ### Corrections
 
-- fix case when a step have no `focusElementSelector` (#19)
+- Fix case when a step have no `focusElementSelector` (#19)
 
 ## V0.6.14 (2018-05-24)
 
 ### Corrections
 
-- fix resize code not firing anymore (bug introduced in last release)
+- Fix resize code not firing anymore (bug introduced in last release)
 
 ## V0.6.13 (2018-05-23)
 
 ### Corrections
 
-- fix walkthrough visible while on pause when `window:resize` event is fired
+- Fix walkthrough visible while on pause when `window:resize` event is fired
 
 ## V0.6.12 (2018-05-04)
 
 ### Corrections
 
-- fix crash on IE11 in certain circumstances
-- fix issue when using stop/continue container methods outisde of library
+- Fix crash on IE11 in certain circumstances
+- Fix issue when using stop/continue container methods outisde of library
 
 ## V0.6.11 (2018-05-03)
 
