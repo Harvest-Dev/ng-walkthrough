@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.6.17 (2018-06-12)
+
+### Corrections
+
+- Fix arrow display on Safari/iOS
+
 ## V0.6.16 (2018-06-05)
 
 ### New features

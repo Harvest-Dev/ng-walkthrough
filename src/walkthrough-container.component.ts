@@ -28,6 +28,8 @@ export function throwWalkthroughContentAlreadyAttachedError() {
 })
 export class WalkthroughContainerComponent extends BasePortalHost {
 
+    markerUrl = 'url(#wkt-arrow)';
+
     show = false;
     pause = false;
     parent: WalkthroughComponent;
@@ -474,7 +476,15 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     open() {
-        // show
+        // change markerUrl on Safari
+        // related to
+        // https://gist.github.com/leonderijke/c5cf7c5b2e424c0061d2
+        // http://stackoverflow.com/a/18265336/796152
+        // http://www.w3.org/TR/SVG/linking.html
+        const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (is_safari) {
+            this.markerUrl = 'url(' + window.location.href + '#wkt-arrow)';
+        }
         this.show = true;
     }
 
