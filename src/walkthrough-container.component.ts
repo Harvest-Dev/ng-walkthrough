@@ -21,6 +21,8 @@ export function throwWalkthroughContentAlreadyAttachedError() {
     throw Error('Attempting to attach walkthrough content after content is already attached');
 }
 
+const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 @Component({
     selector: 'walkthrough-container',
     styleUrls: ['./walkthrough-container.component.scss'],
@@ -481,7 +483,6 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         // https://gist.github.com/leonderijke/c5cf7c5b2e424c0061d2
         // http://stackoverflow.com/a/18265336/796152
         // http://www.w3.org/TR/SVG/linking.html
-        const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if (is_safari) {
             this.markerUrl = 'url(' + window.location.href + '#wkt-arrow)';
         }
