@@ -472,9 +472,17 @@ export class WalkthroughComponent implements AfterViewInit {
      *
      */
     private _getFocusElement() {
-        const focusElements: NodeListOf<HTMLElement> = this.focusElementSelector
-            ? document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>
-            : null;
+        let focusElements: NodeListOf<HTMLElement>;
+        try {
+            focusElements = this.focusElementSelector
+                ? document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>
+                : null;
+        } catch (error) {
+            console.error(
+                `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
+                error
+            );
+        }
 
         // getting focus element
 
