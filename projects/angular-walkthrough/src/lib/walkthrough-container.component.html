@@ -1,0 +1,65 @@
+<div class="wkt-container">
+    <div class="wkt-zone"
+         #zone
+         (click)="clickZone($event)"
+         [class.hide]="!hasHighlightZone"
+         [class.backdrop]="hasBackdrop"
+         [class.glow]="hasGlow"
+         [class.clickable]="hasClickable"
+         [class.highlight]="hasHighlight"
+         [style.padding]="marginZone"></div>
+    <div class="wkt-content-block"
+         [class.hide]="hideOther"
+         [class.darken]="contentStyle === 'draken'"
+         #contentBlock>
+        <button type="button"
+                class="wkt-close"
+                *ngIf="hasCloseButton"
+                (click)="close()">✖</button>
+        <div class="wkt-content">
+            <p *ngIf="contentText">{{contentText}}</p>
+            <ng-template cdkPortalHost></ng-template>
+        </div>
+        <div class="wkt-navigate"
+             *ngIf="hasPrevious||hasNext||hasFinish">
+            <button type="button"
+                    class="wkt-previous-link"
+                    *ngIf="hasPrevious"
+                    (click)="previous()">{{text.previous}}</button>
+            <button type="button"
+                    class="wkt-next-link"
+                    *ngIf="hasNext"
+                    (click)="next()">{{text.next}}</button>
+            <button type="button"
+                    class="wkt-finish-link"
+                    *ngIf="hasFinish"
+                    (click)="close(true)">{{text.close}}</button>
+        </div>
+    </div>
+    <div *ngIf="hasArrow"
+         [class.hide]="hideOther">
+        <svg version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             width="100%"
+             height="100%">
+            <defs>
+                <marker id="wkt-arrow"
+                        viewBox="0 0 10 10"
+                        refX="8"
+                        refY="5"
+                        markerUnits="strokeWidth"
+                        orient="auto"
+                        markerWidth="10"
+                        markerHeight="10">
+                    <polyline points="0,0 10,5 0,10 5,5"
+                              stroke-width="0"
+                              [attr.fill]="arrowColor || '#FFF'" />
+                </marker>
+            </defs>
+            <path class="wkt-arrow-path"
+                  [attr.d]="arrowPath"
+                  [attr.stroke]="arrowColor || '#FFF'"
+                  [attr.marker-end]="markerUrl" />
+        </svg>
+    </div>
+</div>

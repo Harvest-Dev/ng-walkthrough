@@ -1,0 +1,185 @@
+:host {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 99.9%;
+    min-height: 100%;
+
+    &.hide {
+        display: none;
+    }
+
+    &.cursor {
+        cursor: pointer;
+    }
+
+    &.backdrop {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+button {
+    background: none;
+    border: 0;
+    color: #FFF;
+}
+
+// hightlight zone
+
+.wkt-zone {
+    position: absolute;
+
+    &.hide {
+        display: none;
+    }
+
+    &.backdrop {
+        box-shadow: 0 0 0 2200px rgba(0, 0, 0, 0.6);
+    }
+
+    &.glow {
+        box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;
+    }
+
+    &.clickable {
+        cursor: pointer;
+    }
+
+    &.highlight {
+        -webkit-animation: highlight .45s 4;
+        animation: highlight .45s 4;
+    }
+}
+
+// text zone
+
+.wkt-container {
+    position: relative;
+}
+
+.wkt-content-block {
+    position: absolute;
+    margin: 1em;
+    padding: 6px;
+    z-index: 1;
+    color: #FFF;
+    min-width: calc(320px - 2em);
+
+    &.hide {
+        display: none;
+    }
+}
+
+.wkt-content-block.darken {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.wkt-close + .wkt-content {
+    margin-top: 1.3em;
+}
+
+// text zone - navigation
+
+.wkt-close {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+}
+
+.wkt-navigate {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & > button {
+        padding: 6px;
+        font-size: 120%;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+}
+
+.wkt-previous-link::before {
+    content: '<< ';
+}
+
+.wkt-next-link::after {
+    content: ' >>';
+}
+
+// arrow
+div.hide {
+    display: none;
+}
+
+svg {
+    overflow: visible;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    border: 1px solid transparent;
+}
+
+#wkt-arrow > path {
+    stroke-width: 0;
+}
+
+.wkt-arrow-path {
+    stroke-width: 2px;
+    fill: none;
+}
+
+@-webkit-keyframes highlight {
+    0% {
+        background-color: none;
+    }
+
+    50% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        background-color: none;
+    }
+}
+
+@keyframes highlight {
+    0% {
+        background-color: none;
+    }
+
+    50% {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    100% {
+        background-color: none;
+    }
+}
+
+// For > HD (4K screen)
+
+@media screen and (min-width: 1920px), screen and (min-height: 1920px) {
+    .wkt-zone.backdrop {
+        box-shadow: 0 0 0 4400px rgba(0, 0, 0, 0.6);
+    }
+}
+
+// For > 4K (8K screen)
+
+@media screen and (min-width: 3840px), screen and (min-height: 3840px) {
+    .wkt-zone.backdrop {
+        box-shadow: 0 0 0 8800px rgba(0, 0, 0, 0.6);
+    }
+}
+
+// [HACK] Safari 9+ (non-iOS) : box-shadow sizes over 2000px can be unpredictable
+
+_:default:not(:root:root), .wkt-zone.backdrop {
+    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6) !important;
+}
