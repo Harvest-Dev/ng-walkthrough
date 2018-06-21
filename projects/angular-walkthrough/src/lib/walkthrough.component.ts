@@ -309,8 +309,8 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     next(
-        closedEvent: EventEmitter<boolean> = undefined,
-        finishedEvent: EventEmitter<WalkthroughEvent> = undefined
+        closedEvent?: EventEmitter<boolean>,
+        finishedEvent?: EventEmitter<WalkthroughEvent>
     ) {
         if (closedEvent) {
             this.closed = closedEvent;
@@ -381,8 +381,8 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     private _next(
-        closedEvent: EventEmitter<boolean> = undefined,
-        finishedEvent: EventEmitter<WalkthroughEvent> = undefined
+        closedEvent?: EventEmitter<boolean>,
+        finishedEvent?: EventEmitter<WalkthroughEvent>
     ) {
         if (closedEvent) {
             this.closed = closedEvent;
@@ -420,7 +420,7 @@ export class WalkthroughComponent implements AfterViewInit {
     ) {
         if (componentOrTemplateRef instanceof TemplateRef) {
             walkthroughContainer.attachTemplatePortal(
-                new TemplatePortal<T>(componentOrTemplateRef, null!));
+                new TemplatePortal<T>(componentOrTemplateRef, null));
         } else {
             const injectionTokens = new WeakMap();
             injectionTokens.set(WalkthroughContainerComponent, walkthroughContainer);
