@@ -1,25 +1,39 @@
-build
-coverage
-dist
-debug.log
-node_modules
-out-tsc
-package-lock.json
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# git
-*.orig
+# compiled output
+/dist
+/tmp
+/out-tsc
 
-# IDE
-nbproject/**
+# dependencies
+/node_modules
 
-# meld
-*_BACKUP_*
-*_LOCAL_*
-*_BASE_*
-*_REMOTE_*
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# global
-*.log
-*.bak
-[Tt]humbs.db
-/angular-walkthrough-0.1.0/angular-walkthrough-0.1.0/package/nbproject/private/
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
