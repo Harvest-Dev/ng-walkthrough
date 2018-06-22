@@ -2,8 +2,9 @@
 
 ## V0.7.0 (2018-06-22)
 
-### Upgrade
+### Breaking changes
 
+- **not compatible anymore with Angular 5**
 - upgrade to Angular 6 using Angular CLI
 - change folders architecture to match the Angular CLI `ng new` and `ng generate library`
 
