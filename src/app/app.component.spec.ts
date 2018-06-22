@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { AngularWalkthroughModule } from 'angular-walkthrough';
+import { WalkthroughModule } from 'angular-walkthrough';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -9,7 +9,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       imports: [
-        AngularWalkthroughModule
+        WalkthroughModule
       ],
     }).compileComponents();
   }));

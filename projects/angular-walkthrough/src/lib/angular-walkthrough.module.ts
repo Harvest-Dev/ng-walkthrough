@@ -29,4 +29,4 @@ import { WalkthroughContainerComponent } from './walkthrough-container.component
     WalkthroughService
   ]
 })
-export class AngularWalkthroughModule { }
+export class WalkthroughModule { }

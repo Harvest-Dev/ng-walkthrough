@@ -2,14 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AngularWalkthroughModule } from 'angular-walkthrough';
+import { WalkthroughModule } from 'angular-walkthrough';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    AngularWalkthroughModule,
+    WalkthroughModule,
     BrowserModule
   ],
   providers: [],
