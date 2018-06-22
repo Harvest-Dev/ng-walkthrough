@@ -12,12 +12,12 @@ npm i angular-walkthrough --save
 
 ## Requirements
 
-- Angular 5.0.0 and more
-- Angular/cdk 5.0.0 and more
+- Angular 6.0.0 and more
+- Angular/cdk 6.0.0 and more
 
 ## Demo
 
-[See a demo](https://zefling.github.io/ng-walkthrough/demo/).
+[See a demo](https://zefling.github.io/ng-walkthrough/dist/ng-walkthrough/).
 
 ## Usage
 
@@ -170,6 +170,14 @@ Example of scenario with `ng-walkthrough-flow`:
 ```
 
 For more examples, see `examples/example.component.html`.
+
+## Publishing the library
+
+```
+ng build angular-walkthrough --prod
+cd dist/angular-walkthrough
+npm publish
+```
 
 ## License
 

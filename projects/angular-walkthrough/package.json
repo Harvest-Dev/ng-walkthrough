@@ -1,0 +1,27 @@
+{
+  "name": "angular-walkthrough",
+  "version": "0.7.0",
+  "description": "Walkthrough, an Angular library",
+  "author": "Célian Veyssière",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "walkthrough",
+    "angular"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zefling/ng-walkthrough.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Zefling/ng-walkthrough/issues"
+  },
+  "homepage": "https://github.com/Zefling/ng-walkthrough#readme"
+}
