@@ -1,5 +1,12 @@
 # Changelog of ng-walkthrough
 
+## V0.7.0 (2018-06-22)
+
+### Upgrade
+
+- upgrade to Angular 6 using Angular CLI
+- change folders architecture to match the Angular CLI `ng new` and `ng generate library`
+
 ## V0.6.17 (2018-06-12)
 
 ### Corrections
