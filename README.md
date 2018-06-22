@@ -171,6 +171,14 @@ Example of scenario with `ng-walkthrough-flow`:
 
 For more examples, see `examples/example.component.html`.
 
+## Publishing the library
+
+```
+ng build angular-walkthrough --prod
+cd dist/angular-walkthrough
+npm publish
+```
+
 ## License
 
 Like Angular, this module is released under the permissive MIT license. Your contributions are always welcome.
