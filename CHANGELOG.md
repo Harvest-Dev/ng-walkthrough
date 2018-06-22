@@ -8,6 +8,10 @@
 - upgrade to Angular 6 using Angular CLI
 - change folders architecture to match the Angular CLI `ng new` and `ng generate library`
 
+### Corrections
+
+- Protection against crashes when the selector is invalid
+
 ## V0.6.17 (2018-06-12)
 
 ### Corrections
