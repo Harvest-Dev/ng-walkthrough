@@ -12,12 +12,12 @@ npm i angular-walkthrough --save
 
 ## Requirements
 
-- Angular 5.0.0 and more
-- Angular/cdk 5.0.0 and more
+- Angular 6.0.0 and more
+- Angular/cdk 6.0.0 and more
 
 ## Demo
 
-[See a demo](https://zefling.github.io/ng-walkthrough/demo/).
+[See a demo](https://zefling.github.io/ng-walkthrough/dist/ng-walkthrough/).
 
 ## Usage
 
