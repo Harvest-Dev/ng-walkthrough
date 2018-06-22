@@ -10,7 +10,6 @@ import {
     ApplicationRef,
     Injector,
     HostListener,
-    OnInit,
     AfterViewInit,
     Renderer2,
     EventEmitter

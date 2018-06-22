@@ -4,23 +4,7 @@ import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-t
 @Injectable()
 export class WalkthroughService {
 
-    private _preventDefault = ((e: Event) => {
-        e = e || window.event;
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
-        e.returnValue = false;
-    }).bind(this);
-
     private _overflowRegex = /(auto|scroll)/;
-
-    private _preventDefaultForScrollKeys = ((e: KeyboardEvent) => {
-        // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36, left: 37, up: 38, right: 39, down: 40
-        if (e.keyCode >= 32 && e.keyCode <= 40) {
-            this._preventDefault(e);
-            return false;
-        }
-    }).bind(this);
 
     retrieveCoordinates(element: HTMLElement, margin?: WalkthroughMargin): WalkthroughElementCoordinate {
         const clientrect: ClientRect = element.getBoundingClientRect();
