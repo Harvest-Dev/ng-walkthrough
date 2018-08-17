@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/angular-walkthrough.svg)](https://badge.fury.io/js/angular-walkthrough) [![Downloads](https://img.shields.io/npm/dm/angular-walkthrough.svg)](https://www.npmjs.com/package/angular-walkthrough) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Zefling/ng-walkthrough/master/LICENSE.md)
+[![npm version](https://badge.fury.io/js/angular-walkthrough.svg)](https://badge.fury.io/js/angular-walkthrough) [![Downloads](https://img.shields.io/npm/dm/angular-walkthrough.svg)](https://www.npmjs.com/package/angular-walkthrough) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/harvest-dev/ng-walkthrough/master/LICENSE.md)
 
 # Walkthrough
 
@@ -17,7 +17,7 @@ npm i angular-walkthrough --save
 
 ## Demo
 
-[See a demo](https://zefling.github.io/ng-walkthrough/dist/ng-walkthrough/).
+[See a demo](https://harvest-dev.github.io/ng-walkthrough/dist/ng-walkthrough/).
 
 ## Usage
 
