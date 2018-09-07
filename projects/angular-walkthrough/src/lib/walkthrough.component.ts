@@ -359,7 +359,7 @@ export class WalkthroughComponent implements AfterViewInit {
         this._display = false;
 
         // add CSS to focusElement
-        if (this.focusElementCSSClass) {
+        if (this.focusElementCSSClass && this._focusElement) {
             this._renderer.removeClass(this._focusElement, this.focusElementCSSClass);
         }
 
@@ -581,7 +581,7 @@ export class WalkthroughComponent implements AfterViewInit {
                 }
 
                 // add CSS to focusElement
-                if (this.focusElementCSSClass) {
+                if (this.focusElementCSSClass && this._focusElement) {
                     this._renderer.addClass(this._focusElement, this.focusElementCSSClass);
                 }
 
