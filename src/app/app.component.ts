@@ -4,7 +4,7 @@ import {
   WalkthroughContainerComponent,
   WalkthroughEvent,
   WalkthroughComponent
-} from 'angular-walkthrough';
+} from 'projects/angular-walkthrough/src/public_api';
 
 @Component({
   selector: 'app-root',
