@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.7.1 (2018-09-17)
+
+### Corrections
+
+- Fix crashes with “Toggle focusElementSelector” in demo
+
 ## V0.7.0 (2018-06-22)
 
 ### Breaking changes
