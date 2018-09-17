@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "html,\nbody {\n    height: 100%;\n    width: 100%;\n    padding: 0;\n    margin: 0;\n}\n"
+module.exports = "html,\r\nbody {\r\n    height: 100%;\r\n    width: 100%;\r\n    padding: 0;\r\n    margin: 0;\r\n}\r\n"
 
 /***/ }),
 
@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\BMenadier\dev\projects\ng-walkthrough\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! c:\Data\sources-svn\pitch\angular-walkthrough\src\styles.css */"./src/styles.css");
 
 
 /***/ })
