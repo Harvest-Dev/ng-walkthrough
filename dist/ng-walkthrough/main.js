@@ -917,10 +917,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WalkthroughComponent", function() { return WalkthroughComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/portal */ "./node_modules/@angular/cdk/esm5/portal.es5.js");
-/* harmony import */ var _walkthrough_container_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./walkthrough-container.component */ "./projects/angular-walkthrough/src/lib/walkthrough-container.component.ts");
-/* harmony import */ var _walkthrough_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./walkthrough.service */ "./projects/angular-walkthrough/src/lib/walkthrough.service.ts");
-/* harmony import */ var _walkthrough_text__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./walkthrough-text */ "./projects/angular-walkthrough/src/lib/walkthrough-text.ts");
-/* harmony import */ var _walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./walkthrough-tools */ "./projects/angular-walkthrough/src/lib/walkthrough-tools.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _walkthrough_container_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./walkthrough-container.component */ "./projects/angular-walkthrough/src/lib/walkthrough-container.component.ts");
+/* harmony import */ var _walkthrough_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./walkthrough.service */ "./projects/angular-walkthrough/src/lib/walkthrough.service.ts");
+/* harmony import */ var _walkthrough_text__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./walkthrough-text */ "./projects/angular-walkthrough/src/lib/walkthrough-text.ts");
+/* harmony import */ var _walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./walkthrough-tools */ "./projects/angular-walkthrough/src/lib/walkthrough-tools.ts");
 var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -938,6 +939,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -970,7 +972,7 @@ var WalkthroughComponent = /** @class */ (function () {
         this._hasCloseButton = false;
         this._hasCloseAnywhere = true;
         this._disabled = false;
-        this._marginZonePx = new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["WalkthroughMargin"]();
+        this._marginZonePx = new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["WalkthroughMargin"]();
         this._alignContent = 'left';
         this._verticalAlignContent = 'top';
         this._contentSpacing = 0;
@@ -984,7 +986,7 @@ var WalkthroughComponent = /** @class */ (function () {
                 if (points === null) {
                     this._marginZone = null;
                 }
-                this._marginZonePx = _walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["WalkthroughMargin"].parsePoints(points);
+                this._marginZonePx = _walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["WalkthroughMargin"].parsePoints(points);
                 if (this._marginZonePx !== null) {
                     this._marginZone = points;
                 }
@@ -1083,7 +1085,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasCloseButton;
         },
         set: function (value) {
-            this._hasCloseButton = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasCloseButton = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1093,7 +1095,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasCloseAnywhere;
         },
         set: function (value) {
-            this._hasCloseAnywhere = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasCloseAnywhere = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1103,7 +1105,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasArrow;
         },
         set: function (value) {
-            this._hasArrow = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasArrow = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1113,7 +1115,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasFinish;
         },
         set: function (value) {
-            this._hasFinish = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasFinish = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1123,7 +1125,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasHighlightAnimation;
         },
         set: function (value) {
-            this._hasHighlightAnimation = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasHighlightAnimation = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1133,7 +1135,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasBackdrop;
         },
         set: function (value) {
-            this._hasBackdrop = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasBackdrop = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1143,7 +1145,7 @@ var WalkthroughComponent = /** @class */ (function () {
             return this._hasGlow;
         },
         set: function (value) {
-            this._hasGlow = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["booleanValue"])(value);
+            this._hasGlow = Object(_walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["booleanValue"])(value);
         },
         enumerable: true,
         configurable: true
@@ -1217,7 +1219,7 @@ var WalkthroughComponent = /** @class */ (function () {
             WalkthroughComponent_1._walkthroughContainerCreating = true;
             setTimeout(function () {
                 WalkthroughComponent_1._walkthroughContainer =
-                    _this._appendComponentToBody(_walkthrough_container_component__WEBPACK_IMPORTED_MODULE_2__["WalkthroughContainerComponent"]);
+                    _this._appendComponentToBody(_walkthrough_container_component__WEBPACK_IMPORTED_MODULE_3__["WalkthroughContainerComponent"]);
             }, 0);
         }
     };
@@ -1232,11 +1234,13 @@ var WalkthroughComponent = /** @class */ (function () {
     };
     WalkthroughComponent.prototype.refresh = function () {
         if (!this._getInstance().pause) {
+            WalkthroughComponent_1.onRefresh.next(this);
             this._elementLocations();
         }
     };
     WalkthroughComponent.prototype.open = function () {
         if (!this._getInstance().pause) {
+            WalkthroughComponent_1.onOpen.next(this);
             this._elementLocations();
         }
         else {
@@ -1249,6 +1253,8 @@ var WalkthroughComponent = /** @class */ (function () {
     WalkthroughComponent.prototype.loadPrevioustStep = function () {
         var _this = this;
         setTimeout(function () {
+            WalkthroughComponent_1.onNavigate.next({ previous: _this, next: _this.previousStep });
+            WalkthroughComponent_1.onNavigatePrevious.next({ previous: _this, next: _this.previousStep });
             _this.previousStep._next(_this.closed, _this.finished);
         }, 0);
     };
@@ -1258,6 +1264,8 @@ var WalkthroughComponent = /** @class */ (function () {
     WalkthroughComponent.prototype.loadNextStep = function () {
         var _this = this;
         setTimeout(function () {
+            WalkthroughComponent_1.onNavigate.next({ previous: _this, next: _this.nextStep });
+            WalkthroughComponent_1.onNavigateNext.next({ previous: _this, next: _this.nextStep });
             _this.nextStep._next(_this.closed, _this.finished);
         }, 0);
     };
@@ -1275,11 +1283,13 @@ var WalkthroughComponent = /** @class */ (function () {
         }
         if (closeWalkthrough) {
             setTimeout(function () {
+                WalkthroughComponent_1.onClose.next(_this);
                 // emit closed event
                 _this.closed.emit(finishLink);
                 if (!_this.nextStep) {
                     // emit finished event
-                    _this.finished.emit(new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["WalkthroughEvent"](_this, _this._focusElement));
+                    WalkthroughComponent_1.onFinish.next(_this);
+                    _this.finished.emit(new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["WalkthroughEvent"](_this, _this._focusElement));
                 }
             }, 20);
         }
@@ -1317,7 +1327,7 @@ var WalkthroughComponent = /** @class */ (function () {
         }
         else {
             var injectionTokens = new WeakMap();
-            injectionTokens.set(_walkthrough_container_component__WEBPACK_IMPORTED_MODULE_2__["WalkthroughContainerComponent"], walkthroughContainer);
+            injectionTokens.set(_walkthrough_container_component__WEBPACK_IMPORTED_MODULE_3__["WalkthroughContainerComponent"], walkthroughContainer);
             var injector = new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_1__["PortalInjector"](this._injector, injectionTokens);
             walkthroughContainer.attachComponentPortal(new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_1__["ComponentPortal"](componentOrTemplateRef, undefined, injector));
         }
@@ -1446,7 +1456,7 @@ var WalkthroughComponent = /** @class */ (function () {
                     _this._getInstance().setHeight();
                     if (!_this._readyHasBeenEmited) {
                         _this._readyHasBeenEmited = true;
-                        _this.ready.emit(new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_5__["WalkthroughEvent"](_this, _this._focusElement));
+                        _this.ready.emit(new _walkthrough_tools__WEBPACK_IMPORTED_MODULE_6__["WalkthroughEvent"](_this, _this._focusElement));
                     }
                     var contentBlockNative = instance.contentBlock.nativeElement;
                     var scrollPos;
@@ -1528,7 +1538,7 @@ var WalkthroughComponent = /** @class */ (function () {
         instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts
-            ? __assign({}, new _walkthrough_text__WEBPACK_IMPORTED_MODULE_4__["WalkthroughText"](), this.texts) : new _walkthrough_text__WEBPACK_IMPORTED_MODULE_4__["WalkthroughText"]();
+            ? __assign({}, new _walkthrough_text__WEBPACK_IMPORTED_MODULE_5__["WalkthroughText"](), this.texts) : new _walkthrough_text__WEBPACK_IMPORTED_MODULE_5__["WalkthroughText"]();
         this._show();
     };
     /**
@@ -1564,6 +1574,13 @@ var WalkthroughComponent = /** @class */ (function () {
     WalkthroughComponent._walkthroughContainer = null;
     WalkthroughComponent._walkthroughContainerCreating = false;
     WalkthroughComponent.minimalMargin = 30;
+    WalkthroughComponent.onOpen = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onRefresh = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onClose = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onNavigate = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onNavigatePrevious = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onNavigateNext = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    WalkthroughComponent.onFinish = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"])
@@ -1610,7 +1627,7 @@ var WalkthroughComponent = /** @class */ (function () {
     ], WalkthroughComponent.prototype, "nextStep", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", _walkthrough_text__WEBPACK_IMPORTED_MODULE_4__["WalkthroughText"])
+        __metadata("design:type", _walkthrough_text__WEBPACK_IMPORTED_MODULE_5__["WalkthroughText"])
     ], WalkthroughComponent.prototype, "texts", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -1722,7 +1739,7 @@ var WalkthroughComponent = /** @class */ (function () {
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ApplicationRef"],
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"],
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"],
-            _walkthrough_service__WEBPACK_IMPORTED_MODULE_3__["WalkthroughService"]])
+            _walkthrough_service__WEBPACK_IMPORTED_MODULE_4__["WalkthroughService"]])
     ], WalkthroughComponent);
     return WalkthroughComponent;
     var WalkthroughComponent_1;
@@ -1967,6 +1984,9 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
 
 var AppComponent = /** @class */ (function () {
@@ -1992,6 +2012,33 @@ var AppComponent = /** @class */ (function () {
         this.hideCount = 3;
         this._count = 3;
         this._start = false;
+        this._listener = [];
+        this._listener.push(projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onOpen.subscribe(function (compt) {
+            console.group('open');
+            console.log('onOpen:', compt.id);
+            console.groupEnd();
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onClose.subscribe(function (compt) {
+            console.group('close');
+            console.log('onClose:', compt.id);
+            console.groupEnd();
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onFinish.subscribe(function (compt) {
+            console.group('finish (close on the last step)');
+            console.log('onFinish:', compt.id);
+            console.groupEnd();
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onRefresh.subscribe(function (compt) {
+            console.group('refresh');
+            console.log('onRefresh:', compt.id);
+            console.groupEnd();
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onNavigate.subscribe(function (compt) {
+            console.group('navigate');
+            console.log('onNavigate:', compt.previous.id, '→', compt.next.id);
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onNavigateNext.subscribe(function (compt) {
+            console.log('onNavigateNext:', compt.previous.id, '→', compt.next.id);
+            console.groupEnd();
+        }), projects_angular_walkthrough_src_public_api__WEBPACK_IMPORTED_MODULE_1__["WalkthroughComponent"].onNavigatePrevious.subscribe(function (compt) {
+            console.log('onNavigatePrevious:', compt.previous.id, '→', compt.next.id);
+            console.groupEnd();
+        }));
     }
     Object.defineProperty(AppComponent.prototype, "isMobile", {
         get: function () {
@@ -2079,12 +2126,19 @@ var AppComponent = /** @class */ (function () {
             }
         });
     };
+    AppComponent.prototype.ngOnDestroy = function () {
+        for (var _i = 0, _a = this._listener; _i < _a.length; _i++) {
+            var list = _a[_i];
+            list.unsubscribe();
+        }
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
-        })
+        }),
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
 }());
@@ -2200,7 +2254,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! c:\Data\sources-svn\pitch\angular-walkthrough\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Data\sources-svn\pitch\angular-walkthrough\src\main.ts */"./src/main.ts");
 
 
 /***/ })
