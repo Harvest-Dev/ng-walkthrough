@@ -1,5 +1,18 @@
 # Changelog of ng-walkthrough
 
+## V0.7.2 (2018-10-25)
+
+### New features
+
+- Add subjects on `WalkthroughComponent` :
+    - `onOpen` : on open
+    - `onRefresh` : on reshowing the current step
+    - `onClose`  : on close
+    - `onFinish` : on close in the last step
+    - `onNavigate` : on navigate
+    - `onNavigatePrevious` : on navigate on the previous step
+    - `onNavigateNext`  : on navigate on the next step
+
 ## V0.7.1 (2018-09-17)
 
 ### Corrections

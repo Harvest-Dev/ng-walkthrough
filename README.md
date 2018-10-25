@@ -119,6 +119,16 @@ Does not work if no walkthrough is showed.
 - `WalkthroughComponent.walkthroughNext()` : to load the next walkthrough.
 - `WalkthroughComponent.walkthroughPrevious()` : to load the previous walkthrough.
 
+### Statics observable
+
+- `WalkthroughComponent.onOpen` : on open
+- `WalkthroughComponent.onRefresh` : on reshowing the current step
+- `WalkthroughComponent.onClose`  : on close
+- `WalkthroughComponent.onFinish` : on close in the last step
+- `WalkthroughComponent.onNavigate` : on navigate
+- `WalkthroughComponent.onNavigatePrevious` : on navigate on the previous step
+- `WalkthroughComponent.onNavigateNext`  : on navigate on the next step
+
 ### Example
 
 Highlighting `#selectorId` element with example text in `ng-template`.
@@ -175,6 +185,7 @@ For more examples, see `examples/example.component.html`.
 
 ```
 ng build angular-walkthrough --prod
+cp *.md  dist/angular-walkthrough
 cd dist/angular-walkthrough
 npm publish
 ```

@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import {
   WalkthroughText,
   WalkthroughContainerComponent,
   WalkthroughEvent,
-  WalkthroughComponent
+  WalkthroughComponent,
+  WalkthroughNavigate
 } from 'projects/angular-walkthrough/src/public_api';
 
 @Component({
@@ -11,7 +14,7 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   frenchText: WalkthroughText = {
     previous: 'Précédent',
     next: 'Suivant',
@@ -39,6 +42,45 @@ export class AppComponent {
 
   get isMobile(): boolean {
     return window.innerWidth < 768;
+  }
+
+  private _listener: Subscription[] = [];
+
+  constructor() {
+    this._listener.push(
+      WalkthroughComponent.onOpen.subscribe((compt: WalkthroughComponent) => {
+        console.group('open');
+        console.log('onOpen:', compt.id);
+        console.groupEnd();
+      }),
+      WalkthroughComponent.onClose.subscribe((compt: WalkthroughComponent) => {
+        console.group('close');
+        console.log('onClose:', compt.id);
+        console.groupEnd();
+      }),
+      WalkthroughComponent.onFinish.subscribe((compt: WalkthroughComponent) => {
+        console.group('finish (close on the last step)');
+        console.log('onFinish:', compt.id);
+        console.groupEnd();
+      }),
+      WalkthroughComponent.onRefresh.subscribe((compt: WalkthroughComponent) => {
+        console.group('refresh');
+        console.log('onRefresh:', compt.id);
+        console.groupEnd();
+      }),
+      WalkthroughComponent.onNavigate.subscribe((compt: WalkthroughNavigate) => {
+        console.group('navigate');
+        console.log('onNavigate:', compt.previous.id, '→', compt.next.id);
+      }),
+      WalkthroughComponent.onNavigateNext.subscribe((compt: WalkthroughNavigate) => {
+        console.log('onNavigateNext:', compt.previous.id, '→', compt.next.id);
+        console.groupEnd();
+      }),
+      WalkthroughComponent.onNavigatePrevious.subscribe((compt: WalkthroughNavigate) => {
+        console.log('onNavigatePrevious:', compt.previous.id, '→', compt.next.id);
+        console.groupEnd();
+      })
+    );
   }
 
   buttonAction() {
@@ -125,5 +167,11 @@ export class AppComponent {
         elt.id += '-rename';
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    for (const list of this._listener) {
+      list.unsubscribe();
+    }
   }
 }

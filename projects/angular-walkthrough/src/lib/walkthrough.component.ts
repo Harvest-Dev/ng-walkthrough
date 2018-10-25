@@ -1,27 +1,22 @@
 import {
-    Type,
-    TemplateRef,
-    Input,
-    Output,
-    Component,
-    ComponentFactoryResolver,
-    EmbeddedViewRef,
-    ComponentRef,
-    ApplicationRef,
-    Injector,
-    HostListener,
-    AfterViewInit,
-    Renderer2,
-    EventEmitter
+    Type, TemplateRef, Input, Output, Component, ComponentFactoryResolver, EmbeddedViewRef, ComponentRef,
+    ApplicationRef, Injector, HostListener, AfterViewInit, Renderer2, EventEmitter
 } from '@angular/core';
-
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
+
+import { Subject } from 'rxjs';
+
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
 import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 let nextUniqueId = 0;
+
+export interface WalkthroughNavigate {
+    previous: WalkthroughComponent;
+    next: WalkthroughComponent;
+}
 
 @Component({
     selector: 'ng-walkthrough',
@@ -32,6 +27,14 @@ export class WalkthroughComponent implements AfterViewInit {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
     public static minimalMargin = 30;
+
+    public static onOpen = new Subject<WalkthroughComponent>();
+    public static onRefresh = new Subject<WalkthroughComponent>();
+    public static onClose = new Subject<WalkthroughComponent>();
+    public static onNavigate = new Subject<WalkthroughNavigate>();
+    public static onNavigatePrevious = new Subject<WalkthroughNavigate>();
+    public static onNavigateNext = new Subject<WalkthroughNavigate>();
+    public static onFinish = new Subject<WalkthroughComponent>();
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter();
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
@@ -322,12 +325,14 @@ export class WalkthroughComponent implements AfterViewInit {
 
     refresh() {
         if (!this._getInstance().pause) {
+            WalkthroughComponent.onRefresh.next(this);
             this._elementLocations();
         }
     }
 
     open() {
         if (!this._getInstance().pause) {
+            WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
         } else {
             console.warn('Another walkthrough is in pause. Please close it before.');
@@ -339,6 +344,8 @@ export class WalkthroughComponent implements AfterViewInit {
      */
     loadPrevioustStep() {
         setTimeout(() => {
+            WalkthroughComponent.onNavigate.next({ previous: this, next: this.previousStep });
+            WalkthroughComponent.onNavigatePrevious.next({ previous: this, next: this.previousStep });
             this.previousStep._next(this.closed, this.finished);
         }, 0);
     }
@@ -348,6 +355,8 @@ export class WalkthroughComponent implements AfterViewInit {
      */
     loadNextStep() {
         setTimeout(() => {
+            WalkthroughComponent.onNavigate.next({ previous: this, next: this.nextStep });
+            WalkthroughComponent.onNavigateNext.next({ previous: this, next: this.nextStep });
             this.nextStep._next(this.closed, this.finished);
         }, 0);
     }
@@ -365,10 +374,14 @@ export class WalkthroughComponent implements AfterViewInit {
 
         if (closeWalkthrough) {
             setTimeout(() => {
+
+                WalkthroughComponent.onClose.next(this);
+
                 // emit closed event
                 this.closed.emit(finishLink);
                 if (!this.nextStep) {
                     // emit finished event
+                    WalkthroughComponent.onFinish.next(this);
                     this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
