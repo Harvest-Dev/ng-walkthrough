@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
@@ -14,7 +14,7 @@ import {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   frenchText: WalkthroughText = {
     previous: 'Précédent',
     next: 'Suivant',
@@ -29,6 +29,8 @@ export class AppComponent implements OnDestroy {
   valignHeight = '600px';
   contentSpacing = 200;
   verticalContentSpacing = 50;
+
+  @ViewChild('walk1') walk1: WalkthroughComponent;
 
   // disabled flags
   step1flowDisabled = false;
@@ -81,6 +83,11 @@ export class AppComponent implements OnDestroy {
         console.groupEnd();
       })
     );
+  }
+
+  ngOnInit() {
+    // for test: onContainerInit
+    // this.walk1.open();
   }
 
   buttonAction() {

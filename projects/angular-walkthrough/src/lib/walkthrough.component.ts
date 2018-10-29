@@ -5,6 +5,7 @@ import {
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 
 import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
@@ -12,6 +13,9 @@ import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 let nextUniqueId = 0;
+
+const noInstanceWarn = 'No instance of walkthroughContainer.';
+const anoterWktPauseWarn = 'Another walkthrough is in pause. Please close it before.';
 
 export interface WalkthroughNavigate {
     previous: WalkthroughComponent;
@@ -244,6 +248,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
     private _windowWidth: number;
+    private _onContainerInit = new Subject<void>();
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -306,7 +311,8 @@ export class WalkthroughComponent implements AfterViewInit {
             setTimeout(() => {
                 WalkthroughComponent._walkthroughContainer =
                     this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
-            }, 0);
+                this._onContainerInit.next();
+            });
         }
     }
 
@@ -324,18 +330,27 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     refresh() {
-        if (!this._getInstance().pause) {
-            WalkthroughComponent.onRefresh.next(this);
-            this._elementLocations();
+        if (this._getInstance()) {
+            if (!this._getInstance().pause) {
+                WalkthroughComponent.onRefresh.next(this);
+                this._elementLocations();
+            }
+        } else {
+            console.warn(noInstanceWarn);
         }
     }
 
     open() {
-        if (!this._getInstance().pause) {
-            WalkthroughComponent.onOpen.next(this);
-            this._elementLocations();
+        if (this._getInstance()) {
+            this._open();
         } else {
-            console.warn('Another walkthrough is in pause. Please close it before.');
+            this._onContainerInit.pipe(first()).subscribe(() => {
+                if (this._getInstance()) {
+                    this._open();
+                } else {
+                    console.warn(noInstanceWarn);
+                }
+            });
         }
     }
 
@@ -385,6 +400,15 @@ export class WalkthroughComponent implements AfterViewInit {
                     this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
+        }
+    }
+
+    private _open() {
+        if (!this._getInstance().pause) {
+            WalkthroughComponent.onOpen.next(this);
+            this._elementLocations();
+        } else {
+            console.warn(anoterWktPauseWarn);
         }
     }
 
