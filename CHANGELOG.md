@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.7.3 (2018-09-29)
+
+### Corrections
+
+- Fix a problem the instance is called too early.
+
 ## V0.7.2 (2018-10-25)
 
 ### New features

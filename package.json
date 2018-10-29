@@ -1,7 +1,7 @@
 {
     "name": "ng-walkthrough",
     "description": "Walkthrough, an Angular library",
-    "version": "0.7.2",
+    "version": "0.7.3",
     "author": "Célian Veyssière",
     "license": "MIT",
     "scripts": {
