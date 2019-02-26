@@ -225,6 +225,8 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
+    @Input() scrollOnTarget = true;
+
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
     private _readyHasBeenEmited = false;
@@ -475,7 +477,9 @@ export class WalkthroughComponent implements AfterViewInit {
 
         const element = this._focusElement;
         if (element) {
-            this._walkthroughService.scrollIntoViewIfOutOfView(element);
+            if (this.scrollOnTarget) {
+                this._walkthroughService.scrollIntoViewIfOutOfView(element);
+            }
 
             // if there is a root element defined (in some cases when position fixed is used, we need to scroll on it)
             if (this.rootElement) {

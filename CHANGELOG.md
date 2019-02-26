@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.7.4 (2019-02-26)
+
+### New features
+
+- Optional parameter `scrollOnTarget` default `true` : if the walkthrough detect that `focusElementSelector` is outside of the current view, scrolls automatically.
+
 ## V0.7.3 (2018-10-29)
 
 ### Corrections

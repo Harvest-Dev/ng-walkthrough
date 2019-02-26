@@ -43,7 +43,7 @@ export class WalkthroughService {
         return Math.max(this.getHeightOfPage() + this.getTop(), body_height);
     }
 
-    scrollIntoViewIfOutOfView(element: HTMLElement, marginTop = 0) {
+    scrollIntoViewIfOutOfView(element: HTMLElement) {
         const topOfPage = this.getTop();
         const heightOfPage = this.getHeightOfPage();
         let elementY = 0;
