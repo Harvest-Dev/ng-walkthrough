@@ -1,5 +1,15 @@
 # Changelog of ng-walkthrough
 
+## V0.8.0 (2019-03-28)
+
+### Breaking changes
+
+- upgrade to Angular 7
+
+### Corrections
+
+- Avoid resize event spamming
+
 ## V0.7.4 (2019-02-26)
 
 ### New features

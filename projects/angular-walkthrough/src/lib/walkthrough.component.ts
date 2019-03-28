@@ -5,7 +5,7 @@ import {
 import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 
 import { Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, debounceTime } from 'rxjs/operators';
 
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughService } from './walkthrough.service';
@@ -249,8 +249,8 @@ export class WalkthroughComponent implements AfterViewInit {
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
     private _offsetCoordinates: WalkthroughElementCoordinate;
-    private _windowWidth: number;
     private _onContainerInit = new Subject<void>();
+    private _onResize = new Subject<void>();
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -294,16 +294,24 @@ export class WalkthroughComponent implements AfterViewInit {
         private _injector: Injector,
         private _renderer: Renderer2,
         private _walkthroughService: WalkthroughService
-    ) { }
+    ) {
+        this._onResize.pipe(
+            debounceTime(200)
+        ).subscribe(() => {
+            if (this._display &&
+                WalkthroughComponent._walkthroughContainer &&
+                !WalkthroughComponent.walkthroughHasPause()) {
+                this._elementLocations();
+                setTimeout(() => {
+                    this._elementLocations();
+                }, 200);
+            }
+        });
+    }
 
     @HostListener('window:resize')
     resize() {
-        if (this._display &&
-            WalkthroughComponent._walkthroughContainer &&
-            window.innerWidth !== this._windowWidth &&
-            !WalkthroughComponent.walkthroughHasPause()) {
-            this._elementLocations();
-        }
+        this._onResize.next();
     }
 
     ngAfterViewInit() {
@@ -505,7 +513,6 @@ export class WalkthroughComponent implements AfterViewInit {
             this._offsetCoordinates = null;
         }
         this._setFocus();
-        this._windowWidth = window.innerWidth;
     }
 
     /**
