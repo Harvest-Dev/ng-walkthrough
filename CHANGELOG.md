@@ -1,5 +1,13 @@
 # Changelog of ng-walkthrough
 
+## V0.8.1 (2019-04-02)
+
+### Corrections
+
+- fix crash if `open()` called on multiple walkthrough at the same time
+- check existence of `focusElementSelector`
+- add `Promise<boolean>` on `open()`
+
 ## V0.8.0 (2019-03-28)
 
 ### Breaking changes
