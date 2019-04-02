@@ -15,7 +15,7 @@ import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, Walkthrou
 let nextUniqueId = 0;
 
 const noInstanceWarn = 'No instance of walkthroughContainer.';
-const anoterWktPauseWarn = 'Another walkthrough is in pause. Please close it before.';
+const anoterWktOnGoing = 'Another walkthrough is ongoing. Please close it before opening a new one.';
 
 export interface WalkthroughNavigate {
     previous: WalkthroughComponent;
@@ -226,6 +226,7 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     @Input() scrollOnTarget = true;
+    @Input() visibilityCallback: Function;
 
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
@@ -271,8 +272,16 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     static walkthroughContinue() {
-        if (WalkthroughComponent._walkthroughContainer) {
-            WalkthroughComponent._walkthroughContainer.instance.continue(true);
+        if (WalkthroughComponent._walkthroughContainer &&
+            WalkthroughComponent._walkthroughContainer.instance.parent) {
+            const visible = WalkthroughComponent._walkthroughContainer.instance.parent._checkVisibility();
+            if (visible) {
+                WalkthroughComponent._walkthroughContainer.instance.continue();
+            } else {
+                // we can't open the walkthrough anymore, the focusElementSelector is no more visible
+                // so we update the flag "ongoing"
+                WalkthroughComponent._walkthroughContainer.instance.ongoing = false;
+            }
         }
     }
 
@@ -298,9 +307,8 @@ export class WalkthroughComponent implements AfterViewInit {
         this._onResize.pipe(
             debounceTime(200)
         ).subscribe(() => {
-            if (this._display &&
-                WalkthroughComponent._walkthroughContainer &&
-                !WalkthroughComponent.walkthroughHasPause()) {
+            const instance = this._getInstance();
+            if (instance && instance.ongoing && this._display) {
                 this._elementLocations();
                 setTimeout(() => {
                     this._elementLocations();
@@ -341,27 +349,36 @@ export class WalkthroughComponent implements AfterViewInit {
 
     refresh() {
         if (this._getInstance()) {
-            if (!this._getInstance().pause) {
+            if (!this._getInstance().ongoing) {
                 WalkthroughComponent.onRefresh.next(this);
                 this._elementLocations();
+            } else {
+                console.warn(anoterWktOnGoing);
             }
         } else {
             console.warn(noInstanceWarn);
         }
     }
 
-    open() {
-        if (this._getInstance()) {
-            this._open();
-        } else {
-            this._onContainerInit.pipe(first()).subscribe(() => {
+    open(): Promise<boolean> {
+        return new Promise<boolean>((resolve) => {
+            if (this._checkVisibility()) {
                 if (this._getInstance()) {
-                    this._open();
+                    resolve(this._open());
                 } else {
-                    console.warn(noInstanceWarn);
+                    this._onContainerInit.pipe(first()).subscribe(() => {
+                        if (this._getInstance()) {
+                            resolve(this._open());
+                        } else {
+                            console.warn(noInstanceWarn);
+                            resolve(false);
+                        }
+                    });
                 }
-            });
-        }
+            } else {
+                resolve(false);
+            }
+        });
     }
 
     /**
@@ -400,6 +417,7 @@ export class WalkthroughComponent implements AfterViewInit {
         if (closeWalkthrough) {
             setTimeout(() => {
 
+                this._getInstance().ongoing = false;
                 WalkthroughComponent.onClose.next(this);
 
                 // emit closed event
@@ -413,12 +431,33 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
-    private _open() {
-        if (!this._getInstance().pause) {
+    private _checkVisibility(): boolean {
+        if (this.focusElementSelector) {
+            const elements = document.querySelectorAll(this.focusElementSelector);
+            if (elements.length === 0) {
+                return false;
+            }
+            if (this.visibilityCallback) {
+                return this.visibilityCallback();
+            }
+            for (const el of <any>elements) {
+                if (el.offsetParent === null) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private _open(): boolean {
+        if (!this._getInstance().ongoing) {
+            this._getInstance().ongoing = true;
             WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
+            return true;
         } else {
-            console.warn(anoterWktPauseWarn);
+            console.warn(anoterWktOnGoing);
+            return false;
         }
     }
 
@@ -435,6 +474,10 @@ export class WalkthroughComponent implements AfterViewInit {
         }
         if (finishedEvent) {
             this.finished = finishedEvent;
+        }
+        const instance = this._getInstance();
+        if (instance && instance.ongoing) {
+            instance.ongoing = false;
         }
         this.open();
     }

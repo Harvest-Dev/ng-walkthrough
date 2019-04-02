@@ -32,6 +32,9 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     markerUrl = 'url(#wkt-arrow)';
 
+    /* if a walkthrough is ongoing (paused or not) */
+    ongoing = false;
+
     show = false;
     pause = false;
     parent: WalkthroughComponent;
@@ -461,19 +464,11 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     /**
      * continue the walkthrough if is stopped : show the container and change to pause at false
      */
-    continue(unpause = false) {
+    continue() {
         if (this.parent && this.pause) {
             this.show = true;
             this.pause = false;
-            if (unpause) {
-                // if focusElement does not exist anymore, we close the walkthrough (without emiting any event)
-                if (this.parent.focusElementSelector && !document.querySelector(this.parent.focusElementSelector)) {
-                    this.close(false, false);
-                } else {
-                    // we update elements positioning on the current walkthrough
-                    this.parent.refresh();
-                }
-            }
+            this.parent.refresh();
         }
     }
 
