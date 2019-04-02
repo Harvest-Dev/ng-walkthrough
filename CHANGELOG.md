@@ -7,6 +7,7 @@
 - fix crash if `open()` called on multiple walkthrough at the same time
 - check existence of `focusElementSelector`
 - add `Promise<boolean>` on `open()`
+- add `visibilityCallback` attribute
 
 ## V0.8.0 (2019-03-28)
 
