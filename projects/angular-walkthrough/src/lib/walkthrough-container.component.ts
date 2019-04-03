@@ -204,8 +204,8 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             }, intervale);
 
         } else {
-            zoneStyle.left = coordinate.left + 'px';
-            zoneStyle.top = coordinate.top + 'px';
+            zoneStyle.left = (coordinate.left - this.marginZonePx.left) + 'px';
+            zoneStyle.top = (coordinate.top - this.marginZonePx.top) + 'px';
             zoneStyle.width = coordinate.width + 'px';
             zoneStyle.height = coordinate.height + 'px';
 
@@ -239,7 +239,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
     }
 
     contentBlockPosition(
-        coordinate: WalkthroughElementCoordinate,
+        paramcoordinate: WalkthroughElementCoordinate,
         alignContent: 'left' | 'center' | 'right',
         verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
         contentSpacing: number,
@@ -249,6 +249,12 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         const elementSize = this._walkthroughService.retrieveCoordinates(element);
         const width = elementSize.width + elementSize.margin.left + elementSize.margin.right;
         const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
+
+        const coordinate = JSON.parse(JSON.stringify(paramcoordinate));
+        coordinate.top -= this.marginZonePx.top;
+        coordinate.left -= this.marginZonePx.left;
+        coordinate.width += this.marginZonePx.left + this.marginZonePx.right;
+        coordinate.height += this.marginZonePx.top + this.marginZonePx.bottom;
 
         // check if we've got the space to respect the alignContent attribute
         let notEnoughSpace = false;
@@ -372,17 +378,25 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     }
 
-    arrowPosition(coordinate: WalkthroughElementCoordinate, verticalContentSpacing: number) {
+    arrowPosition(coordinate: WalkthroughElementCoordinate) {
 
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
+        const realwidth = coordinate.width + this.marginZonePx.left + this.marginZonePx.right;
+        const realheight = coordinate.height + this.marginZonePx.top + this.marginZonePx.bottom;
+
+        // start point of the arrow (tail)
         let startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
         let startTop = contentBlockCoordinates.top + contentBlockCoordinates.height;
+
+        // start point of the curve of the arrow
         let centerTop: number;
         let centerLeft: number;
-        let endLeft = coordinate.left;
-        let endTop = coordinate.top + this.marginZonePx.top;
+
+        // end point of the arrow (head)
+        let endLeft = coordinate.left - this.marginZonePx.left;
+        let endTop = coordinate.top - this.marginZonePx.top;
 
         switch (this._contentPosition) {
             case 'top':
@@ -401,10 +415,10 @@ export class WalkthroughContainerComponent extends BasePortalHost {
         }
 
         if (this._arrowPosition === 'topBottom') {
-            endLeft += coordinate.width / 2;
+            endLeft += realwidth / 2;
 
             if (this._contentPosition === 'below') {
-                endTop += coordinate.height + 6;
+                endTop += realheight + 6;
             } else {
                 endTop -= 6;
             }
@@ -417,12 +431,12 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
         } else {
             if (startLeft > coordinate.left) {
-                endLeft += coordinate.width + this.arrowMarkerDist;
+                endLeft += realwidth + this.arrowMarkerDist;
             } else {
                 endLeft -= this.arrowMarkerDist;
             }
 
-            endTop += coordinate.height / 2;
+            endTop += realheight / 2;
 
             centerLeft = (startLeft + endLeft) / 2;
             centerTop = (startTop + endTop) / 2;

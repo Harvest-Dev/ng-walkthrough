@@ -78,16 +78,6 @@ export class WalkthroughService {
         }
     }
 
-    scrollToTopElement(element1: HTMLElement, element2: HTMLElement, margin: WalkthroughMargin) {
-        if (element1 && element2) {
-            const element1Position = this.retrieveCoordinates(element1, margin);
-            const element2Position = this.retrieveCoordinates(element2, margin);
-            const minX = Math.min(element1Position.left, element2Position.left);
-            const minY = Math.min(element1Position.top, element2Position.top);
-            window.scrollTo(minX - 20, minY - 20);
-        }
-    }
-
     getScrollParent(element: HTMLElement): HTMLElement {
         let scrollParent;
         let style = getComputedStyle(element);

@@ -537,13 +537,10 @@ export class WalkthroughComponent implements AfterViewInit {
                 document.querySelector(this.rootElement).scrollIntoView(true);
             }
 
-            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element, this._marginZonePx);
+            this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
 
             if (this.typeSelector === 'zone') {
-                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(
-                    this._focusElementEnd,
-                    this._marginZonePx
-                );
+                const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
 
                 this._offsetCoordinates.height = offsetEndCoordinatesEnd.top
                     - this._offsetCoordinates.top
@@ -627,6 +624,7 @@ export class WalkthroughComponent implements AfterViewInit {
             this._initStylingTemplate(instance);
             setTimeout(() => {
                 if (this._focusElement && instance.zone) {
+                    instance.marginZonePx = this._marginZonePx;
                     instance.hightlightZone(
                         this._offsetCoordinates,
                         scrollY - window.pageXOffset,
@@ -666,8 +664,7 @@ export class WalkthroughComponent implements AfterViewInit {
                 );
                 if (this._focusElement !== null && this._hasArrow) {
                     instance.arrowPosition(
-                        this._offsetCoordinates,
-                        this._verticalContentSpacing
+                        this._offsetCoordinates
                     );
                 }
 
