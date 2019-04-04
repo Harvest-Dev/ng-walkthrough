@@ -30,7 +30,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
-    public static minimalMargin = 30;
+    public static minimalMargin = 60;
 
     public static onOpen = new Subject<WalkthroughComponent>();
     public static onRefresh = new Subject<WalkthroughComponent>();

@@ -426,6 +426,13 @@ export class WalkthroughContainerComponent extends BasePortalHost {
             centerLeft = (startLeft + endLeft) / 2;
             centerTop = (startTop + endTop) / 2;
 
+            // we make the curve start nearer the tail of the arrow
+            if (startTop < centerTop) {
+                centerTop = centerTop - Math.abs(startTop - centerTop) / 2;
+            } else {
+                centerTop = centerTop + Math.abs(startTop - centerTop) / 2;
+            }
+
             this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${centerTop} ${centerLeft},${centerTop} `
                 + `Q${endLeft},${centerTop} ${endLeft},${endTop}`;
 
@@ -440,6 +447,13 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
             centerLeft = (startLeft + endLeft) / 2;
             centerTop = (startTop + endTop) / 2;
+
+            // we make the curve start nearer the tail of the arrow
+            if (startLeft < centerLeft) {
+                centerLeft = centerLeft - Math.abs(startLeft - centerLeft) / 2;
+            } else {
+                centerLeft = centerLeft + Math.abs(startLeft - centerLeft) / 2;
+            }
 
             let directStartLeft: number = startLeft;
             let directStartTop: number = startTop;
