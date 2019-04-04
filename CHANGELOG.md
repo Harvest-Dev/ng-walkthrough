@@ -1,5 +1,12 @@
 # Changelog of ng-walkthrough
 
+## V0.8.2 (2019-04-04)
+
+### Corrections
+
+- fix interpretation of `marginZone` to avoid arrow to be inside the highlight zone
+- make the curve of the arrow start nearer the tail to avoid arrow to be messed up
+
 ## V0.8.1 (2019-04-02)
 
 ### Corrections
