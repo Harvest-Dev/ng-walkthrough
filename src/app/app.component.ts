@@ -1,12 +1,9 @@
-import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
 import { Subscription } from 'rxjs';
 
 import {
-  WalkthroughText,
-  WalkthroughContainerComponent,
-  WalkthroughEvent,
-  WalkthroughComponent,
-  WalkthroughNavigate
+    WalkthroughComponent, WalkthroughContainerComponent, WalkthroughEvent, WalkthroughNavigate, WalkthroughTextI
 } from 'projects/angular-walkthrough/src/public_api';
 
 @Component({
@@ -15,7 +12,7 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  frenchText: WalkthroughText = {
+  frenchText: WalkthroughTextI = {
     previous: 'Précédent',
     next: 'Suivant',
     close: 'Fermer'

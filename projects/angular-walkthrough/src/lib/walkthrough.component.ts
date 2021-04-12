@@ -1,16 +1,16 @@
+import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import {
-    Type, TemplateRef, Input, Output, Component, ComponentFactoryResolver, EmbeddedViewRef, ComponentRef,
-    ApplicationRef, Injector, HostListener, AfterViewInit, Renderer2, EventEmitter
+    AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, EventEmitter,
+    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type
 } from '@angular/core';
-import { ComponentPortal, ComponentType, PortalInjector, TemplatePortal } from '@angular/cdk/portal';
 
 import { Subject } from 'rxjs';
-import { first, debounceTime } from 'rxjs/operators';
+import { debounceTime, first } from 'rxjs/operators';
 
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
+import { WalkthroughTextI } from './walkthrough-text';
+import { booleanValue, WalkthroughElementCoordinate, WalkthroughEvent, WalkthroughMargin } from './walkthrough-tools';
 import { WalkthroughService } from './walkthrough.service';
-import { WalkthroughText } from './walkthrough-text';
-import { WalkthroughEvent, booleanValue, WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 
 let nextUniqueId = 0;
 
@@ -54,7 +54,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
     @Input() previousStep: WalkthroughComponent;
     @Input() nextStep: WalkthroughComponent;
-    @Input() texts: WalkthroughText;
+    @Input() texts: WalkthroughTextI;
 
     @Input() contentTemplate: TemplateRef<any>;
     @Input() contentText: string;

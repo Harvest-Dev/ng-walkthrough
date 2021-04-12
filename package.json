@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "ci": "ng lint && ng e2e && ng test",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
