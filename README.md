@@ -15,6 +15,8 @@ npm i angular-walkthrough --save
 - Angular 11.0.0 and more
 - Angular/cdk 11.0.0 and more
 
+For Angular 6~11 use 0.8.2
+
 ## Demo
 
 [See a demo](https://harvest-dev.github.io/ng-walkthrough/dist/ng-walkthrough/).
