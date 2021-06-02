@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
 
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
-import { WalkthroughTextI } from './walkthrough-text';
+import { WalkthroughText, WalkthroughTextI } from './walkthrough-text';
 import { booleanValue, WalkthroughElementCoordinate, WalkthroughEvent, WalkthroughMargin } from './walkthrough-tools';
 import { WalkthroughService } from './walkthrough.service';
 
@@ -508,16 +508,9 @@ export class WalkthroughComponent implements AfterViewInit {
         walkthroughContainer: WalkthroughContainerComponent
     ) {
         if (componentOrTemplateRef instanceof TemplateRef) {
-            walkthroughContainer.attachTemplatePortal(
-                new TemplatePortal<T>(componentOrTemplateRef, null));
+            walkthroughContainer.attachTemplatePortal(new TemplatePortal<T>(componentOrTemplateRef, null));
         } else {
-            const injectionTokens = new WeakMap();
-            injectionTokens.set(WalkthroughContainerComponent, walkthroughContainer);
-            const injector = new PortalInjector(this._injector, injectionTokens);
-            walkthroughContainer.attachComponentPortal(
-                new ComponentPortal(componentOrTemplateRef, undefined, injector)
-            );
-
+            walkthroughContainer.attachComponentPortal(new ComponentPortal(componentOrTemplateRef));
         }
 
     }
