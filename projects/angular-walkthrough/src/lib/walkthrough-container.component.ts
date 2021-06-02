@@ -1,21 +1,13 @@
-import {
-    Component,
-    TemplateRef,
-    ViewChild,
-    ElementRef,
-    ViewContainerRef,
-    EmbeddedViewRef,
-    ComponentRef,
-    HostBinding,
-    HostListener,
-    Renderer2
-} from '@angular/core';
 import { BasePortalHost, ComponentPortal, PortalHostDirective, TemplatePortal } from '@angular/cdk/portal';
+import {
+    Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 
+import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
 import { WalkthroughComponent } from './walkthrough.component';
 import { WalkthroughService } from './walkthrough.service';
-import { WalkthroughText } from './walkthrough-text';
 
 export function throwWalkthroughContentAlreadyAttachedError() {
     throw Error('Attempting to attach walkthrough content after content is already attached');

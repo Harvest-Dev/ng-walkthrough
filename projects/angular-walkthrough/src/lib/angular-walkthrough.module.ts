@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PortalModule } from '@angular/cdk/portal';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughFlowComponent } from './walkthrough-flow.component';
 import { WalkthroughComponent } from './walkthrough.component';
 import { WalkthroughService } from './walkthrough.service';
-import { WalkthroughContainerComponent } from './walkthrough-container.component';
 
 @NgModule({
   imports: [

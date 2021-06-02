@@ -12,8 +12,8 @@ npm i angular-walkthrough --save
 
 ## Requirements
 
-- Angular 7.0.0 and more
-- Angular/cdk 7.0.0 and more
+- Angular 11.0.0 and more
+- Angular/cdk 11.0.0 and more
 
 ## Demo
 

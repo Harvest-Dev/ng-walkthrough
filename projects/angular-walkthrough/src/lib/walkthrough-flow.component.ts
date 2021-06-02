@@ -1,15 +1,7 @@
-import {
-    Component,
-    Input,
-    ContentChildren,
-    QueryList,
-    AfterViewInit,
-    Output,
-    EventEmitter
-} from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList } from '@angular/core';
 
+import { WalkthroughTextI } from './walkthrough-text';
 import { booleanValue, WalkthroughEvent } from './walkthrough-tools';
-import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughComponent } from './walkthrough.component';
 
 let nextUniqueId = 0;
@@ -44,7 +36,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     @Input() focusGlow: string | boolean;
     @Input() radius: string;
 
-    @Input() texts: WalkthroughText;
+    @Input() texts: WalkthroughTextI;
 
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
