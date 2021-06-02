@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:lib": "ng build angular-walkthrough --prod && cp *.md dist/angular-walkthrough",
     "ci": "ng lint && ng e2e && ng test",
     "test": "ng test",
     "lint": "ng lint",

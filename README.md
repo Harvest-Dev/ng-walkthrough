@@ -188,8 +188,7 @@ For more examples, see `examples/example.component.html`.
 ## Publishing the library
 
 ```
-ng build angular-walkthrough --prod
-cp *.md  dist/angular-walkthrough
+npm run build:lib
 cd dist/angular-walkthrough
 npm publish
 ```
