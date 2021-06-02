@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.0 (2021-06-02)
+
+### Breaking changes
+
+- upgrade to Angular 11
+
 ## V0.8.2 (2019-04-04)
 
 ### Corrections
