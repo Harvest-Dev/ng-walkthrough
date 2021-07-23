@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.1 (2019-07-23)
+
+### Corrections
+
+- fix the walkthrough pause on resize
+
 ## V0.9.0 (2021-06-02)
 
 ### Breaking changes
