@@ -308,7 +308,7 @@ export class WalkthroughComponent implements AfterViewInit {
             debounceTime(200)
         ).subscribe(() => {
             const instance = this._getInstance();
-            if (instance && instance.ongoing && this._display) {
+            if (instance?.ongoing && this._display && !WalkthroughComponent._walkthroughContainer?.instance?.pause) {
                 this._elementLocations();
                 setTimeout(() => {
                     this._elementLocations();
