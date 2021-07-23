@@ -1,7 +1,7 @@
 import { BasePortalHost, ComponentPortal, PortalHostDirective, TemplatePortal } from '@angular/cdk/portal';
 import {
     Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
 } from '@angular/core';
 
 import { WalkthroughText } from './walkthrough-text';

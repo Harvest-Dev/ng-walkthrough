@@ -1,7 +1,7 @@
 import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import {
     AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, EventEmitter,
-    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type
+    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
