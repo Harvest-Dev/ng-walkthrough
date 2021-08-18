@@ -1,4 +1,4 @@
-import { BasePortalHost, ComponentPortal, PortalHostDirective, TemplatePortal } from '@angular/cdk/portal';
+import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
     Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
     ViewContainerRef,
@@ -20,8 +20,7 @@ const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     styleUrls: ['./walkthrough-container.component.scss'],
     templateUrl: './walkthrough-container.component.html'
 })
-export class WalkthroughContainerComponent extends BasePortalHost {
-
+export class WalkthroughContainerComponent extends BasePortalOutlet {
     markerUrl = 'url(#wkt-arrow)';
 
     /* if a walkthrough is ongoing (paused or not) */
@@ -72,7 +71,7 @@ export class WalkthroughContainerComponent extends BasePortalHost {
 
     // elements
 
-    @ViewChild(PortalHostDirective) _portalHost: PortalHostDirective;
+    @ViewChild(CdkPortalOutlet) _portalHost: CdkPortalOutlet;
     @ViewChild('content') content: TemplateRef<any>;
     @ViewChild('contentBlock') contentBlock: ElementRef;
     @ViewChild('zone') zone: ElementRef;
