@@ -220,6 +220,7 @@
     [alignContent]="alignContent"
     [contentSpacing]="contentSpacing"
     [verticalContentSpacing]="verticalContentSpacing"
+    [notScrollOnResize]="notScrollOnResize"
     closeAnywhere="false"
 >
     <ng-template #valignContent>
@@ -246,6 +247,16 @@
                     min="0"
                 />
             </p>
+            <p>
+                notScrollOnResize
+                <input
+                    type="checkbox"
+                    #notScrollOnResizeValue
+                    [value]="notScrollOnResize"
+                    (change)="notScrollOnResize = notScrollOnResizeValue.checked"
+                />
+            </p>
+
             alignContent value :
             <div>
                 <button (click)="alignContent = 'left'">left</button>

@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
     valignHeight = '600px';
     contentSpacing = 200;
     verticalContentSpacing = 50;
+    notScrollOnResize = false;
 
     @ViewChild('walk1') walk1: WalkthroughComponent;
 

@@ -105,6 +105,14 @@ export class WalkthroughComponent implements AfterViewInit {
     @Input() animationDelays = 0;
 
     @Input()
+    get notScrollOnResize() {
+        return this._notScrollOnResize;
+    }
+    set notScrollOnResize(value: string | boolean) {
+        this._notScrollOnResize = booleanValue(value);
+    }
+
+    @Input()
     get id() {
         return this._id;
     }
@@ -270,6 +278,8 @@ export class WalkthroughComponent implements AfterViewInit {
     private _offsetCoordinates: WalkthroughElementCoordinate;
     private _onContainerInit = new Subject<void>();
     private _onResize = new Subject<void>();
+    private _notScrollOnResize = true;
+    private _resizeDelays = 200;
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -321,13 +331,13 @@ export class WalkthroughComponent implements AfterViewInit {
         private _renderer: Renderer2,
         private _walkthroughService: WalkthroughService,
     ) {
-        this._onResize.pipe(debounceTime(200)).subscribe(() => {
+        this._onResize.pipe(debounceTime(this._resizeDelays)).subscribe(() => {
             const instance = this._getInstance();
             if (instance?.ongoing && this._display && !WalkthroughComponent._walkthroughContainer?.instance?.pause) {
-                this._elementLocations();
+                this._elementLocations(!this._notScrollOnResize);
                 setTimeout(() => {
-                    this._elementLocations();
-                }, 200);
+                    this._elementLocations(!this._notScrollOnResize);
+                }, 50);
             }
         });
     }
@@ -520,20 +530,21 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
-    private _elementLocations(): void {
+    private _elementLocations(scroll: boolean = true): void {
         this._getFocusElement();
 
         const element = this._focusElement;
         if (element) {
-            if (this.scrollOnTarget) {
-                this._walkthroughService.scrollIntoViewIfOutOfView(element);
-            }
+            if (scroll) {
+                if (this.scrollOnTarget) {
+                    this._walkthroughService.scrollIntoViewIfOutOfView(element);
+                }
 
-            // if there is a root element defined (in some cases when position fixed is used, we need to scroll on it)
-            if (this.rootElement) {
-                document.querySelector(this.rootElement).scrollIntoView(true);
+                // if there is a root element defined (in some cases when position fixed is used, we need to scroll on it)
+                if (this.rootElement) {
+                    document.querySelector(this.rootElement).scrollIntoView(true);
+                }
             }
-
             this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
 
             if (this.typeSelector === 'zone') {

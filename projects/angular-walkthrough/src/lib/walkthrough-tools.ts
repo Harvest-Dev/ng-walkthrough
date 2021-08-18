@@ -15,7 +15,7 @@ export interface Margin {
 }
 
 export const booleanValue = (value: string | boolean) => {
-    return value === 'true' || value === true;
+    return value === '' || value === 'true' || value === true;
 };
 
 export class WalkthroughEvent {

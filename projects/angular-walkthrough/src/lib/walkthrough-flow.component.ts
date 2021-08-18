@@ -39,6 +39,8 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     @Input() focusGlow: string | boolean;
     @Input() radius: string;
 
+    @Input() notScrollOnResize: string | boolean;
+
     @Input() texts: WalkthroughTextI;
 
     private _id: string;
@@ -49,7 +51,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => {
             this.init();
-        }, 0);
+        });
     }
 
     init() {
@@ -100,6 +102,9 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             }
             if (!walkthrough.focusGlow && booleanValue(this.focusGlow)) {
                 walkthrough.focusGlow = this.focusGlow;
+            }
+            if (!walkthrough.notScrollOnResize && booleanValue(this.notScrollOnResize)) {
+                walkthrough.notScrollOnResize = this.notScrollOnResize;
             }
             if (!walkthrough.radius && this.radius) {
                 walkthrough.radius = this.radius;

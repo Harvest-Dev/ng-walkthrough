@@ -31,9 +31,9 @@ All attributes are optional.
 
 **Output events**
 
--   `ready` : fired when the walkthrough is completely ready
--   `closed` : fired when the walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
--   `finished` : fired when the walkthrough has been finished, which means : closed on last step.
+-   `ready`: fired when the walkthrough is completely ready
+-   `closed`: fired when the walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
+-   `finished`: fired when the walkthrough has been finished, which means : closed on last step.
 
 **Focus zone**:
 
@@ -45,9 +45,10 @@ All attributes are optional.
 -   `focusAction`: add an action `click` on the highlight zone.
 -   `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
 -   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
--   `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.
--   `scrollOnTarget` : if the walkthrough detects that `focusElementSelector` is outside of the current view, scrolls automatically. By default : `true`
--   `visibilityCallback` : callback to check if `focusElementSelector` is hidden, only if the walkthrough needs specific verification. By default : `optional`
+-   `marginZone`: add a maring of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
+-   `scrollOnTarget`: if the walkthrough detects that `focusElementSelector` is outside of the current view, scrolls automatically. By default : `true`
+-   `visibilityCallback`: callback to check if `focusElementSelector` is hidden, only if the walkthrough needs specific verification. By default : `optional`
+-   `notScrollOnResize`: do not scroll when resizing (e.g. may be required with dynamic menu on mobile)
 
 **Content**:
 
@@ -83,8 +84,8 @@ All attributes are optional and not overriding the subcomponents attributes exce
 
 **Output events**
 
--   `closed` : fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
--   `finished` : fired when the last walkthrough has been closed.
+-   `closed`: fired when a walkthrough has been closed. It sends a boolean value set to true if the walkthrough has been closed with the "finishButton" button.
+-   `finished`: fired when the last walkthrough has been closed.
 
 **Focus zone**:
 
@@ -92,7 +93,8 @@ All attributes are optional and not overriding the subcomponents attributes exce
 -   `focusBackdrop`: `true` for show a dark backdrop around the focus element.
 -   `focusGlow`: `true` for show a glow on the focus element.
 -   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes.
--   `marginZone` : add a maring of focus zone in px. . e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.
+-   `marginZone`: add a maring of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
+-   `notScrollOnResize`: do not scroll when resizing (e.g. may be required with dynamic menu on mobile)
 
 **Content**:
 
@@ -125,22 +127,22 @@ WalkthroughText {
 
 ### Statics methods
 
--   `WalkthroughComponent.walkthroughStop()` : hide and stop the current walkthrough (impossible to open a new walkthrough).
+-   `WalkthroughComponent.walkthroughStop()`: hide and stop the current walkthrough (impossible to open a new walkthrough).
     Does not work if no walkthrough is showed.
--   `WalkthroughComponent.walkthroughContinue()` : show and continue the current walkthrough. Does not work if no walkthrough is paused.
--   `WalkthroughComponent.walkthroughHasShow()` : if the a walkthrough is currently showing.
--   `WalkthroughComponent.walkthroughNext()` : to load the next walkthrough.
--   `WalkthroughComponent.walkthroughPrevious()` : to load the previous walkthrough.
+-   `WalkthroughComponent.walkthroughContinue()`: show and continue the current walkthrough. Does not work if no walkthrough is paused.
+-   `WalkthroughComponent.walkthroughHasShow()`: if the a walkthrough is currently showing.
+-   `WalkthroughComponent.walkthroughNext()`: to load the next walkthrough.
+-   `WalkthroughComponent.walkthroughPrevious()`: to load the previous walkthrough.
 
 ### Statics observable
 
--   `WalkthroughComponent.onOpen` : on open
--   `WalkthroughComponent.onRefresh` : on reshowing the current step
--   `WalkthroughComponent.onClose` : on close
--   `WalkthroughComponent.onFinish` : on close in the last step
--   `WalkthroughComponent.onNavigate` : on navigate
--   `WalkthroughComponent.onNavigatePrevious` : on navigate on the previous step
--   `WalkthroughComponent.onNavigateNext` : on navigate on the next step
+-   `WalkthroughComponent.onOpen`: on open
+-   `WalkthroughComponent.onRefresh`: on reshowing the current step
+-   `WalkthroughComponent.onClose`: on close
+-   `WalkthroughComponent.onFinish`: on close in the last step
+-   `WalkthroughComponent.onNavigate`: on navigate
+-   `WalkthroughComponent.onNavigatePrevious`: on navigate on the previous step
+-   `WalkthroughComponent.onNavigateNext`: on navigate on the next step
 
 ### Example
 
