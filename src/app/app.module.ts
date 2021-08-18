@@ -6,14 +6,9 @@ import { WalkthroughModule } from 'projects/angular-walkthrough/src/public_api';
 import { AppComponent } from './app.component';
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        WalkthroughModule,
-        BrowserModule
-    ],
+    declarations: [AppComponent],
+    imports: [WalkthroughModule, BrowserModule],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

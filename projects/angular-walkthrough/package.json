@@ -1,27 +1,27 @@
 {
-  "name": "angular-walkthrough",
-  "version": "0.9.1",
-  "description": "Walkthrough, an Angular library",
-  "author": "Célian Veyssière",
-  "license": "MIT",
-  "private": false,
-  "keywords": [
-    "walkthrough",
-    "angular"
-  ],
-  "peerDependencies": {
-    "@angular/common": ">=11.0.0",
-    "@angular/core": ">=11.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Harvest-Dev/ng-walkthrough.git"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com"
-  },
-  "bugs": {
-    "url": "https://github.com/Harvest-Dev/ng-walkthrough/issues"
-  },
-  "homepage": "https://github.com/Harvest-Dev/ng-walkthrough#readme"
+    "name": "angular-walkthrough",
+    "version": "0.9.1",
+    "description": "Walkthrough, an Angular library",
+    "author": "Célian Veyssière",
+    "license": "MIT",
+    "private": false,
+    "keywords": [
+        "walkthrough",
+        "angular"
+    ],
+    "peerDependencies": {
+        "@angular/common": ">=11.0.0",
+        "@angular/core": ">=11.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Harvest-Dev/ng-walkthrough.git"
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.com"
+    },
+    "bugs": {
+        "url": "https://github.com/Harvest-Dev/ng-walkthrough/issues"
+    },
+    "homepage": "https://github.com/Harvest-Dev/ng-walkthrough#readme"
 }

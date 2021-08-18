@@ -1,7 +1,19 @@
 import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import {
-    AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, EventEmitter,
-    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type,
+    AfterViewInit,
+    ApplicationRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    HostListener,
+    Injector,
+    Input,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -24,10 +36,9 @@ export interface WalkthroughNavigate {
 
 @Component({
     selector: 'ng-walkthrough',
-    template: ''
+    template: '',
 })
 export class WalkthroughComponent implements AfterViewInit {
-
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
     public static minimalMargin = 60;
@@ -61,7 +72,9 @@ export class WalkthroughComponent implements AfterViewInit {
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
     @Input()
-    get marginZone() { return this._marginZone; }
+    get marginZone() {
+        return this._marginZone;
+    }
     set marginZone(points: string | null) {
         if (this._marginZone !== points) {
             if (points === null) {
@@ -76,7 +89,9 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     @Input()
-    get arrowColor() { return this._arrowColor; }
+    get arrowColor() {
+        return this._arrowColor;
+    }
     set arrowColor(color: string) {
         if (this._arrowColor !== color) {
             this._arrowColor = color;
@@ -90,8 +105,12 @@ export class WalkthroughComponent implements AfterViewInit {
     @Input() animationDelays = 0;
 
     @Input()
-    get id() { return this._id; }
-    set id(value: string) { this._id = value || this._uid; }
+    get id() {
+        return this._id;
+    }
+    set id(value: string) {
+        this._id = value || this._uid;
+    }
 
     @Input()
     get alignContent() {
@@ -101,7 +120,6 @@ export class WalkthroughComponent implements AfterViewInit {
         if (this._alignContent !== value) {
             this._alignContent = value;
             this._updateElementPositions(this._getInstance());
-
         } else {
             this._alignContent = value;
         }
@@ -272,8 +290,7 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     static walkthroughContinue() {
-        if (WalkthroughComponent._walkthroughContainer &&
-            WalkthroughComponent._walkthroughContainer.instance.parent) {
+        if (WalkthroughComponent._walkthroughContainer && WalkthroughComponent._walkthroughContainer.instance.parent) {
             const visible = WalkthroughComponent._walkthroughContainer.instance.parent._checkVisibility();
             if (visible) {
                 WalkthroughComponent._walkthroughContainer.instance.continue();
@@ -302,11 +319,9 @@ export class WalkthroughComponent implements AfterViewInit {
         private _applicationRef: ApplicationRef,
         private _injector: Injector,
         private _renderer: Renderer2,
-        private _walkthroughService: WalkthroughService
+        private _walkthroughService: WalkthroughService,
     ) {
-        this._onResize.pipe(
-            debounceTime(200)
-        ).subscribe(() => {
+        this._onResize.pipe(debounceTime(200)).subscribe(() => {
             const instance = this._getInstance();
             if (instance?.ongoing && this._display && !WalkthroughComponent._walkthroughContainer?.instance?.pause) {
                 this._elementLocations();
@@ -334,10 +349,7 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
-    next(
-        closedEvent?: EventEmitter<boolean>,
-        finishedEvent?: EventEmitter<WalkthroughEvent>
-    ) {
+    next(closedEvent?: EventEmitter<boolean>, finishedEvent?: EventEmitter<WalkthroughEvent>) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -361,7 +373,7 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     open(): Promise<boolean> {
-        return new Promise<boolean>((resolve) => {
+        return new Promise<boolean>(resolve => {
             if (this._checkVisibility()) {
                 if (this._getInstance()) {
                     resolve(this._open());
@@ -406,7 +418,7 @@ export class WalkthroughComponent implements AfterViewInit {
     /**
      * Do not use this method outside of the library
      */
-    hide(finishLink = false, closeWalkthrough = true) {
+    _hide(finishLink = false, closeWalkthrough = true) {
         this._display = false;
 
         // add CSS to focusElement
@@ -416,7 +428,6 @@ export class WalkthroughComponent implements AfterViewInit {
 
         if (closeWalkthrough) {
             setTimeout(() => {
-
                 this._getInstance().ongoing = false;
                 WalkthroughComponent.onClose.next(this);
 
@@ -465,10 +476,7 @@ export class WalkthroughComponent implements AfterViewInit {
         this._display = true;
     }
 
-    private _next(
-        closedEvent?: EventEmitter<boolean>,
-        finishedEvent?: EventEmitter<WalkthroughEvent>
-    ) {
+    private _next(closedEvent?: EventEmitter<boolean>, finishedEvent?: EventEmitter<WalkthroughEvent>) {
         if (closedEvent) {
             this.closed = closedEvent;
         }
@@ -483,9 +491,7 @@ export class WalkthroughComponent implements AfterViewInit {
     }
 
     private _getInstance(): WalkthroughContainerComponent {
-        return WalkthroughComponent._walkthroughContainer
-            ? WalkthroughComponent._walkthroughContainer.instance
-            : null;
+        return WalkthroughComponent._walkthroughContainer ? WalkthroughComponent._walkthroughContainer.instance : null;
     }
 
     private _appendComponentToBody<T>(component: Type<T>): ComponentRef<T> {
@@ -505,18 +511,16 @@ export class WalkthroughComponent implements AfterViewInit {
 
     private _attachWalkthroughContent<T>(
         componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-        walkthroughContainer: WalkthroughContainerComponent
+        walkthroughContainer: WalkthroughContainerComponent,
     ) {
         if (componentOrTemplateRef instanceof TemplateRef) {
             walkthroughContainer.attachTemplatePortal(new TemplatePortal<T>(componentOrTemplateRef, null));
         } else {
             walkthroughContainer.attachComponentPortal(new ComponentPortal(componentOrTemplateRef));
         }
-
     }
 
     private _elementLocations(): void {
-
         this._getFocusElement();
 
         const element = this._focusElement;
@@ -535,12 +539,10 @@ export class WalkthroughComponent implements AfterViewInit {
             if (this.typeSelector === 'zone') {
                 const offsetEndCoordinatesEnd = this._walkthroughService.retrieveCoordinates(this._focusElementEnd);
 
-                this._offsetCoordinates.height = offsetEndCoordinatesEnd.top
-                    - this._offsetCoordinates.top
-                    + offsetEndCoordinatesEnd.height;
-                this._offsetCoordinates.width = offsetEndCoordinatesEnd.left
-                    - this._offsetCoordinates.left
-                    + offsetEndCoordinatesEnd.width;
+                this._offsetCoordinates.height =
+                    offsetEndCoordinatesEnd.top - this._offsetCoordinates.top + offsetEndCoordinatesEnd.height;
+                this._offsetCoordinates.width =
+                    offsetEndCoordinatesEnd.left - this._offsetCoordinates.left + offsetEndCoordinatesEnd.width;
             }
         } else {
             this._offsetCoordinates = null;
@@ -555,12 +557,12 @@ export class WalkthroughComponent implements AfterViewInit {
         let focusElements: NodeListOf<HTMLElement>;
         try {
             focusElements = this.focusElementSelector
-                ? document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>
+                ? (document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>)
                 : null;
         } catch (error) {
             console.error(
                 `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
-                error
+                error,
             );
         }
 
@@ -582,7 +584,6 @@ export class WalkthroughComponent implements AfterViewInit {
 
                 // if typeSelector is by zone, get also the last element
                 if (this.typeSelector === 'zone') {
-
                     for (let i = l - 1; i >= 0; i--) {
                         // offsetHeight not of 0 means visible
                         if (focusElements[i].offsetHeight) {
@@ -597,7 +598,6 @@ export class WalkthroughComponent implements AfterViewInit {
                         this.typeSelector = 'element';
                     }
                 }
-
             } else {
                 this._focusElement = focusElements[0];
                 this.typeSelector = 'element';
@@ -623,7 +623,7 @@ export class WalkthroughComponent implements AfterViewInit {
                         scrollY - window.pageXOffset,
                         this.animation,
                         this.animationDelays,
-                        this._setFocusContinue.bind(this)
+                        this._setFocusContinue.bind(this),
                     );
                 } else {
                     this._setFocusContinue();
@@ -653,12 +653,10 @@ export class WalkthroughComponent implements AfterViewInit {
                     this._alignContent,
                     this._verticalAlignContent,
                     this._contentSpacing,
-                    this._verticalContentSpacing
+                    this._verticalContentSpacing,
                 );
                 if (this._focusElement !== null && this._hasArrow) {
-                    instance.arrowPosition(
-                        this._offsetCoordinates
-                    );
+                    instance.arrowPosition(this._offsetCoordinates);
                 }
 
                 // add CSS to focusElement
@@ -719,10 +717,7 @@ export class WalkthroughComponent implements AfterViewInit {
      */
     private _attachContentTemplate() {
         if (this.contentTemplate) {
-            this._attachWalkthroughContent(
-                this.contentTemplate,
-                this._getInstance()
-            );
+            this._attachWalkthroughContent(this.contentTemplate, this._getInstance());
         }
     }
 
@@ -739,9 +734,7 @@ export class WalkthroughComponent implements AfterViewInit {
         instance.hasHighlight = hasHighlightZone && this._hasHighlightAnimation;
         instance.hasBackdrop = this._hasBackdrop;
         instance.hasGlow = hasHighlightZone && this._hasGlow;
-
     }
-
 
     /**
      * init all datas of the contenaire
@@ -761,9 +754,7 @@ export class WalkthroughComponent implements AfterViewInit {
         instance.marginZonePx = this._marginZonePx;
         instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
-        instance.text = this.texts
-            ? { ...new WalkthroughText(), ...this.texts }
-            : new WalkthroughText();
+        instance.text = this.texts ? { ...new WalkthroughText(), ...this.texts } : new WalkthroughText();
 
         this._show();
     }

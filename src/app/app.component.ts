@@ -3,23 +3,27 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
-    WalkthroughComponent, WalkthroughContainerComponent, WalkthroughEvent, WalkthroughNavigate, WalkthroughTextI,
+    WalkthroughComponent,
+    WalkthroughContainerComponent,
+    WalkthroughEvent,
+    WalkthroughNavigate,
+    WalkthroughTextI,
 } from 'projects/angular-walkthrough/src/public_api';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
     frenchText: WalkthroughTextI = {
         previous: 'Précédent',
         next: 'Suivant',
-        close: 'Fermer'
+        close: 'Fermer',
     };
 
     testClickCount = 0;
-    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
+    testClickTexts = ['click me', "it's ok!", 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
     alignContent = 'left';
     verticalAlignContent = 'top';
@@ -78,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
             WalkthroughComponent.onNavigatePrevious.subscribe((compt: WalkthroughNavigate) => {
                 console.log('onNavigatePrevious:', compt.previous.id, '→', compt.next.id);
                 console.groupEnd();
-            })
+            }),
         );
     }
 

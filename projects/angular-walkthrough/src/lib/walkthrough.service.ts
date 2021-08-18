@@ -4,7 +4,6 @@ import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-t
 
 @Injectable()
 export class WalkthroughService {
-
     private _overflowRegex = /(auto|scroll)/;
 
     retrieveCoordinates(element: HTMLElement, margin?: WalkthroughMargin): WalkthroughElementCoordinate {
@@ -21,7 +20,7 @@ export class WalkthroughService {
                 right: parseFloat(style.marginRight),
                 bottom: parseFloat(style.marginBottom),
                 left: parseFloat(style.marginLeft),
-            }
+            },
         };
         coordinates.top += this.getTop();
         return coordinates;
@@ -38,7 +37,7 @@ export class WalkthroughService {
             document.body.offsetHeight,
             document.documentElement.clientHeight,
             document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight
+            document.documentElement.offsetHeight,
         );
 
         return Math.max(this.getHeightOfPage() + this.getTop(), body_height);
@@ -57,7 +56,7 @@ export class WalkthroughService {
         }
         elementH = element.offsetHeight;
 
-        if ((topOfPage + heightOfPage) < (elementY + elementH)) {
+        if (topOfPage + heightOfPage < elementY + elementH) {
             element.scrollIntoView(false);
         } else if (elementY < topOfPage) {
             element.scrollIntoView(true);
@@ -67,9 +66,10 @@ export class WalkthroughService {
             let current = element;
             while (current && current !== document.body) {
                 parent = this.getScrollParent(current);
-                if (current.offsetTop + current.offsetHeight - parent.scrollTop > parent.offsetHeight ||
-                    current.offsetLeft + current.offsetWidth - parent.scrollLeft > parent.offsetWidth) {
-
+                if (
+                    current.offsetTop + current.offsetHeight - parent.scrollTop > parent.offsetHeight ||
+                    current.offsetLeft + current.offsetWidth - parent.scrollLeft > parent.offsetWidth
+                ) {
                     element.scrollIntoView();
                     window.scrollBy(0, -30);
                     break;
@@ -85,7 +85,6 @@ export class WalkthroughService {
         const excludeStaticParent = style.position === 'absolute';
 
         if (style.position !== 'fixed') {
-
             let parent = element.parentElement;
             while (parent && parent !== document.body) {
                 style = getComputedStyle(parent);
@@ -105,5 +104,4 @@ export class WalkthroughService {
     getHeightOfPage() {
         return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     }
-
 }

@@ -1,6 +1,14 @@
 import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
-    Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
+    Component,
+    ComponentRef,
+    ElementRef,
+    EmbeddedViewRef,
+    HostBinding,
+    HostListener,
+    Renderer2,
+    TemplateRef,
+    ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 
@@ -18,7 +26,7 @@ const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 @Component({
     selector: 'walkthrough-container',
     styleUrls: ['./walkthrough-container.component.scss'],
-    templateUrl: './walkthrough-container.component.html'
+    templateUrl: './walkthrough-container.component.html',
 })
 export class WalkthroughContainerComponent extends BasePortalOutlet {
     markerUrl = 'url(#wkt-arrow)';
@@ -105,7 +113,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         public viewContainerRef: ViewContainerRef,
         private _walkthroughService: WalkthroughService,
         private _renderer: Renderer2,
-        private _el: ElementRef
+        private _el: ElementRef,
     ) {
         super();
     }
@@ -158,10 +166,9 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         scrollDiff: number,
         animation: 'none' | 'linear',
         animationDelays: number,
-        continueFunction: () => {}
+        continueFunction: () => {},
     ) {
-
-        const element = (this.zone.nativeElement as HTMLElement);
+        const element = this.zone.nativeElement as HTMLElement;
         const zoneStyle = element.style;
         const style = window.getComputedStyle(element, null);
 
@@ -182,21 +189,19 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             this.show = true;
             zoneStyle.borderRadius = '50%';
             const timer = setInterval(() => {
-
-                zoneStyle.left = (left + partLeft * count) + 'px';
-                zoneStyle.top = (top + partTop * count) + 'px';
-                zoneStyle.width = (width + partWidth * count) + 'px';
-                zoneStyle.height = (height + partHeight * count) + 'px';
+                zoneStyle.left = left + partLeft * count + 'px';
+                zoneStyle.top = top + partTop * count + 'px';
+                zoneStyle.width = width + partWidth * count + 'px';
+                zoneStyle.height = height + partHeight * count + 'px';
                 if (count++ >= fragment) {
                     clearInterval(timer);
                     this.hideOther = false;
                     continueFunction();
                 }
             }, intervale);
-
         } else {
-            zoneStyle.left = (coordinate.left - this.marginZonePx.left) + 'px';
-            zoneStyle.top = (coordinate.top - this.marginZonePx.top) + 'px';
+            zoneStyle.left = coordinate.left - this.marginZonePx.left + 'px';
+            zoneStyle.top = coordinate.top - this.marginZonePx.top + 'px';
             zoneStyle.width = coordinate.width + 'px';
             zoneStyle.height = coordinate.height + 'px';
 
@@ -234,7 +239,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         alignContent: 'left' | 'center' | 'right',
         verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
         contentSpacing: number,
-        verticalContentSpacing: number) {
+        verticalContentSpacing: number,
+    ) {
         const element = this.contentBlock.nativeElement as HTMLElement;
 
         const elementSize = this._walkthroughService.retrieveCoordinates(element);
@@ -256,19 +262,24 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 notEnoughSpace = true;
             }
             // if not enough space to respect the alignContent, content goes above/below
-            if ((verticalAlignContent === 'top' ||
-                verticalAlignContent === 'center' ||
-                verticalAlignContent === 'bottom') && !notEnoughSpace) {
-
+            if (
+                (verticalAlignContent === 'top' ||
+                    verticalAlignContent === 'center' ||
+                    verticalAlignContent === 'bottom') &&
+                !notEnoughSpace
+            ) {
                 // change align center to left or right if not enough space to align center
                 if (alignContent === 'center') {
                     const maxSpace = Math.max(spaceRight, spaceLeft);
-                    if (maxSpace < width + ((window.innerWidth - width) / 2)) {
+                    if (maxSpace < width + (window.innerWidth - width) / 2) {
                         alignContent = spaceRight > spaceLeft ? 'right' : 'left';
                     }
-                } else if (alignContent === 'left' && spaceLeft < width ||
-                    alignContent === 'right' && spaceRight < width) {
-                    verticalAlignContent = verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
+                } else if (
+                    (alignContent === 'left' && spaceLeft < width) ||
+                    (alignContent === 'right' && spaceRight < width)
+                ) {
+                    verticalAlignContent =
+                        verticalAlignContent === 'bottom' || coordinate.top < height ? 'below' : 'above';
                 }
             }
         }
@@ -287,15 +298,11 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 const space = coordinate.left - width;
                 // handle contentSpacing
                 if (contentSpacing && space > contentSpacing) {
-                    element.style.left = (
-                        coordinate.left -
-                        width -
-                        contentSpacing
-                    ) + 'px';
+                    element.style.left = coordinate.left - width - contentSpacing + 'px';
                 }
             }
         } else if (alignContent === 'center') {
-            element.style.left = (window.innerWidth / 2 - width / 2) + 'px';
+            element.style.left = window.innerWidth / 2 - width / 2 + 'px';
         } else if (alignContent === 'right') {
             element.style.right = '0';
             if (this.hasHighlightZone) {
@@ -303,11 +310,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 // handle contentSpacing
                 if (contentSpacing && space > contentSpacing) {
                     element.style.right = '';
-                    element.style.left = (
-                        coordinate.left +
-                        coordinate.width +
-                        contentSpacing
-                    ) + 'px';
+                    element.style.left = coordinate.left + coordinate.width + contentSpacing + 'px';
                 }
             }
         }
@@ -316,9 +319,11 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             // for arrow position
             const startLeft = this._walkthroughService.retrieveCoordinates(element).left + width / 2;
 
-            this._arrowPosition = startLeft > (coordinate.left - WalkthroughComponent.minimalMargin)
-                && startLeft < (coordinate.left + coordinate.width + WalkthroughComponent.minimalMargin)
-                ? 'topBottom' : 'leftRight';
+            this._arrowPosition =
+                startLeft > coordinate.left - WalkthroughComponent.minimalMargin &&
+                startLeft < coordinate.left + coordinate.width + WalkthroughComponent.minimalMargin
+                    ? 'topBottom'
+                    : 'leftRight';
 
             // if there is enough place on the left or on the right, we consider verticalAlignContent, otherwise, we ignore it
             if (verticalAlignContent && !notEnoughSpace) {
@@ -328,27 +333,27 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                     case 'above':
                         space = coordinate.top;
                         if (space > verticalContentSpacing) {
-                            element.style.top = (coordinate.top - height - verticalContentSpacing) + 'px';
+                            element.style.top = coordinate.top - height - verticalContentSpacing + 'px';
                         } else {
                             element.style.top = '0';
                         }
                         this._arrowPosition = 'topBottom';
                         break;
                     case 'top':
-                        element.style.top = (coordinate.top) + 'px';
+                        element.style.top = coordinate.top + 'px';
                         break;
                     case 'center':
-                        element.style.top = (coordinate.top + (coordinate.height / 2) - (height / 2)) + 'px';
+                        element.style.top = coordinate.top + coordinate.height / 2 - height / 2 + 'px';
                         break;
                     case 'bottom':
-                        element.style.top = (coordinate.top + coordinate.height - height) + 'px';
+                        element.style.top = coordinate.top + coordinate.height - height + 'px';
                         break;
                     case 'below':
                         space = this._walkthroughService.getDocumentHeight() - coordinate.top + coordinate.height;
                         if (space > verticalContentSpacing) {
-                            element.style.top = (coordinate.top + coordinate.height + verticalContentSpacing) + 'px';
+                            element.style.top = coordinate.top + coordinate.height + verticalContentSpacing + 'px';
                         } else {
-                            element.style.top = (this._walkthroughService.getDocumentHeight() - height) + 'px';
+                            element.style.top = this._walkthroughService.getDocumentHeight() - height + 'px';
                         }
                         this._arrowPosition = 'topBottom';
                         break;
@@ -356,21 +361,19 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             } else {
                 // position of content top/bottom
                 if (verticalAlignContent === 'below' || coordinate.top < height) {
-                    element.style.top = (coordinate.top + coordinate.height + WalkthroughComponent.minimalMargin) + 'px';
+                    element.style.top = coordinate.top + coordinate.height + WalkthroughComponent.minimalMargin + 'px';
                     this._contentPosition = 'below';
                 } else {
-                    element.style.top = (coordinate.top - height - WalkthroughComponent.minimalMargin) + 'px';
+                    element.style.top = coordinate.top - height - WalkthroughComponent.minimalMargin + 'px';
                     this._contentPosition = 'above';
                 }
             }
         } else {
-            element.style.top = (this._walkthroughService.getHeightOfPage() / 2 - height / 2) + 'px';
+            element.style.top = this._walkthroughService.getHeightOfPage() / 2 - height / 2 + 'px';
         }
-
     }
 
     arrowPosition(coordinate: WalkthroughElementCoordinate) {
-
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
@@ -424,9 +427,9 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 centerTop = centerTop + Math.abs(startTop - centerTop) / 2;
             }
 
-            this.arrowPath = `M${startLeft},${startTop} Q${startLeft},${centerTop} ${centerLeft},${centerTop} `
-                + `Q${endLeft},${centerTop} ${endLeft},${endTop}`;
-
+            this.arrowPath =
+                `M${startLeft},${startTop} Q${startLeft},${centerTop} ${centerLeft},${centerTop} ` +
+                `Q${endLeft},${centerTop} ${endLeft},${endTop}`;
         } else {
             if (startLeft > coordinate.left) {
                 endLeft += realwidth + this.arrowMarkerDist;
@@ -449,20 +452,22 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             let directStartLeft: number = startLeft;
             let directStartTop: number = startTop;
             if (this._contentPosition === 'top' || this._contentPosition === 'bottom') {
-                directStartLeft = contentBlockCoordinates.left + (contentBlockCoordinates.width / 2);
-                directStartTop = (this._contentPosition === 'top') ?
-                    (contentBlockCoordinates.top + contentBlockCoordinates.height) :
-                    (contentBlockCoordinates.top);
+                directStartLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
+                directStartTop =
+                    this._contentPosition === 'top'
+                        ? contentBlockCoordinates.top + contentBlockCoordinates.height
+                        : contentBlockCoordinates.top;
 
                 // we use direct curve only if the arrow don't cross the content, otherwise, we use double curved
                 if (
-                    (this._contentPosition === 'top' && directStartTop < (endTop - WalkthroughComponent.minimalMargin)) ||
-                    (this._contentPosition === 'bottom' && directStartTop > (endTop + WalkthroughComponent.minimalMargin))
+                    (this._contentPosition === 'top' && directStartTop < endTop - WalkthroughComponent.minimalMargin) ||
+                    (this._contentPosition === 'bottom' && directStartTop > endTop + WalkthroughComponent.minimalMargin)
                 ) {
                     this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
                 } else {
-                    this.arrowPath = `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} `
-                        + `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
+                    this.arrowPath =
+                        `M${startLeft},${startTop} Q${centerLeft},${startTop} ${centerLeft},${centerTop} ` +
+                        `Q${centerLeft},${endTop} ${endLeft},${endTop}`;
                 }
             } else {
                 this.arrowPath = `M${directStartLeft},${directStartTop} Q${directStartLeft},${endTop} ${endLeft},${endTop}`;
@@ -551,8 +556,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         // hide
         this.show = false;
         if (this.parent) {
-            this.parent.hide(finishLink, closeWalkthrough);
+            this.parent._hide(finishLink, closeWalkthrough);
         }
     }
-
 }

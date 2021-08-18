@@ -1,3 +1,1 @@
-describe('workspace-project App', () => {
-
-});
+describe('workspace-project App', () => {});

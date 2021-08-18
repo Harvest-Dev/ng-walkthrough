@@ -23,7 +23,7 @@
 button {
     background: none;
     border: 0;
-    color: #FFF;
+    color: #fff;
 }
 
 // hightlight zone
@@ -40,7 +40,7 @@ button {
     }
 
     &.glow {
-        box-shadow: 0 0 4px 2px #FFFF66, 0 0 9px 0 #FFFF66, 0 0 36px #FFFF66;
+        box-shadow: 0 0 4px 2px #ffff66, 0 0 9px 0 #ffff66, 0 0 36px #ffff66;
     }
 
     &.clickable {
@@ -48,8 +48,8 @@ button {
     }
 
     &.highlight {
-        -webkit-animation: highlight .45s 4;
-        animation: highlight .45s 4;
+        -webkit-animation: highlight 0.45s 4;
+        animation: highlight 0.45s 4;
     }
 }
 
@@ -64,7 +64,7 @@ button {
     margin: 1em;
     padding: 6px;
     z-index: 1;
-    color: #FFF;
+    color: #fff;
     min-width: calc(320px - 2em);
 
     &.hide {
@@ -180,6 +180,7 @@ svg {
 
 // [HACK] Safari 9+ (non-iOS) : box-shadow sizes over 2000px can be unpredictable
 
-_:default:not(:root:root), .wkt-zone.backdrop {
+_:default:not(:root:root),
+.wkt-zone.backdrop {
     box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6) !important;
 }

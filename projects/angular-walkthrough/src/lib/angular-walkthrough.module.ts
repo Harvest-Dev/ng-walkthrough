@@ -8,25 +8,10 @@ import { WalkthroughComponent } from './walkthrough.component';
 import { WalkthroughService } from './walkthrough.service';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        PortalModule
-    ],
-    declarations: [
-        WalkthroughFlowComponent,
-        WalkthroughComponent,
-        WalkthroughContainerComponent
-    ],
-    exports: [
-        WalkthroughFlowComponent,
-        WalkthroughComponent,
-        WalkthroughContainerComponent
-    ],
-    entryComponents: [
-        WalkthroughContainerComponent
-    ],
-    providers: [
-        WalkthroughService
-    ]
+    imports: [CommonModule, PortalModule],
+    declarations: [WalkthroughFlowComponent, WalkthroughComponent, WalkthroughContainerComponent],
+    exports: [WalkthroughFlowComponent, WalkthroughComponent, WalkthroughContainerComponent],
+    entryComponents: [WalkthroughContainerComponent],
+    providers: [WalkthroughService],
 })
-export class WalkthroughModule { }
+export class WalkthroughModule {}

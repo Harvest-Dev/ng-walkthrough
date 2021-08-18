@@ -8,15 +8,18 @@ let nextUniqueId = 0;
 
 @Component({
     selector: 'ng-walkthrough-flow',
-    template: ''
+    template: '',
 })
 export class WalkthroughFlowComponent implements AfterViewInit {
-
     @ContentChildren(WalkthroughComponent) walkthroughComponents: QueryList<WalkthroughComponent>;
 
     @Input()
-    get id() { return this._id; }
-    set id(value: string) { this._id = value || this._uid; }
+    get id() {
+        return this._id;
+    }
+    set id(value: string) {
+        this._id = value || this._uid;
+    }
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
@@ -41,7 +44,7 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
 
-    constructor() { }
+    constructor() {}
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -52,7 +55,6 @@ export class WalkthroughFlowComponent implements AfterViewInit {
     init() {
         let prevComp: WalkthroughComponent = null;
         this.walkthroughComponents.forEach((walkthrough: WalkthroughComponent) => {
-
             // navigation auto (ignore previousStep/nextStep on the WalkthroughComponent)
 
             if (prevComp) {
@@ -105,7 +107,6 @@ export class WalkthroughFlowComponent implements AfterViewInit {
             if (!walkthrough.texts && this.texts) {
                 walkthrough.texts = this.texts;
             }
-
         });
         // navigation auto (close on last step)
         prevComp.finishButton = true;

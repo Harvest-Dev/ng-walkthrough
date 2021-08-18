@@ -19,14 +19,10 @@ export const booleanValue = (value: string | boolean) => {
 };
 
 export class WalkthroughEvent {
-    constructor(
-        public component: WalkthroughComponent,
-        public focusElement: HTMLElement
-    ) { }
+    constructor(public component: WalkthroughComponent, public focusElement: HTMLElement) {}
 }
 
 export class WalkthroughMargin {
-
     static parsePoints(points: string): WalkthroughMargin {
         let pointsPx: WalkthroughMargin;
         if (points.match(/^\d+(?:\s+\d+)*$/)) {
@@ -36,12 +32,7 @@ export class WalkthroughMargin {
         return pointsPx || new WalkthroughMargin();
     }
 
-    constructor(
-        public top = 0,
-        public right?: number,
-        public bottom?: number,
-        public left?: number,
-    ) {
+    constructor(public top = 0, public right?: number, public bottom?: number, public left?: number) {
         if (right === undefined) {
             this.right = top;
         }
