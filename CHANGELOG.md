@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.2 (2019-08-18)
+
+### New features
+
+-   add `notScrollOnResize` attribute
+
 ## V0.9.1 (2019-07-23)
 
 ### Corrections
@@ -140,7 +146,7 @@
 
 ### Corrections
 
--   Improve content positioning:  
+-   Improve content positioning:
     when `verticalAlignContent = top | center | bottom`, if there is enough space on the side but we can't respect the `alignContent center` attribute, we rollback to `left` or `right` (where there is more space)
 -   Improve scroll positioning
 
