@@ -166,7 +166,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         scrollDiff: number,
         animation: 'none' | 'linear',
         animationDelays: number,
-        continueFunction: () => {},
+        continueFunction: (scroll: boolean) => {},
+        scroll: boolean,
     ) {
         const element = this.zone.nativeElement as HTMLElement;
         const zoneStyle = element.style;
@@ -196,7 +197,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 if (count++ >= fragment) {
                     clearInterval(timer);
                     this.hideOther = false;
-                    continueFunction();
+                    continueFunction(scroll);
                 }
             }, intervale);
         } else {
@@ -205,7 +206,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             zoneStyle.width = coordinate.width + 'px';
             zoneStyle.height = coordinate.height + 'px';
 
-            continueFunction();
+            continueFunction(scroll);
         }
     }
 

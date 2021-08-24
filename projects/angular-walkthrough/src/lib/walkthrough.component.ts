@@ -558,7 +558,7 @@ export class WalkthroughComponent implements AfterViewInit {
         } else {
             this._offsetCoordinates = null;
         }
-        this._setFocus();
+        this._setFocus(scroll);
     }
 
     /**
@@ -621,7 +621,7 @@ export class WalkthroughComponent implements AfterViewInit {
     /**
      * get instance, hightlight the focused element et show the template
      */
-    private _setFocus() {
+    private _setFocus(scroll: boolean = true) {
         const instance = this._getInstance();
         if (instance) {
             const scrollY = window.pageXOffset;
@@ -635,15 +635,16 @@ export class WalkthroughComponent implements AfterViewInit {
                         this.animation,
                         this.animationDelays,
                         this._setFocusContinue.bind(this),
+                        scroll,
                     );
                 } else {
-                    this._setFocusContinue();
+                    this._setFocusContinue(scroll);
                 }
             }, 20);
         }
     }
 
-    private _setFocusContinue() {
+    private _setFocusContinue(scroll: boolean) {
         const instance = this._getInstance();
         if (!this._display) {
             this._attachContentTemplate();
@@ -652,11 +653,11 @@ export class WalkthroughComponent implements AfterViewInit {
         }
         setTimeout(() => {
             instance.hightlightZoneStyling(this._focusElement);
-            this._updateElementPositions(instance);
-        }, 0);
+            this._updateElementPositions(instance, scroll);
+        });
     }
 
-    private _updateElementPositions(instance: WalkthroughContainerComponent) {
+    private _updateElementPositions(instance: WalkthroughContainerComponent, scroll: boolean = true) {
         if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
             setTimeout(() => {
                 instance.contentBlockPosition(
@@ -666,7 +667,7 @@ export class WalkthroughComponent implements AfterViewInit {
                     this._contentSpacing,
                     this._verticalContentSpacing,
                 );
-                if (this._focusElement !== null && this._hasArrow) {
+                if (this._offsetCoordinates && this._focusElement !== null && this._hasArrow) {
                     instance.arrowPosition(this._offsetCoordinates);
                 }
 
@@ -692,7 +693,9 @@ export class WalkthroughComponent implements AfterViewInit {
                         // is content + focus higher than window ?
                         if (coordinatesContent.height + coordinatesFocus.height > window.innerHeight) {
                             // we scroll on content
-                            contentBlockNative.scrollIntoView(true);
+                            if (scroll) {
+                                contentBlockNative.scrollIntoView(true);
+                            }
                             // we offset the window half of the content height
                             if (coordinatesContent.top > coordinatesFocus.top) {
                                 // content below focusZone
@@ -704,20 +707,28 @@ export class WalkthroughComponent implements AfterViewInit {
                         } else {
                             // scroll on element higher minus minimal margin
                             if (coordinatesContent.top > coordinatesFocus.top) {
-                                window.scrollTo(coordinatesFocus.left, coordinatesFocus.top);
+                                if (scroll) {
+                                    window.scrollTo(coordinatesFocus.left, coordinatesFocus.top);
+                                }
                                 scrollPos = -WalkthroughComponent.minimalMargin;
                             } else {
-                                contentBlockNative.scrollIntoView(true);
+                                if (scroll) {
+                                    contentBlockNative.scrollIntoView(true);
+                                }
                                 scrollPos = -WalkthroughComponent.minimalMargin;
                             }
                         }
                     } else {
                         // no focus zone, scroll on content minus margin
-                        contentBlockNative.scrollIntoView(true);
+                        if (scroll) {
+                            contentBlockNative.scrollIntoView(true);
+                        }
                         scrollPos = -WalkthroughComponent.minimalMargin;
                     }
 
-                    window.scrollBy(0, scrollPos);
+                    if (scroll) {
+                        window.scrollBy(0, scrollPos);
+                    }
                 }, 50);
             }, 0);
         }
