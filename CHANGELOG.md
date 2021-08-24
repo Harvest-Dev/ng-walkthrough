@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.3 (2019-08-24)
+
+### Corrections
+
+-   fix `notScrollOnResize`
+
 ## V0.9.2 (2019-08-18)
 
 ### New features
