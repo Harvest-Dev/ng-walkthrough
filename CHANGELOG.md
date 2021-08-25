@@ -1,5 +1,12 @@
 # Changelog of ng-walkthrough
 
+## V0.9.4 (2019-08-25)
+
+### Corrections
+
+-   fix error in console
+-   rollback on the recalculation timer
+
 ## V0.9.3 (2019-08-24)
 
 ### Corrections
