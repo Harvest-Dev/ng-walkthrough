@@ -337,7 +337,7 @@ export class WalkthroughComponent implements AfterViewInit {
                 this._elementLocations(!this._notScrollOnResize);
                 setTimeout(() => {
                     this._elementLocations(!this._notScrollOnResize);
-                }, 50);
+                }, 200);
             }
         });
     }
