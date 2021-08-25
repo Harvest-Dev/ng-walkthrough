@@ -660,13 +660,15 @@ export class WalkthroughComponent implements AfterViewInit {
     private _updateElementPositions(instance: WalkthroughContainerComponent, scroll: boolean = true) {
         if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
             setTimeout(() => {
-                instance.contentBlockPosition(
-                    this._offsetCoordinates,
-                    this._alignContent,
-                    this._verticalAlignContent,
-                    this._contentSpacing,
-                    this._verticalContentSpacing,
-                );
+                if (this._offsetCoordinates) {
+                    instance.contentBlockPosition(
+                        this._offsetCoordinates,
+                        this._alignContent,
+                        this._verticalAlignContent,
+                        this._contentSpacing,
+                        this._verticalContentSpacing,
+                    );
+                }
                 if (this._offsetCoordinates && this._focusElement !== null && this._hasArrow) {
                     instance.arrowPosition(this._offsetCoordinates);
                 }
