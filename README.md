@@ -39,12 +39,12 @@ All attributes are optional.
 
 -   `focusElementSelector`: CSS selector for focus a HTML element. If the selector detect more that one, the only the first will be chosen.
 -   `focusElementCSSClass`: Add a class on focusElement
--   `focusHighlightAnimation`: `true` for show highlight animation on the focus element. By defaut `false`.
--   `focusBackdrop`: `true` for show a dark backdrop around the focus element. By defaut `false`.
--   `focusGlow`: `true` for show a glow on the focus element. By defaut `false`.
+-   `focusHighlightAnimation`: `true` for show highlight animation on the focus element. By default `false`.
+-   `focusBackdrop`: `true` for show a dark backdrop around the focus element. By default `false`.
+-   `focusGlow`: `true` for show a glow on the focus element. By default `false`.
 -   `focusAction`: add an action `click` on the highlight zone.
--   `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By defaut : `element`.
--   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By defaut, no radius.
+-   `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By default : `element`.
+-   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By default, no radius.
 -   `marginZone`: add a maring of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
 -   `scrollOnTarget`: if the walkthrough detects that `focusElementSelector` is outside of the current view, scrolls automatically. By default : `true`
 -   `visibilityCallback`: callback to check if `focusElementSelector` is hidden, only if the walkthrough needs specific verification. By default : `optional`
@@ -54,27 +54,28 @@ All attributes are optional.
 
 -   `contentTemplate`: add a `ng-template` with your description.
 -   `contentText`: show a simple description without formating in content.
--   `contentStyle`: background style for content container. Possible values: `none`, `darken`. By defaut : `darken`.
--   `alignContent`: align the `contentTemplate` horizontally. Possible values: `left`, `center` or `right`. By defaut : `left`.
--   `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By defaut : `top`.
+-   `contentStyle`: background style for content container. Possible values: `none`, `darken`. By default : `darken`.
+-   `alignContent`: align the `contentTemplate` horizontally. Possible values: `left`, `center` or `right`. By default : `left`.
+-   `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By default : `top`.
 -   `contentSpacing`: The max space which separates the content to the focus zone horizontally, default is 0 (opposite of the focusZone)
 -   `verticalContentSpacing`: The max space which separates the content to the focus zone vertically, default is 50
 -   `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones
 
 **Navigation**:
 
+-   `hidePrevious`: `true` to hide the previous button. By default `false`
 -   `previousStep`: add a ling to go to the previous `ng-walkthrough`.
 -   `nextStep`: add a ling to go to the next `ng-walkthrough`.
--   `closeButton`: `true` for show the button. By defaut `false`.
--   `closeAnywhere`: `false` for click anywhere to close. By defaut `true`.
--   `finishButton`: `true` for show a link to exit. By defaut `false`.
--   `disabled`: `true` for ignoring the walkthrough based on a boolean flag. By defaut `false`.
--   `texts`: change texts. It's a overlay of `WalkthroughText`.
+-   `closeButton`: `true` for show the button. By default `false`.
+-   `closeAnywhere`: `false` for click anywhere to close. By default `true`.
+-   `finishButton`: `true` for show a link to exit. By default `false`.
+-   `disabled`: `true` for ignoring the walkthrough based on a boolean flag. By default `false`.
+-   `texts`: change texts. It's an overlay of `WalkthroughText`.
 
 **Arrow**:
 
--   `showArrow`: `true` for show the arrow. By defaut `false`.
--   `arrowColor`: change the arrow color. By defaut `#FFF`.
+-   `showArrow`: `true` for show the arrow. By default `false`.
+-   `arrowColor`: change the arrow color. By default `#FFF`.
 
 ### `ng-walkthrough-flow` attributes
 
@@ -103,15 +104,16 @@ All attributes are optional and not overriding the subcomponents attributes exce
 
 **Navigation**:
 
+-   `hidePrevious`: `true` to hide the previous button. By default `false`
 -   `closeButton`: `true` for show the button.
 -   `closeAnywhere`: `false` for for click anywhere to close.
 -   `texts`: change texts. It's a overlay of `WalkthroughText`.
--   `finishButton`: `true` for show a link to exit. By defaut `false`. Always `true` on the last step.
+-   `finishButton`: `true` for show a link to exit. By default `false`. Always `true` on the last step.
 
 **Arrow**:
 
--   `showArrow`: `true` for show the arrow. By defaut `false`.
--   `arrowColor`: change the arrow color. By defaut `#FFF`.
+-   `showArrow`: `true` for show the arrow. By default `false`.
+-   `arrowColor`: change the arrow color. By default `#FFF`.
 
 ### Change texts
 

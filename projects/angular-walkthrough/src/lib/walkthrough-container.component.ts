@@ -49,6 +49,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
 
     // navigate
 
+    hidePrevious = false;
     hasPrevious = false;
     hasNext = false;
     hasFinish = false;
