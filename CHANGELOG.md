@@ -1,5 +1,13 @@
 # Changelog of ng-walkthrough
 
+
+## V0.9.5 (2019-09-03)
+
+### New features
+
+-   add `hidePrevious` attribute
+-   walkthrough flow parameters can be changed dynamically
+
 ## V0.9.4 (2019-08-25)
 
 ### Corrections
