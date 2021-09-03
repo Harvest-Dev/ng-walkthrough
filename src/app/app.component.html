@@ -14,6 +14,29 @@
             <button (click)="continue()">Continue walkthrough</button>
         </div>
     </div>
+    <div>
+        flow options :<br />
+        <label>
+            <input
+                type="checkbox"
+                #flowCloseAnywhereValue
+                [checked]="flowCloseAnywhere"
+                (change)="flowCloseAnywhere = flowCloseAnywhereValue.checked"
+            />
+            CloseAnywhere {{flowCloseAnywhere}}
+        </label><br />
+        <label>
+            <input
+                type="checkbox"
+                #flowHidePreviousValue
+                [checked]="flowHidePrevious"
+                (change)="flowHidePrevious = flowHidePreviousValue.checked"
+            />
+            HidePrevious {{flowHidePrevious}}
+        </label>
+
+    </div>
+
     <div class="overflow">
         <div></div>
         <div>
@@ -329,7 +352,8 @@
     focusBackdrop="true"
     focusHighlightAnimation="true"
     closeButton="true"
-    closeAnywhere="false"
+    [closeAnywhere]="flowCloseAnywhere"
+    [hidePrevious]="flowHidePrevious"
     arrowColor="#000"
     showArrow="true"
     radius="auto"

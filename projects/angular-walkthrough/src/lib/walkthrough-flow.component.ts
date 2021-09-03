@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList } from '@angular/core';
+import {
+    AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, OnChanges, SimpleChanges
+} from '@angular/core';
 
 import { WalkthroughTextI } from './walkthrough-text';
 import { booleanValue, WalkthroughEvent } from './walkthrough-tools';
@@ -10,7 +12,7 @@ let nextUniqueId = 0;
     selector: 'ng-walkthrough-flow',
     template: '',
 })
-export class WalkthroughFlowComponent implements AfterViewInit {
+export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     @ContentChildren(WalkthroughComponent) walkthroughComponents: QueryList<WalkthroughComponent>;
 
     @Input()
@@ -53,6 +55,18 @@ export class WalkthroughFlowComponent implements AfterViewInit {
         setTimeout(() => {
             this.init();
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (this.walkthroughComponents && changes) {
+            for (const option in changes) {
+                if (changes[option] && option !== 'id') {
+                    this.walkthroughComponents.forEach((walkthrough: WalkthroughComponent) => {
+                        walkthrough[option] = changes[option].currentValue;
+                    });
+                }
+            }
+        }
     }
 
     init() {

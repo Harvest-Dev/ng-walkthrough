@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     };
 
     testClickCount = 0;
-    testClickTexts = ['click me', "it's ok!", 'realy ok', 'ok ok...', 'stop that!'];
+    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
     alignContent = 'left';
     verticalAlignContent = 'top';
@@ -39,6 +39,9 @@ export class AppComponent implements OnInit, OnDestroy {
     step2flowDisabled = false;
     step3flowDisabled = false;
     step4flowDisabled = false;
+
+    flowHidePrevious = false;
+    flowCloseAnywhere = false;
 
     hideCount = 3;
     private _count = 3;
