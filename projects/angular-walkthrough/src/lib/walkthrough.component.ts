@@ -251,6 +251,14 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
+    @Input()
+    get hidePrevious() {
+        return this._hidePrevious;
+    }
+    set hidePrevious(value: string | boolean) {
+        this._hidePrevious = booleanValue(value);
+    }
+
     @Input() scrollOnTarget = true;
     @Input() visibilityCallback: Function;
 
@@ -266,6 +274,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _hasCloseButton = false;
     private _hasCloseAnywhere = true;
     private _disabled = false;
+    private _hidePrevious = false;
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
@@ -779,6 +788,7 @@ export class WalkthroughComponent implements AfterViewInit {
         instance.contentText = this.contentText;
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts ? { ...new WalkthroughText(), ...this.texts } : new WalkthroughText();
+        instance.hidePrevious = this._hidePrevious;
 
         this._show();
     }
