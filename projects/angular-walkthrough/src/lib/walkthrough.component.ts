@@ -1,19 +1,7 @@
 import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import {
-    AfterViewInit,
-    ApplicationRef,
-    Component,
-    ComponentFactoryResolver,
-    ComponentRef,
-    EmbeddedViewRef,
-    EventEmitter,
-    HostListener,
-    Injector,
-    Input,
-    Output,
-    Renderer2,
-    TemplateRef,
-    Type,
+    AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, EventEmitter,
+    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -289,6 +277,9 @@ export class WalkthroughComponent implements AfterViewInit {
     private _onResize = new Subject<void>();
     private _notScrollOnResize = true;
     private _resizeDelays = 200;
+    private _domChangedObserver = new MutationObserver(list => {
+        this._elementLocations();
+    });
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -437,7 +428,7 @@ export class WalkthroughComponent implements AfterViewInit {
     /**
      * Do not use this method outside of the library
      */
-    _hide(finishLink = false, closeWalkthrough = true) {
+    _hide(finishLink = false, closeWalkthrough = true, triggerFinishIfEnd = true) {
         this._display = false;
 
         // add CSS to focusElement
@@ -452,12 +443,13 @@ export class WalkthroughComponent implements AfterViewInit {
 
                 // emit closed event
                 this.closed.emit(finishLink);
-                if (!this.nextStep) {
+                if (!this.nextStep && triggerFinishIfEnd) {
                     // emit finished event
                     WalkthroughComponent.onFinish.next(this);
                     this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
+            this._domChangedObserver.disconnect();
         }
     }
 
@@ -484,6 +476,7 @@ export class WalkthroughComponent implements AfterViewInit {
             this._getInstance().ongoing = true;
             WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
+            this._domChangedObserver.observe(document.body, { attributes: false, childList: true, subtree: true });
             return true;
         } else {
             console.warn(anoterWktOnGoing);
@@ -566,6 +559,9 @@ export class WalkthroughComponent implements AfterViewInit {
             }
         } else {
             this._offsetCoordinates = null;
+
+            // element does not exist anymore we close the walkthrough
+            setTimeout(() => this._getInstance().close(false, true, false), 50);
         }
         this._setFocus(scroll);
     }
