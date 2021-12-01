@@ -1,7 +1,19 @@
 import { ComponentPortal, ComponentType, TemplatePortal } from '@angular/cdk/portal';
 import {
-    AfterViewInit, ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, EventEmitter,
-    HostListener, Injector, Input, Output, Renderer2, TemplateRef, Type,
+    AfterViewInit,
+    ApplicationRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    HostListener,
+    Injector,
+    Input,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type,
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -277,8 +289,11 @@ export class WalkthroughComponent implements AfterViewInit {
     private _onResize = new Subject<void>();
     private _notScrollOnResize = true;
     private _resizeDelays = 200;
-    private _domChangedObserver = new MutationObserver(list => {
-        this._elementLocations();
+    private _domChangedObserver = new MutationObserver(() => {
+        if (!this._hasElements(this._getFocusElements())) {
+            // focus element does not exist anymore we close the walkthrough
+            this._close();
+        }
     });
 
     static walkthroughStop() {
@@ -560,31 +575,40 @@ export class WalkthroughComponent implements AfterViewInit {
         } else {
             this._offsetCoordinates = null;
 
-            // element does not exist anymore we close the walkthrough
-            setTimeout(() => this._getInstance().close(false, true, false), 50);
+            // focus element does not exist anymore we close the walkthrough
+            this._close();
         }
         this._setFocus(scroll);
     }
 
-    /**
-     *
-     */
-    private _getFocusElement() {
-        let focusElements: NodeListOf<HTMLElement>;
-        try {
-            focusElements = this.focusElementSelector
-                ? (document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>)
-                : null;
-        } catch (error) {
-            console.error(
-                `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
-                error,
-            );
+    private _close() {
+        setTimeout(() => this._getInstance().close(false, true, false), 50);
+    }
+
+    private _hasElements(elements: NodeListOf<HTMLElement>): boolean {
+        return elements && elements.length > 0;
+    }
+
+    private _getFocusElements(): NodeListOf<HTMLElement> {
+        let focusElements: NodeListOf<HTMLElement> = null;
+        if (this.focusElementSelector) {
+            try {
+                focusElements = document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>;
+            } catch (error) {
+                console.error(
+                    `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
+                    error,
+                );
+            }
         }
+        return focusElements;
+    }
+
+    private _getFocusElement() {
+        const focusElements: NodeListOf<HTMLElement> = this._getFocusElements();
 
         // getting focus element
-
-        if (focusElements && focusElements.length > 0) {
+        if (this._hasElements(focusElements)) {
             if (focusElements.length > 1) {
                 // Multiple items fit selector, displaying first visible as focus item in 'element' mode
 
