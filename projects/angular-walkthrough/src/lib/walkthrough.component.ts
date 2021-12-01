@@ -10,6 +10,7 @@ import {
     HostListener,
     Injector,
     Input,
+    OnDestroy,
     Output,
     Renderer2,
     TemplateRef,
@@ -38,7 +39,7 @@ export interface WalkthroughNavigate {
     selector: 'ng-walkthrough',
     template: '',
 })
-export class WalkthroughComponent implements AfterViewInit {
+export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
     public static minimalMargin = 60;
@@ -290,7 +291,7 @@ export class WalkthroughComponent implements AfterViewInit {
     private _notScrollOnResize = true;
     private _resizeDelays = 200;
     private _domChangedObserver = new MutationObserver(() => {
-        if (!this._hasElements(this._getFocusElements())) {
+        if (this._display && this.focusElementSelector && !this._hasElements(this._getFocusElements())) {
             // focus element does not exist anymore we close the walkthrough
             this._close();
         }
@@ -372,6 +373,10 @@ export class WalkthroughComponent implements AfterViewInit {
                 this._onContainerInit.next();
             });
         }
+    }
+
+    ngOnDestroy() {
+        this._domChangedObserver.disconnect();
     }
 
     next(closedEvent?: EventEmitter<boolean>, finishedEvent?: EventEmitter<WalkthroughEvent>) {
@@ -464,7 +469,6 @@ export class WalkthroughComponent implements AfterViewInit {
                     this.finished.emit(new WalkthroughEvent(this, this._focusElement));
                 }
             }, 20);
-            this._domChangedObserver.disconnect();
         }
     }
 
@@ -574,9 +578,6 @@ export class WalkthroughComponent implements AfterViewInit {
             }
         } else {
             this._offsetCoordinates = null;
-
-            // focus element does not exist anymore we close the walkthrough
-            this._close();
         }
         this._setFocus(scroll);
     }
