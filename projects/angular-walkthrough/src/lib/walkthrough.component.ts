@@ -10,6 +10,7 @@ import {
     HostListener,
     Injector,
     Input,
+    OnDestroy,
     Output,
     Renderer2,
     TemplateRef,
@@ -38,7 +39,7 @@ export interface WalkthroughNavigate {
     selector: 'ng-walkthrough',
     template: '',
 })
-export class WalkthroughComponent implements AfterViewInit {
+export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
     private static _walkthroughContainerCreating = false;
     public static minimalMargin = 60;
@@ -289,6 +290,12 @@ export class WalkthroughComponent implements AfterViewInit {
     private _onResize = new Subject<void>();
     private _notScrollOnResize = true;
     private _resizeDelays = 200;
+    private _domChangedObserver = new MutationObserver(() => {
+        if (this._display && this.focusElementSelector && !this._hasElements(this._getFocusElements())) {
+            // focus element does not exist anymore we close the walkthrough
+            this._close();
+        }
+    });
 
     static walkthroughStop() {
         if (WalkthroughComponent._walkthroughContainer) {
@@ -368,6 +375,10 @@ export class WalkthroughComponent implements AfterViewInit {
         }
     }
 
+    ngOnDestroy() {
+        this._domChangedObserver.disconnect();
+    }
+
     next(closedEvent?: EventEmitter<boolean>, finishedEvent?: EventEmitter<WalkthroughEvent>) {
         if (closedEvent) {
             this.closed = closedEvent;
@@ -437,7 +448,7 @@ export class WalkthroughComponent implements AfterViewInit {
     /**
      * Do not use this method outside of the library
      */
-    _hide(finishLink = false, closeWalkthrough = true) {
+    _hide(finishLink = false, closeWalkthrough = true, triggerFinishIfEnd = true) {
         this._display = false;
 
         // add CSS to focusElement
@@ -452,7 +463,7 @@ export class WalkthroughComponent implements AfterViewInit {
 
                 // emit closed event
                 this.closed.emit(finishLink);
-                if (!this.nextStep) {
+                if (!this.nextStep && triggerFinishIfEnd) {
                     // emit finished event
                     WalkthroughComponent.onFinish.next(this);
                     this.finished.emit(new WalkthroughEvent(this, this._focusElement));
@@ -484,6 +495,7 @@ export class WalkthroughComponent implements AfterViewInit {
             this._getInstance().ongoing = true;
             WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
+            this._domChangedObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
             return true;
         } else {
             console.warn(anoterWktOnGoing);
@@ -570,25 +582,34 @@ export class WalkthroughComponent implements AfterViewInit {
         this._setFocus(scroll);
     }
 
-    /**
-     *
-     */
-    private _getFocusElement() {
-        let focusElements: NodeListOf<HTMLElement>;
-        try {
-            focusElements = this.focusElementSelector
-                ? (document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>)
-                : null;
-        } catch (error) {
-            console.error(
-                `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
-                error,
-            );
+    private _close() {
+        setTimeout(() => this._getInstance().close(false, true, false), 50);
+    }
+
+    private _hasElements(elements: NodeListOf<HTMLElement>): boolean {
+        return elements && elements.length > 0;
+    }
+
+    private _getFocusElements(): NodeListOf<HTMLElement> {
+        let focusElements: NodeListOf<HTMLElement> = null;
+        if (this.focusElementSelector) {
+            try {
+                focusElements = document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>;
+            } catch (error) {
+                console.error(
+                    `#${this.id}@focusElementSelector: '${this.focusElementSelector}' is not a valid selector.\n`,
+                    error,
+                );
+            }
         }
+        return focusElements;
+    }
+
+    private _getFocusElement() {
+        const focusElements: NodeListOf<HTMLElement> = this._getFocusElements();
 
         // getting focus element
-
-        if (focusElements && focusElements.length > 0) {
+        if (this._hasElements(focusElements)) {
             if (focusElements.length > 1) {
                 // Multiple items fit selector, displaying first visible as focus item in 'element' mode
 

@@ -1,14 +1,6 @@
 import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
-    Component,
-    ComponentRef,
-    ElementRef,
-    EmbeddedViewRef,
-    HostBinding,
-    HostListener,
-    Renderer2,
-    TemplateRef,
-    ViewChild,
+    Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 
@@ -552,13 +544,13 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         this.close(true, true);
     }
 
-    close(finishLink = false, closeWalkthrough = true) {
+    close(finishLink = false, closeWalkthrough = true, triggerFinishIfEnd = true) {
         // remove content
         this._portalHost.dispose();
         // hide
         this.show = false;
         if (this.parent) {
-            this.parent._hide(finishLink, closeWalkthrough);
+            this.parent._hide(finishLink, closeWalkthrough, triggerFinishIfEnd);
         }
     }
 }

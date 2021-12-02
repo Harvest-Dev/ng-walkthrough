@@ -1,5 +1,10 @@
 # Changelog of ng-walkthrough
 
+## V0.9.6 (2021-12-01)
+
+### Corrections
+
+-   close walkthrough when dom changed and focusElement does not exist anymore
 
 ## V0.9.5 (2019-09-03)
 
