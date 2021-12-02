@@ -495,7 +495,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             this._getInstance().ongoing = true;
             WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
-            this._domChangedObserver.observe(document.body, { attributes: false, childList: true, subtree: true });
+            this._domChangedObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
             return true;
         } else {
             console.warn(anoterWktOnGoing);
