@@ -72,6 +72,8 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     @Input() contentText: string;
     @Input() contentStyle: 'none' | 'draken' = 'draken';
 
+    @Input() observerOptions: MutationObserverInit = { attributes: false, childList: true, subtree: true };
+
     @Input()
     get marginZone() {
         return this._marginZone;
@@ -495,7 +497,9 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             this._getInstance().ongoing = true;
             WalkthroughComponent.onOpen.next(this);
             this._elementLocations();
-            this._domChangedObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+            if (this.observerOptions) {
+                this._domChangedObserver.observe(document.body, this.observerOptions);
+            }
             return true;
         } else {
             console.warn(anoterWktOnGoing);

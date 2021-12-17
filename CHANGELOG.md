@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.7 (2021-12-17)
+
+### Corrections
+
+-   add options for DOM detection changes
+
 ## V0.9.6 (2021-12-02)
 
 ### Corrections

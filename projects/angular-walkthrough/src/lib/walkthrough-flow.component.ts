@@ -1,5 +1,13 @@
 import {
-    AfterViewInit, Component, ContentChildren, EventEmitter, Input, Output, QueryList, OnChanges, SimpleChanges
+    AfterViewInit,
+    Component,
+    ContentChildren,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    SimpleChanges,
 } from '@angular/core';
 
 import { WalkthroughTextI } from './walkthrough-text';
@@ -45,6 +53,8 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     @Input() notScrollOnResize: string | boolean;
 
     @Input() texts: WalkthroughTextI;
+
+    @Input() observerOptions: MutationObserverInit = { attributes: false, childList: true, subtree: true };
 
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
@@ -129,6 +139,9 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
             }
             if (!walkthrough.texts && this.texts) {
                 walkthrough.texts = this.texts;
+            }
+            if (!walkthrough.observerOptions && this.observerOptions) {
+                walkthrough.observerOptions = this.observerOptions;
             }
         });
         // navigation auto (close on last step)
