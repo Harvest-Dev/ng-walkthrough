@@ -1,6 +1,14 @@
 import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
-    Component, ComponentRef, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Renderer2, TemplateRef, ViewChild,
+    Component,
+    ComponentRef,
+    ElementRef,
+    EmbeddedViewRef,
+    HostBinding,
+    HostListener,
+    Renderer2,
+    TemplateRef,
+    ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 
@@ -42,6 +50,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     // navigate
 
     hidePrevious = false;
+    hideNext = false;
+    hideNav = false;
     hasPrevious = false;
     hasNext = false;
     hasFinish = false;

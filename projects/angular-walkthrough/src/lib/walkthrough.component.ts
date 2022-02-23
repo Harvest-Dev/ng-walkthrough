@@ -262,6 +262,22 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         this._hidePrevious = booleanValue(value);
     }
 
+    @Input()
+    get hideNext() {
+        return this._hideNext;
+    }
+    set hideNext(value: string | boolean) {
+        this._hideNext = booleanValue(value);
+    }
+
+    @Input()
+    get hideNav() {
+        return this._hideNav;
+    }
+    set hideNav(value: string | boolean) {
+        this._hideNav = booleanValue(value);
+    }
+
     @Input() scrollOnTarget = true;
     @Input() visibilityCallback: Function;
 
@@ -278,6 +294,8 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _hasCloseAnywhere = true;
     private _disabled = false;
     private _hidePrevious = false;
+    private _hideNext = false;
+    private _hideNav = false;
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
@@ -370,8 +388,9 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         if (!WalkthroughComponent._walkthroughContainer && !WalkthroughComponent._walkthroughContainerCreating) {
             WalkthroughComponent._walkthroughContainerCreating = true;
             setTimeout(() => {
-                WalkthroughComponent._walkthroughContainer =
-                    this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
+                WalkthroughComponent._walkthroughContainer = this._appendComponentToBody<WalkthroughContainerComponent>(
+                    WalkthroughContainerComponent,
+                );
                 this._onContainerInit.next();
             });
         }
@@ -814,6 +833,8 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         instance.contentStyle = this.contentStyle;
         instance.text = this.texts ? { ...new WalkthroughText(), ...this.texts } : new WalkthroughText();
         instance.hidePrevious = this._hidePrevious;
+        instance.hideNext = this._hideNext;
+        instance.hideNav = this._hideNav;
 
         this._show();
     }
