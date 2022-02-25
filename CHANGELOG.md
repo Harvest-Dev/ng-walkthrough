@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.9.8 (2022-02-25)
+
+### New features
+
+-   add `hideNext` and `hideNav` attributes
+
 ## V0.9.7 (2021-12-17)
 
 ### Corrections

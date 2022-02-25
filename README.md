@@ -65,8 +65,10 @@ All attributes are optional.
 **Navigation**:
 
 -   `hidePrevious`: `true` to hide the previous button. By default `false`
--   `previousStep`: add a ling to go to the previous `ng-walkthrough`.
--   `nextStep`: add a ling to go to the next `ng-walkthrough`.
+-   `previousStep`: add a link to go to the previous `ng-walkthrough`.
+-   `nextStep`: add a link to go to the next `ng-walkthrough`.
+-   `hideNext`: hide the next step link.
+-   `HiveNav`: hide the navigation step links.
 -   `closeButton`: `true` for show the button. By default `false`.
 -   `closeAnywhere`: `false` for click anywhere to close. By default `true`.
 -   `finishButton`: `true` for show a link to exit. By default `false`.
