@@ -24,6 +24,7 @@ import { WalkthroughContainerComponent } from './walkthrough-container.component
 import { WalkthroughText, WalkthroughTextI } from './walkthrough-text';
 import { booleanValue, WalkthroughElementCoordinate, WalkthroughEvent, WalkthroughMargin } from './walkthrough-tools';
 import { WalkthroughService } from './walkthrough.service';
+import { HostBinding } from '@angular/core';
 
 let nextUniqueId = 0;
 
@@ -115,6 +116,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         this._notScrollOnResize = booleanValue(value);
     }
 
+    @HostBinding('attr.id')
     @Input()
     get id() {
         return this._id;

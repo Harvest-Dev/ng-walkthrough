@@ -3,6 +3,7 @@ import {
     Component,
     ContentChildren,
     EventEmitter,
+    HostBinding,
     Input,
     OnChanges,
     Output,
@@ -23,6 +24,7 @@ let nextUniqueId = 0;
 export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     @ContentChildren(WalkthroughComponent) walkthroughComponents: QueryList<WalkthroughComponent>;
 
+    @HostBinding('attr.id')
     @Input()
     get id() {
         return this._id;
