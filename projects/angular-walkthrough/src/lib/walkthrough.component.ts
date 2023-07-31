@@ -20,11 +20,11 @@ import {
 import { Subject } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
 
+import { HostBinding } from '@angular/core';
 import { WalkthroughContainerComponent } from './walkthrough-container.component';
 import { WalkthroughText, WalkthroughTextI } from './walkthrough-text';
-import { booleanValue, WalkthroughElementCoordinate, WalkthroughEvent, WalkthroughMargin } from './walkthrough-tools';
+import { WalkthroughElementCoordinate, WalkthroughEvent, WalkthroughMargin, booleanValue } from './walkthrough-tools';
 import { WalkthroughService } from './walkthrough.service';
-import { HostBinding } from '@angular/core';
 
 let nextUniqueId = 0;
 
@@ -390,9 +390,8 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         if (!WalkthroughComponent._walkthroughContainer && !WalkthroughComponent._walkthroughContainerCreating) {
             WalkthroughComponent._walkthroughContainerCreating = true;
             setTimeout(() => {
-                WalkthroughComponent._walkthroughContainer = this._appendComponentToBody<WalkthroughContainerComponent>(
-                    WalkthroughContainerComponent,
-                );
+                WalkthroughComponent._walkthroughContainer =
+                    this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
                 this._onContainerInit.next();
             });
         }

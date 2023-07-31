@@ -5,5 +5,27 @@
     "printWidth": 120,
     "arrowParens": "avoid",
     "trailingComma": "all",
-    "bracketSpacing": true
+    "bracketSpacing": true,
+    "importOrderParserPlugins": ["typescript", "decorators-legacy"],
+    "importOrder": [
+        "^@angular/",
+        "rxjs",
+        "^(?!(src|projects|lib)/)[a-z]",
+        "^@",
+        "^(src|lib|projects)/",
+        "^[.][.]",
+        "^(?!.*routing)[.]/",
+        "^[.]/"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2,
+                "printWidth": 250
+            }
+        }
+    ]
 }

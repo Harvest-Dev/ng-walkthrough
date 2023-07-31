@@ -7,14 +7,14 @@ export class WalkthroughService {
     private _overflowRegex = /(auto|scroll)/;
 
     retrieveCoordinates(element: HTMLElement, margin?: WalkthroughMargin): WalkthroughElementCoordinate {
-        const clientrect: ClientRect = element.getBoundingClientRect();
+        const clientRect = element.getBoundingClientRect();
         const style = window.getComputedStyle(element);
 
         const coordinates = {
-            top: clientrect.top - (margin ? margin.top : 0),
-            height: clientrect.height,
-            width: clientrect.width,
-            left: clientrect.left - (margin ? margin.left : 0),
+            top: clientRect.top - (margin ? margin.top : 0),
+            height: clientRect.height,
+            width: clientRect.width,
+            left: clientRect.left - (margin ? margin.left : 0),
             margin: {
                 top: parseFloat(style.marginTop),
                 right: parseFloat(style.marginRight),
