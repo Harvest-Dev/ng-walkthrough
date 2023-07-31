@@ -151,6 +151,5 @@
                 }
             }
         }
-    },
-    "defaultProject": "ng-walkthrough"
+    }
 }
