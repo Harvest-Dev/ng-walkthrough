@@ -4,6 +4,7 @@
 /dist/angular-walkthrough
 /tmp
 /out-tsc
+.angular
 
 # dependencies
 /node_modules
@@ -33,7 +34,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-.history
 
 # System Files
 .DS_Store
