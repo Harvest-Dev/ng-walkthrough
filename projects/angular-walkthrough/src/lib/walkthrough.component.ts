@@ -29,7 +29,7 @@ import { WalkthroughService } from './walkthrough.service';
 let nextUniqueId = 0;
 
 const noInstanceWarn = 'No instance of walkthroughContainer.';
-const anoterWktOnGoing = 'Another walkthrough is ongoing. Please close it before opening a new one.';
+const anotherWktOnGoing = 'Another walkthrough is ongoing. Please close it before opening a new one.';
 
 export interface WalkthroughNavigate {
     previous: WalkthroughComponent;
@@ -62,7 +62,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
 
     @Input() focusElementSelector: string;
     @Input() typeSelector: 'element' | 'zone' = 'element';
-    @Input() focusClick: (event: Event, content: WalkthroughContainerComponent) => {};
+    @Input() focusClick: (event: Event, content: WalkthroughContainerComponent) => void;
     @Input() radius: string;
 
     @Input() previousStep: WalkthroughComponent;
@@ -71,7 +71,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
 
     @Input() contentTemplate: TemplateRef<any>;
     @Input() contentText: string;
-    @Input() contentStyle: 'none' | 'draken' = 'draken';
+    @Input() contentStyle: 'none' | 'darken' = 'darken';
 
     @Input() observerOptions: MutationObserverInit = { attributes: false, childList: true, subtree: true };
 
@@ -281,11 +281,11 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     @Input() scrollOnTarget = true;
-    @Input() visibilityCallback: Function;
+    @Input() visibilityCallback: () => boolean;
 
     private _id: string;
     private _uid = `walkthrough-${nextUniqueId++}`;
-    private _readyHasBeenEmited = false;
+    private _readyHasBeenEmitted = false;
     private _display = false;
     private _hasHighlightAnimation = false;
     private _hasBackdrop = false;
@@ -417,7 +417,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
                 WalkthroughComponent.onRefresh.next(this);
                 this._elementLocations();
             } else {
-                console.warn(anoterWktOnGoing);
+                console.warn(anotherWktOnGoing);
             }
         } else {
             console.warn(noInstanceWarn);
@@ -448,12 +448,12 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     /**
      * Do not use this method outside of the library
      */
-    loadPrevioustStep() {
+    _loadPreviousStep() {
         setTimeout(() => {
             WalkthroughComponent.onNavigate.next({ previous: this, next: this.previousStep });
             WalkthroughComponent.onNavigatePrevious.next({ previous: this, next: this.previousStep });
             this.previousStep._next(this.closed, this.finished);
-        }, 0);
+        });
     }
 
     /**
@@ -464,7 +464,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             WalkthroughComponent.onNavigate.next({ previous: this, next: this.nextStep });
             WalkthroughComponent.onNavigateNext.next({ previous: this, next: this.nextStep });
             this.nextStep._next(this.closed, this.finished);
-        }, 0);
+        });
     }
 
     /**
@@ -522,7 +522,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             }
             return true;
         } else {
-            console.warn(anoterWktOnGoing);
+            console.warn(anotherWktOnGoing);
             return false;
         }
     }
@@ -575,7 +575,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    private _elementLocations(scroll: boolean = true): void {
+    private _elementLocations(scroll = true): void {
         this._getFocusElement();
 
         const element = this._focusElement;
@@ -673,9 +673,9 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * get instance, hightlight the focused element et show the template
+     * get instance, highlight the focused element et show the template
      */
-    private _setFocus(scroll: boolean = true) {
+    private _setFocus(scroll = true) {
         const instance = this._getInstance();
         if (instance) {
             const scrollY = window.pageXOffset;
@@ -683,7 +683,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             setTimeout(() => {
                 if (this._focusElement && instance.zone) {
                     instance.marginZonePx = this._marginZonePx;
-                    instance.hightlightZone(
+                    instance.highlightZone(
                         this._offsetCoordinates,
                         scrollY - window.pageXOffset,
                         this.animation,
@@ -706,12 +706,12 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             this._initContentTemplate(instance);
         }
         setTimeout(() => {
-            instance.hightlightZoneStyling(this._focusElement);
+            instance.highlightZoneStyling(this._focusElement);
             this._updateElementPositions(instance, scroll);
         });
     }
 
-    private _updateElementPositions(instance: WalkthroughContainerComponent, scroll: boolean = true) {
+    private _updateElementPositions(instance: WalkthroughContainerComponent, scroll = true) {
         if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
             setTimeout(() => {
                 if (this._offsetCoordinates) {
@@ -735,8 +735,8 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
                 setTimeout(() => {
                     this._getInstance().setHeight();
 
-                    if (!this._readyHasBeenEmited) {
-                        this._readyHasBeenEmited = true;
+                    if (!this._readyHasBeenEmitted) {
+                        this._readyHasBeenEmitted = true;
                         this.ready.emit(new WalkthroughEvent(this, this._focusElement));
                     }
 
@@ -791,7 +791,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * Attache the template in the contener, if a template is linked.
+     * Attache the template in the container, if a template is linked.
      */
     private _attachContentTemplate() {
         if (this.contentTemplate) {
@@ -800,7 +800,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * init a partof styles of the contenaire
+     * init a part of styles of the container
      */
     private _initStylingTemplate(instance: WalkthroughContainerComponent) {
         const hasHighlightZone = this._focusElement !== null;
@@ -815,7 +815,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     /**
-     * init all datas of the contenaire
+     * init all datas of the container
      */
     private _initContentTemplate(instance: WalkthroughContainerComponent) {
         const hasHighlightZone = this._focusElement !== null;

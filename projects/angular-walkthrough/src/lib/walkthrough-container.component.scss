@@ -16,7 +16,7 @@
     }
 
     &.backdrop {
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: #0009;
     }
 }
 
@@ -26,7 +26,7 @@ button {
     color: #fff;
 }
 
-// hightlight zone
+// highlight zone
 
 .wkt-zone {
     position: absolute;
@@ -36,11 +36,11 @@ button {
     }
 
     &.backdrop {
-        box-shadow: 0 0 0 2200px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 2200px #0009;
     }
 
     &.glow {
-        box-shadow: 0 0 4px 2px #ffff66, 0 0 9px 0 #ffff66, 0 0 36px #ffff66;
+        box-shadow: 0 0 4px 2px #ff6, 0 0 9px 0 #ff6, 0 0 36px #ff6;
     }
 
     &.clickable {
@@ -73,7 +73,7 @@ button {
 }
 
 .wkt-content-block.darken {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #0009;
 }
 
 .wkt-close + .wkt-content {
@@ -140,7 +140,7 @@ svg {
     }
 
     50% {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: #fffc;
     }
 
     100% {
@@ -154,7 +154,7 @@ svg {
     }
 
     50% {
-        background-color: rgba(255, 255, 255, 0.8);
+        background-color: #fffc;
     }
 
     100% {
@@ -166,7 +166,7 @@ svg {
 
 @media screen and (min-width: 1920px), screen and (min-height: 1920px) {
     .wkt-zone.backdrop {
-        box-shadow: 0 0 0 4400px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 4400px #0009;
     }
 }
 
@@ -174,7 +174,7 @@ svg {
 
 @media screen and (min-width: 3840px), screen and (min-height: 3840px) {
     .wkt-zone.backdrop {
-        box-shadow: 0 0 0 8800px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 0 0 8800px #0009;
     }
 }
 
@@ -182,5 +182,5 @@ svg {
 
 _:default:not(:root:root),
 .wkt-zone.backdrop {
-    box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 0 0 2000px #0009 !important;
 }

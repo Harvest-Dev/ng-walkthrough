@@ -12,10 +12,13 @@ npm i angular-walkthrough --save
 
 ## Requirements
 
--   Angular 11.0.0 and more
--   Angular/cdk 11.0.0 and more
+-   Angular `16.1` and more
+-   Angular/cdk `16.1` and more
 
-For Angular 6~11 use 0.8.2
+Old versions:
+
+-   For Angular 6~11 use `0.8.2`
+-   For Angular 11~15 use `0.9.8`
 
 ## Demo
 

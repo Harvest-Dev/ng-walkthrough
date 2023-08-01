@@ -35,7 +35,7 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
 
     @Output() closed: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
-    @Input() contentStyle: 'none' | 'draken' = 'draken';
+    @Input() contentStyle: 'none' | 'darken' = 'darken';
 
     @Input() arrowColor: string;
     @Input() marginZone: string | null = null;
@@ -60,8 +60,6 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
 
     private _id: string;
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
-
-    constructor() {}
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -92,7 +90,7 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
             }
             prevComp = walkthrough;
 
-            // transmition (only if different from default)
+            // transmission (only if different from default)
 
             if (this.closed) {
                 walkthrough.closed = this.closed;

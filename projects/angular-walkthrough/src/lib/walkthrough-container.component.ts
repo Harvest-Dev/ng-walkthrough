@@ -164,12 +164,12 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         this._renderer.setStyle(this._el.nativeElement, 'height', this._walkthroughService.getDocumentHeight() + 'px');
     }
 
-    hightlightZone(
+    highlightZone(
         coordinate: WalkthroughElementCoordinate,
         scrollDiff: number,
         animation: 'none' | 'linear',
         animationDelays: number,
-        continueFunction: (scroll: boolean) => {},
+        continueFunction: (scroll: boolean) => void,
         scroll: boolean,
     ) {
         const element = this.zone.nativeElement as HTMLElement;
@@ -213,7 +213,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         }
     }
 
-    hightlightZoneStyling(element: HTMLElement) {
+    highlightZoneStyling(element: HTMLElement) {
         if (element) {
             const zoneStyle = (this.zone.nativeElement as HTMLElement).style;
             if (this.radius) {
@@ -239,7 +239,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     }
 
     contentBlockPosition(
-        paramcoordinate: WalkthroughElementCoordinate,
+        paramCoordinate: WalkthroughElementCoordinate,
         alignContent: 'left' | 'center' | 'right',
         verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
         contentSpacing: number,
@@ -251,7 +251,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         const width = elementSize.width + elementSize.margin.left + elementSize.margin.right;
         const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
 
-        const coordinate = JSON.parse(JSON.stringify(paramcoordinate));
+        const coordinate = JSON.parse(JSON.stringify(paramCoordinate));
         coordinate.top -= this.marginZonePx.top;
         coordinate.left -= this.marginZonePx.left;
         coordinate.width += this.marginZonePx.left + this.marginZonePx.right;
@@ -353,12 +353,10 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                         element.style.top = coordinate.top + coordinate.height - height + 'px';
                         break;
                     case 'below':
-                        space = this._walkthroughService.getDocumentHeight() - coordinate.top + coordinate.height;
-                        if (space > verticalContentSpacing) {
-                            element.style.top = coordinate.top + coordinate.height + verticalContentSpacing + 'px';
-                        } else {
-                            element.style.top = this._walkthroughService.getDocumentHeight() - height + 'px';
-                        }
+                        element.style.top =
+                            space > verticalContentSpacing
+                                ? coordinate.top + coordinate.height + verticalContentSpacing + 'px'
+                                : this._walkthroughService.getDocumentHeight() - height + 'px';
                         this._arrowPosition = 'topBottom';
                         break;
                 }
@@ -381,8 +379,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
-        const realwidth = coordinate.width + this.marginZonePx.left + this.marginZonePx.right;
-        const realheight = coordinate.height + this.marginZonePx.top + this.marginZonePx.bottom;
+        const realWidth = coordinate.width + this.marginZonePx.left + this.marginZonePx.right;
+        const realHeight = coordinate.height + this.marginZonePx.top + this.marginZonePx.bottom;
 
         // start point of the arrow (tail)
         let startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
@@ -413,10 +411,10 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         }
 
         if (this._arrowPosition === 'topBottom') {
-            endLeft += realwidth / 2;
+            endLeft += realWidth / 2;
 
             if (this._contentPosition === 'below') {
-                endTop += realheight + 6;
+                endTop += realHeight + 6;
             } else {
                 endTop -= 6;
             }
@@ -436,12 +434,12 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 `Q${endLeft},${centerTop} ${endLeft},${endTop}`;
         } else {
             if (startLeft > coordinate.left) {
-                endLeft += realwidth + this.arrowMarkerDist;
+                endLeft += realWidth + this.arrowMarkerDist;
             } else {
                 endLeft -= this.arrowMarkerDist;
             }
 
-            endTop += realheight / 2;
+            endTop += realHeight / 2;
 
             centerLeft = (startLeft + endLeft) / 2;
             centerTop = (startTop + endTop) / 2;
@@ -519,7 +517,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         let current = this.parent;
         while (current) {
             if (current.previousStep && !current.previousStep.disabled) {
-                current.loadPrevioustStep();
+                current._loadPreviousStep();
                 return;
             } else {
                 if (!current.previousStep) {

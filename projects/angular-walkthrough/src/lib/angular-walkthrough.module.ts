@@ -11,6 +11,6 @@ import { WalkthroughService } from './walkthrough.service';
     imports: [CommonModule, PortalModule],
     declarations: [WalkthroughFlowComponent, WalkthroughComponent, WalkthroughContainerComponent],
     exports: [WalkthroughFlowComponent, WalkthroughComponent, WalkthroughContainerComponent],
-    providers: [WalkthroughService]
+    providers: [WalkthroughService],
 })
 export class WalkthroughModule {}
