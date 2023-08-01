@@ -1,5 +1,12 @@
 # Changelog of ng-walkthrough
 
+## V0.10.0 (2023-08-01)
+
+### Breaking changes
+
+-   upgrade to Angular 16.1
+-   fix typo/wording
+
 ## V0.9.8 (2022-02-25)
 
 ### New features
