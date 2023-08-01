@@ -10,7 +10,7 @@
         [class.highlight]="hasHighlight"
         [style.padding]="marginZone"
     ></div>
-    <div class="wkt-content-block" [class.hide]="hideOther" [class.darken]="contentStyle === 'draken'" #contentBlock>
+    <div class="wkt-content-block" [class.hide]="hideOther" [class.darken]="contentStyle === 'darken'" #contentBlock>
         <button type="button" class="wkt-close" *ngIf="hasCloseButton" (click)="close()">✖</button>
         <div class="wkt-content">
             <p *ngIf="contentText">{{ contentText }}</p>
