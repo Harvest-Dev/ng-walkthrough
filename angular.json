@@ -61,18 +61,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-walkthrough:build"
+            "buildTarget": "ng-walkthrough:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-walkthrough:build:production"
+              "buildTarget": "ng-walkthrough:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-walkthrough:build"
+            "buildTarget": "ng-walkthrough:build"
           }
         },
         "test": {
