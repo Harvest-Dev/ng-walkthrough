@@ -129,7 +129,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     get alignContent() {
         return this._alignContent;
     }
-    set alignContent(value: 'left' | 'center' | 'right') {
+    set alignContent(value: 'left' | 'center' | 'content' | 'right') {
         if (this._alignContent !== value) {
             this._alignContent = value;
             this._updateElementPositions(this._getInstance());
@@ -301,7 +301,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _arrowColor: string;
     private _marginZone: string;
     private _marginZonePx = new WalkthroughMargin();
-    private _alignContent: 'left' | 'center' | 'right' = 'left';
+    private _alignContent: 'left' | 'center' | 'content' | 'right' = 'left';
     private _verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below' = 'top';
     private _contentSpacing = 0;
     private _verticalContentSpacing = 50;

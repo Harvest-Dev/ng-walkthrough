@@ -240,7 +240,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
 
     contentBlockPosition(
         paramCoordinate: WalkthroughElementCoordinate,
-        alignContent: 'left' | 'center' | 'right',
+        alignContent: 'left' | 'center' | 'right' | 'content',
         verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
         contentSpacing: number,
         verticalContentSpacing: number,
@@ -273,7 +273,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 !notEnoughSpace
             ) {
                 // change align center to left or right if not enough space to align center
-                if (alignContent === 'center') {
+                if (alignContent === 'center' || alignContent === 'content') {
                     const maxSpace = Math.max(spaceRight, spaceLeft);
                     if (maxSpace < width + (window.innerWidth - width) / 2) {
                         alignContent = spaceRight > spaceLeft ? 'right' : 'left';
@@ -307,6 +307,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             }
         } else if (alignContent === 'center') {
             element.style.left = window.innerWidth / 2 - width / 2 + 'px';
+        } else if (alignContent === 'content') {
+            element.style.left = coordinate.left + coordinate.width / 2 - width / 2 + 'px';
         } else if (alignContent === 'right') {
             element.style.right = '0';
             if (this.hasHighlightZone) {
@@ -354,7 +356,11 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                         break;
                     case 'below':
                         element.style.top =
-                            space > verticalContentSpacing
+                            this._walkthroughService.getDocumentHeight() -
+                                coordinate.top +
+                                coordinate.height +
+                                verticalContentSpacing >
+                            height
                                 ? coordinate.top + coordinate.height + verticalContentSpacing + 'px'
                                 : this._walkthroughService.getDocumentHeight() - height + 'px';
                         this._arrowPosition = 'topBottom';

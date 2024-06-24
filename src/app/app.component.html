@@ -23,8 +23,8 @@
                 [checked]="flowCloseAnywhere"
                 (change)="flowCloseAnywhere = flowCloseAnywhereValue.checked"
             />
-            CloseAnywhere {{flowCloseAnywhere}}
-        </label><br />
+            CloseAnywhere {{ flowCloseAnywhere }} </label
+        ><br />
         <label>
             <input
                 type="checkbox"
@@ -32,9 +32,8 @@
                 [checked]="flowHidePrevious"
                 (change)="flowHidePrevious = flowHidePreviousValue.checked"
             />
-            HidePrevious {{flowHidePrevious}}
+            HidePrevious {{ flowHidePrevious }}
         </label>
-
     </div>
 
     <div class="overflow">
@@ -284,6 +283,7 @@
             <div>
                 <button (click)="alignContent = 'left'">left</button>
                 <button (click)="alignContent = 'center'">center</button>
+                <button (click)="alignContent = 'content'">content</button>
                 <button (click)="alignContent = 'right'">right</button>
             </div>
             verticalAlignContent value :
