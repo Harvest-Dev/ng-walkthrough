@@ -2,7 +2,7 @@
 
 ## V0.10.2 (2024-06-25)
 
-### New feature
+### New features
 
 -   positioning management when no target
 -   add `top-screen-center` position for `verticalAlignContent` when no target
