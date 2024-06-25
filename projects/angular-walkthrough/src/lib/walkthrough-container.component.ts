@@ -109,7 +109,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         return !this.hasHighlightZone && this.hasBackdrop;
     }
 
-    private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below';
+    private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below' | 'top-screen-center';
     private _arrowPosition: 'topBottom' | 'leftRight';
 
     constructor(
@@ -241,7 +241,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     contentBlockPosition(
         paramCoordinate: WalkthroughElementCoordinate,
         alignContent: 'left' | 'center' | 'right' | 'content',
-        verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below',
+        verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below' | 'top-screen-center',
         contentSpacing: number,
         verticalContentSpacing: number,
     ) {
@@ -251,7 +251,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         const width = elementSize.width + elementSize.margin.left + elementSize.margin.right;
         const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
 
-        const coordinate = JSON.parse(JSON.stringify(paramCoordinate));
+        const coordinate = paramCoordinate ? JSON.parse(JSON.stringify(paramCoordinate)) : {};
         coordinate.top -= this.marginZonePx.top;
         coordinate.left -= this.marginZonePx.left;
         coordinate.width += this.marginZonePx.left + this.marginZonePx.right;
@@ -307,6 +307,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
             }
         } else if (alignContent === 'center') {
             element.style.left = window.innerWidth / 2 - width / 2 + 'px';
+            console.log(element.style.left);
         } else if (alignContent === 'content') {
             element.style.left = coordinate.left + coordinate.width / 2 - width / 2 + 'px';
         } else if (alignContent === 'right') {
@@ -377,7 +378,22 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 }
             }
         } else {
-            element.style.top = this._walkthroughService.getHeightOfPage() / 2 - height / 2 + 'px';
+            switch (verticalAlignContent) {
+                case 'above':
+                case 'top':
+                    element.style.top = contentSpacing + 'px';
+                    break;
+                case 'top-screen-center':
+                    element.style.top = this._walkthroughService.getHeightOfPage() / 2 - height / 2 + 'px';
+                    break;
+                case 'center':
+                    element.style.top = this._walkthroughService.getDocumentHeight() / 2 - height / 2 + 'px';
+                    break;
+                case 'below':
+                case 'bottom':
+                    element.style.top = this._walkthroughService.getDocumentHeight() - height - contentSpacing + 'px';
+                    break;
+            }
         }
     }
 

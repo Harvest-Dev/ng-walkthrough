@@ -1,6 +1,7 @@
 <div>
     <div>
         <button id="test1" class="rename" (click)="walk1.open()">Test 1</button>
+        <button id="testCenter" class="rename" (click)="walkCenter.open()">Test no target</button>
         <button id="testTable" class="rename" (click)="walkTable.open()">Test Table</button>
         <button id="testSelectorChange" class="rename" (click)="walkSelectorChange.open()">Test Selector change</button>
         <button id="testFlow" class="rename" (click)="walkFlow.start()">Test Flow</button>
@@ -227,6 +228,63 @@
             tellus convallis, non hendrerit augue semper. Maecenas elit ex, lobortis at sapien sed, fermentum volutpat
             sem.
         </p>
+    </ng-template>
+</ng-walkthrough>
+
+<ng-walkthrough
+    #walkCenter
+    id="wt-center"
+    focusBackdrop="true"
+    [contentTemplate]="stepCenter"
+    finishButton="true"
+    [verticalAlignContent]="verticalAlignContent"
+    [alignContent]="alignContent"
+    [contentSpacing]="contentSpacing"
+    [notScrollOnResize]="notScrollOnResize"
+    closeAnywhere="false"
+>
+    <ng-template #stepCenter>
+        <div id="valign-content">
+            <p>alignContent {{ alignContent }}</p>
+            <p>verticalAlignContent {{ verticalAlignContent }}</p>
+            <p>
+                contentSpacing
+                <input
+                    #spacingValue
+                    [value]="contentSpacing"
+                    (change)="contentSpacing = spacingValue.value"
+                    type="number"
+                    min="0"
+                />
+            </p>
+
+            <p>
+                notScrollOnResize
+                <input
+                    type="checkbox"
+                    #notScrollOnResizeValue
+                    [value]="notScrollOnResize"
+                    (change)="notScrollOnResize = notScrollOnResizeValue.checked"
+                />
+            </p>
+
+            alignContent value :
+            <div>
+                <button (click)="alignContent = 'left'">left</button>
+                <button (click)="alignContent = 'center'">center</button>
+                <button (click)="alignContent = 'content'">content</button>
+                <button (click)="alignContent = 'right'">right</button>
+            </div>
+            verticalAlignContent value :
+            <div>
+                <button (click)="verticalAlignContent = 'above'">above</button>
+                <button (click)="verticalAlignContent = 'top'">top</button>
+                <button (click)="verticalAlignContent = 'center'">center</button>
+                <button (click)="verticalAlignContent = 'bottom'">bottom</button>
+                <button (click)="verticalAlignContent = 'below'">below</button>
+                <button (click)="verticalAlignContent = 'top-screen-center'">top-screen-center</button>
+            </div>
+        </div>
     </ng-template>
 </ng-walkthrough>
 

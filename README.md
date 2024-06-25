@@ -46,9 +46,9 @@ All attributes are optional.
 -   `focusBackdrop`: `true` for show a dark backdrop around the focus element. By default `false`.
 -   `focusGlow`: `true` for show a glow on the focus element. By default `false`.
 -   `focusClick`: add an action `click` on the highlight zone.
--   `typeSelector`: type of selection. Two modes possible: `element` (one unique HMLT element), `zone` (a zone with contains the first and last element). By default : `element`.
+-   `typeSelector`: type of selection. Two modes possible: `element` (one unique HTML element), `zone` (a zone with contains the first and last element). By default : `element`.
 -   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes. By default, no radius.
--   `marginZone`: add a maring of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
+-   `marginZone`: add a margin of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
 -   `scrollOnTarget`: if the walkthrough detects that `focusElementSelector` is outside of the current view, scrolls automatically. By default : `true`
 -   `visibilityCallback`: callback to check if `focusElementSelector` is hidden, only if the walkthrough needs specific verification. By default : `optional`
 -   `notScrollOnResize`: do not scroll when resizing (e.g. may be required with dynamic menu on mobile)
@@ -57,10 +57,26 @@ All attributes are optional.
 **Content**:
 
 -   `contentTemplate`: add a `ng-template` with your description.
--   `contentText`: show a simple description without formating in content.
--   `contentStyle`: background style for content container. Possible values: `none`, `darken`. By default : `darken`.
--   `alignContent`: align the `contentTemplate` horizontally. Possible values: `left`, `center` or `right`. By default : `left`.
--   `verticalAlignContent`: align the `contentTemplate` vertically. Possible values: `above`, `top`, `center`, `bottom` or `below`. By default : `top`.
+-   `contentText`: show a simple description without formatting in content.
+-   `contentStyle`: background style for content container. By default : `darken`. Possible values: `none`, `darken`.
+-   `alignContent`: align the `contentTemplate` horizontally. . By default : `left`.
+    -   `left` : on the left
+    -   `center` : on the center of the page
+    -   `right`: on the right
+    -   `content`: center to the target content
+-   `verticalAlignContent`: align the `contentTemplate` vertically. By default : `top`. Possible values :
+    -   With target :
+        -   `above` : above content
+        -   `top` : top of content
+        -   `center` : center of content
+        -   `bottom` : bottom of content
+        -   `below` : below content
+        -   `top-screen-center` : no effect
+    -   Without target
+        -   `above` or `top` : top of the page
+        -   `center` : center of the page
+        -   `bottom` or `below` : bottom of the page
+        -   `top-screen-center` : center on the screen with scroll on top
 -   `contentSpacing`: The max space which separates the content to the focus zone horizontally, default is 0 (opposite of the focusZone)
 -   `verticalContentSpacing`: The max space which separates the content to the focus zone vertically, default is 50
 -   `rootElement`: root element on which walkthrough will scroll to after each positioning, as to avoid hidden zones
@@ -85,7 +101,7 @@ All attributes are optional.
 
 ### `ng-walkthrough-flow` attributes
 
-All attributes are optional and not overriding the subcomponents attributes except `previousStep`, `nextStep` that will be ignored.
+All attributes are optional and not overriding the sub-components attributes except `previousStep`, `nextStep` that will be ignored.
 
 -   `id`: HTML id.
 
@@ -100,7 +116,7 @@ All attributes are optional and not overriding the subcomponents attributes exce
 -   `focusBackdrop`: `true` for show a dark backdrop around the focus element.
 -   `focusGlow`: `true` for show a glow on the focus element.
 -   `radius`: apply a “borderRadius” on highlight zone. If `number` the value as change in percent. If `auto` use the focused element borderRadius. If it's a simple `string`, use it without changes.
--   `marginZone`: add a maring of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
+-   `marginZone`: add a margin of focus zone in px. (e.g. `12 15 12 13` for CSS `12px 15px 12px 13px`, `12 15` for `12px 15px 12px 15px`, `12` for `12px 12px 12px 12px`.)
 -   `notScrollOnResize`: do not scroll when resizing (e.g. may be required with dynamic menu on mobile)
 -   `observerOptions`: options of DOM detection changes (default: `{ attributes: false, childList: true, subtree: true }`)
 

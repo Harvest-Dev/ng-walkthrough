@@ -30,6 +30,10 @@ export class WalkthroughService {
         return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
     }
 
+    getLeft(): number {
+        return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
+    }
+
     getDocumentHeight() {
         // Height of entire body : https://stackoverflow.com/a/1147768
         const body_height = Math.max(

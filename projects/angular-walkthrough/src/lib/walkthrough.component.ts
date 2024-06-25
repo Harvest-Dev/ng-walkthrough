@@ -307,6 +307,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _verticalContentSpacing = 50;
     private _focusElement: HTMLElement;
     private _focusElementEnd: HTMLElement;
+    /** target coordinates */
     private _offsetCoordinates: WalkthroughElementCoordinate;
     private _onContainerInit = new Subject<void>();
     private _onResize = new Subject<void>();
@@ -678,14 +679,14 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _setFocus(scroll = true) {
         const instance = this._getInstance();
         if (instance) {
-            const scrollY = window.pageXOffset;
+            const scrollY = this._walkthroughService.getLeft();
             this._initStylingTemplate(instance);
             setTimeout(() => {
                 if (this._focusElement && instance.zone) {
                     instance.marginZonePx = this._marginZonePx;
                     instance.highlightZone(
                         this._offsetCoordinates,
-                        scrollY - window.pageXOffset,
+                        scrollY - this._walkthroughService.getLeft(),
                         this.animation,
                         this.animationDelays,
                         this._setFocusContinue.bind(this),
@@ -702,7 +703,6 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         const instance = this._getInstance();
         if (!this._display) {
             this._attachContentTemplate();
-
             this._initContentTemplate(instance);
         }
         setTimeout(() => {
@@ -714,15 +714,14 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _updateElementPositions(instance: WalkthroughContainerComponent, scroll = true) {
         if (WalkthroughComponent._walkthroughContainer && this._getInstance()) {
             setTimeout(() => {
-                if (this._offsetCoordinates) {
-                    instance.contentBlockPosition(
-                        this._offsetCoordinates,
-                        this._alignContent,
-                        this._verticalAlignContent,
-                        this._contentSpacing,
-                        this._verticalContentSpacing,
-                    );
-                }
+                instance.contentBlockPosition(
+                    this._offsetCoordinates,
+                    this._alignContent,
+                    this._verticalAlignContent,
+                    this._contentSpacing,
+                    this._verticalContentSpacing,
+                );
+
                 if (this._offsetCoordinates && this._focusElement !== null && this._hasArrow) {
                     instance.arrowPosition(this._offsetCoordinates);
                 }
@@ -782,7 +781,12 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
                         scrollPos = -WalkthroughComponent.minimalMargin;
                     }
 
-                    if (scroll) {
+                    if (
+                        !this._offsetCoordinates &&
+                        ['top', 'above', 'top-screen-center'].includes(this.verticalAlignContent)
+                    ) {
+                        window.scrollTo({ top: 0 });
+                    } else if (scroll) {
                         window.scrollBy(0, scrollPos);
                     }
                 }, 50);
