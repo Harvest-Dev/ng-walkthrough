@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.11.0 (2024-07-02)
+
+### Breaking change
+
+-   upgrade to Angular 18.0
+
 ## V0.10.2 (2024-06-25)
 
 ### New features

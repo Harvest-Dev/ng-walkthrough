@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     };
 
     testClickCount = 0;
-    testClickTexts = ['click me', 'it\'s ok!', 'realy ok', 'ok ok...', 'stop that!'];
+    testClickTexts = ['click me', "it's ok!", 'realy ok', 'ok ok...', 'stop that!'];
     testPosition = 'center';
     alignContent = 'left';
     verticalAlignContent = 'top';

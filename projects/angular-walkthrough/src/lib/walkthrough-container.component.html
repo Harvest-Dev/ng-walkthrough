@@ -11,48 +11,59 @@
         [style.padding]="marginZone"
     ></div>
     <div class="wkt-content-block" [class.hide]="hideOther" [class.darken]="contentStyle === 'darken'" #contentBlock>
-        <button type="button" class="wkt-close" *ngIf="hasCloseButton" (click)="close()">✖</button>
+        @if (hasCloseButton) {
+            <button type="button" class="wkt-close" (click)="close()">✖</button>
+        }
         <div class="wkt-content">
-            <p *ngIf="contentText">{{ contentText }}</p>
+            @if (contentText) {
+                <p>{{ contentText }}</p>
+            }
             <ng-template cdkPortalHost></ng-template>
         </div>
-        <div
-            class="wkt-navigate"
-            *ngIf="!hideNav && ((hasPrevious && !hidePrevious) || (hasNext && !hideNext) || hasFinish)"
-        >
-            <button type="button" class="wkt-previous-link" *ngIf="hasPrevious && !hidePrevious" (click)="previous()">
-                {{ text.previous }}
-            </button>
-            <button type="button" class="wkt-next-link" *ngIf="hasNext && !hideNext" (click)="next()">
-                {{ text.next }}
-            </button>
-            <button type="button" class="wkt-finish-link" *ngIf="hasFinish" (click)="close(true)">
-                {{ text.close }}
-            </button>
+        @if (!hideNav && ((hasPrevious && !hidePrevious) || (hasNext && !hideNext) || hasFinish)) {
+            <div class="wkt-navigate">
+                @if (hasPrevious && !hidePrevious) {
+                    <button type="button" class="wkt-previous-link" (click)="previous()">
+                        {{ text.previous }}
+                    </button>
+                }
+                @if (hasNext && !hideNext) {
+                    <button type="button" class="wkt-next-link" (click)="next()">
+                        {{ text.next }}
+                    </button>
+                }
+                @if (hasFinish) {
+                    <button type="button" class="wkt-finish-link" (click)="close(true)">
+                        {{ text.close }}
+                    </button>
+                }
+            </div>
+        }
+    </div>
+    @if (hasArrow) {
+        <div [class.hide]="hideOther">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <defs>
+                    <marker
+                        id="wkt-arrow"
+                        viewBox="0 0 10 10"
+                        refX="8"
+                        refY="5"
+                        markerUnits="strokeWidth"
+                        orient="auto"
+                        markerWidth="10"
+                        markerHeight="10"
+                    >
+                        <polyline points="0,0 10,5 0,10 5,5" stroke-width="0" [attr.fill]="arrowColor || '#FFF'" />
+                    </marker>
+                </defs>
+                <path
+                    class="wkt-arrow-path"
+                    [attr.d]="arrowPath"
+                    [attr.stroke]="arrowColor || '#FFF'"
+                    [attr.marker-end]="markerUrl"
+                />
+            </svg>
         </div>
-    </div>
-    <div *ngIf="hasArrow" [class.hide]="hideOther">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-                <marker
-                    id="wkt-arrow"
-                    viewBox="0 0 10 10"
-                    refX="8"
-                    refY="5"
-                    markerUnits="strokeWidth"
-                    orient="auto"
-                    markerWidth="10"
-                    markerHeight="10"
-                >
-                    <polyline points="0,0 10,5 0,10 5,5" stroke-width="0" [attr.fill]="arrowColor || '#FFF'" />
-                </marker>
-            </defs>
-            <path
-                class="wkt-arrow-path"
-                [attr.d]="arrowPath"
-                [attr.stroke]="arrowColor || '#FFF'"
-                [attr.marker-end]="markerUrl"
-            />
-        </svg>
-    </div>
+    }
 </div>
