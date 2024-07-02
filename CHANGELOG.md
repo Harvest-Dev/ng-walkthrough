@@ -1,21 +1,41 @@
 # Changelog of ng-walkthrough
 
+## V0.10.2 (2024-06-25)
+
+### New features
+
+-   positioning management when no target
+-   add `top-screen-center` position for `verticalAlignContent` when no target
+
+## V0.10.1 (2024-06-24)
+
+### Correction
+
+-   fix `below` position for `verticalAlignContent`
+
+### New feature
+
+-   add `content` position for `alignContent` : to horizontally center on content
+
 ## V0.10.0 (2023-08-01)
 
-### Breaking changes
+### Breaking change
 
 -   upgrade to Angular 16.1
+
+### Correction
+
 -   fix typo/wording
 
 ## V0.9.8 (2022-02-25)
 
-### New features
+### New feature
 
 -   add `hideNext` and `hideNav` attributes
 
 ## V0.9.7 (2021-12-17)
 
-### Corrections
+### Correction
 
 -   add options for DOM detection changes
 
@@ -41,25 +61,25 @@
 
 ## V0.9.3 (2019-08-24)
 
-### Corrections
+### Correction
 
 -   fix `notScrollOnResize`
 
 ## V0.9.2 (2019-08-18)
 
-### New features
+### New feature
 
 -   add `notScrollOnResize` attribute
 
 ## V0.9.1 (2019-07-23)
 
-### Corrections
+### Correction
 
 -   fix the walkthrough pause on resize
 
 ## V0.9.0 (2021-06-02)
 
-### Breaking changes
+### Breaking change
 
 -   upgrade to Angular 11
 
@@ -81,29 +101,29 @@
 
 ## V0.8.0 (2019-03-28)
 
-### Breaking changes
+### Breaking change
 
 -   upgrade to Angular 7
 
-### Corrections
+### Correction
 
 -   Avoid resize event spamming
 
 ## V0.7.4 (2019-02-26)
 
-### New features
+### New feature
 
 -   Optional parameter `scrollOnTarget` default `true` : if the walkthrough detect that `focusElementSelector` is outside of the current view, scrolls automatically.
 
 ## V0.7.3 (2018-10-29)
 
-### Corrections
+### Correction
 
 -   Fix a problem the instance is called too early.
 
 ## V0.7.2 (2018-10-25)
 
-### New features
+### New feature
 
 -   Add subjects on `WalkthroughComponent` :
     -   `onOpen` : on open
@@ -116,7 +136,7 @@
 
 ## V0.7.1 (2018-09-17)
 
-### Corrections
+### Correction
 
 -   Fix crashes with “Toggle focusElementSelector” in demo
 
@@ -134,35 +154,35 @@
 
 ## V0.6.17 (2018-06-12)
 
-### Corrections
+### Correction
 
 -   Fix arrow display on Safari/iOS
 
 ## V0.6.16 (2018-06-05)
 
-### New features
+### New feature
 
 -   Fix hidden zones when using library with fixed elements by adding `rootElement` attribute
 
-### Corrections
+### Correction
 
 -   Fix resize event fired every time the address bar display is toggled (Android and iOS). Now the resize event is applied only when the width changes.
 
 ## V0.6.15 (2018-05-28)
 
-### Corrections
+### Correction
 
 -   Fix case when a step have no `focusElementSelector` (#19)
 
 ## V0.6.14 (2018-05-24)
 
-### Corrections
+### Correction
 
 -   Fix resize code not firing anymore (bug introduced in last release)
 
 ## V0.6.13 (2018-05-23)
 
-### Corrections
+### Correction
 
 -   Fix walkthrough visible while on pause when `window:resize` event is fired
 
@@ -183,7 +203,7 @@
 
 ## V0.6.10 (2018-04-27)
 
-### Corrections
+### Correction
 
 -   Fix a bug of positioning while scrolling
 
@@ -197,7 +217,7 @@
 
 ## V0.6.8 (2018-04-26)
 
-### Corrections
+### Correction
 
 -   Fix crash on static method with IE11
 
