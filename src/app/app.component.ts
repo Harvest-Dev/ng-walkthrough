@@ -106,7 +106,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     walk3IsReady(event: WalkthroughEvent) {
-        // tslint:disable-next-line:no-console
         console.log('walk3IsReady', event);
         setTimeout(() => {
             event.component.arrowColor = 'red';
@@ -143,22 +142,18 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     walk1Closed(finishButton: boolean) {
-        // tslint:disable-next-line:no-console
         console.log('walk1 has been closed with value : ' + (finishButton ? 'true' : 'false'));
     }
 
     walk1Finished() {
-        // tslint:disable-next-line:no-console
         console.log('walk1 has been finished');
     }
 
     flowClosed(finishButton: boolean) {
-        // tslint:disable-next-line:no-console
         console.log('flow has been closed with value : ' + (finishButton ? 'true' : 'false'));
     }
 
     flowFinished() {
-        // tslint:disable-next-line:no-console
         console.log('flow has been finished');
     }
 
