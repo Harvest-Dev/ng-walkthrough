@@ -26,9 +26,9 @@ export class WalkthroughEvent {
 }
 
 export class WalkthroughMargin {
-    static parsePoints(points: string): WalkthroughMargin {
-        let pointsPx: WalkthroughMargin;
-        if (points.match(/^\d+(?:\s+\d+)*$/)) {
+    static parsePoints(points: string | null): WalkthroughMargin {
+        let pointsPx: WalkthroughMargin | null = null;
+        if (points?.match(/^\d+(?:\s+\d+)*$/)) {
             const split = points.split(/\s+/).map(i => parseFloat(i));
             pointsPx = new WalkthroughMargin(split[0], split[1], split[2], split[3]);
         }

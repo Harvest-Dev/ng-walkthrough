@@ -27,7 +27,7 @@ const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     selector: 'walkthrough-container',
     styleUrls: ['./walkthrough-container.component.scss'],
     templateUrl: './walkthrough-container.component.html',
-    standalone: false
+    standalone: false,
 })
 export class WalkthroughContainerComponent extends BasePortalOutlet {
     markerUrl = 'url(#wkt-arrow)';
@@ -37,7 +37,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
 
     show = false;
     pause = false;
-    parent: WalkthroughComponent;
+    parent!: WalkthroughComponent;
 
     // highlight zone
 
@@ -45,8 +45,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     hasHighlight = false;
     hasBackdrop = false;
     hasGlow = false;
-    hasClickable: boolean;
-    hideOther: boolean;
+    hasClickable = false;
+    hideOther = false;
 
     // navigate
 
@@ -62,20 +62,20 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     // arrow
 
     hasArrow = false;
-    arrowPath: string;
+    arrowPath = '';
     arrowMarkerDist = 7;
 
     // styling
 
-    contentStyle: string;
-    radius: string;
-    arrowColor: string;
-    marginZone: string | null;
+    contentStyle = '';
+    radius = '';
+    arrowColor = '';
+    marginZone: string | null = null;
     marginZonePx = new WalkthroughMargin();
 
     // content
 
-    contentText: string;
+    contentText = '';
 
     // texts change / i18n
 
@@ -83,10 +83,10 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
 
     // elements
 
-    @ViewChild(CdkPortalOutlet) _portalHost: CdkPortalOutlet;
-    @ViewChild('content') content: TemplateRef<any>;
-    @ViewChild('contentBlock') contentBlock: ElementRef;
-    @ViewChild('zone') zone: ElementRef;
+    @ViewChild(CdkPortalOutlet) _portalHost!: CdkPortalOutlet;
+    @ViewChild('content') content!: TemplateRef<any>;
+    @ViewChild('contentBlock') contentBlock!: ElementRef;
+    @ViewChild('zone') zone!: ElementRef;
 
     // HostBinding
 
@@ -110,8 +110,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         return !this.hasHighlightZone && this.hasBackdrop;
     }
 
-    private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below' | 'top-screen-center';
-    private _arrowPosition: 'topBottom' | 'leftRight';
+    private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below' | 'top-screen-center' = 'above';
+    private _arrowPosition: 'topBottom' | 'leftRight' = 'topBottom';
 
     constructor(
         public viewContainerRef: ViewContainerRef,
@@ -205,8 +205,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
                 }
             }, intervale);
         } else {
-            zoneStyle.left = coordinate.left - this.marginZonePx.left + 'px';
-            zoneStyle.top = coordinate.top - this.marginZonePx.top + 'px';
+            zoneStyle.left = coordinate.left - (this.marginZonePx?.left ?? 0) + 'px';
+            zoneStyle.top = coordinate.top - (this.marginZonePx?.top ?? 0) + 'px';
             zoneStyle.width = coordinate.width + 'px';
             zoneStyle.height = coordinate.height + 'px';
 
@@ -253,10 +253,10 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         const height = elementSize.height + elementSize.margin.top + elementSize.margin.bottom;
 
         const coordinate = paramCoordinate ? JSON.parse(JSON.stringify(paramCoordinate)) : {};
-        coordinate.top -= this.marginZonePx.top;
-        coordinate.left -= this.marginZonePx.left;
-        coordinate.width += this.marginZonePx.left + this.marginZonePx.right;
-        coordinate.height += this.marginZonePx.top + this.marginZonePx.bottom;
+        coordinate.top -= this.marginZonePx?.top ?? 0;
+        coordinate.left -= this.marginZonePx?.left ?? 0;
+        coordinate.width += (this.marginZonePx?.left ?? 0) + (this.marginZonePx?.right ?? 0);
+        coordinate.height += (this.marginZonePx?.top ?? 0) + (this.marginZonePx?.bottom ?? 0);
 
         // check if we've got the space to respect the alignContent attribute
         let notEnoughSpace = false;
@@ -402,8 +402,8 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         const contentBlockElement = this.contentBlock.nativeElement as HTMLElement;
         const contentBlockCoordinates = this._walkthroughService.retrieveCoordinates(contentBlockElement);
 
-        const realWidth = coordinate.width + this.marginZonePx.left + this.marginZonePx.right;
-        const realHeight = coordinate.height + this.marginZonePx.top + this.marginZonePx.bottom;
+        const realWidth = coordinate.width + (this.marginZonePx?.left ?? 0) + (this.marginZonePx?.right ?? 0);
+        const realHeight = coordinate.height + (this.marginZonePx?.top ?? 0) + (this.marginZonePx?.bottom ?? 0);
 
         // start point of the arrow (tail)
         let startLeft = contentBlockCoordinates.left + contentBlockCoordinates.width / 2;
@@ -414,7 +414,7 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         let centerLeft: number;
 
         // end point of the arrow (head)
-        let endLeft = coordinate.left - this.marginZonePx.left;
+        let endLeft = coordinate.left - (this.marginZonePx?.left ?? 0);
         let endTop = coordinate.top - this.marginZonePx.top;
 
         switch (this._contentPosition) {

@@ -11,10 +11,10 @@ export class WalkthroughService {
         const style = window.getComputedStyle(element);
 
         const coordinates = {
-            top: clientRect.top - (margin ? margin.top : 0),
+            top: clientRect.top - (margin?.top ?? 0),
             height: clientRect.height,
             width: clientRect.width,
-            left: clientRect.left - (margin ? margin.left : 0),
+            left: clientRect.left - (margin?.left ?? 0),
             margin: {
                 top: parseFloat(style.marginTop),
                 right: parseFloat(style.marginRight),

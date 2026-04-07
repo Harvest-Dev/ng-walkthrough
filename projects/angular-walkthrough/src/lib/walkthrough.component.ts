@@ -39,10 +39,10 @@ export interface WalkthroughNavigate {
 @Component({
     selector: 'ng-walkthrough',
     template: '',
-    standalone: false
+    standalone: false,
 })
 export class WalkthroughComponent implements AfterViewInit, OnDestroy {
-    private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;
+    private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> | null = null;
     private static _walkthroughContainerCreating = false;
     public static minimalMargin = 60;
 
@@ -58,20 +58,20 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Output() ready: EventEmitter<WalkthroughEvent> = new EventEmitter();
 
-    @Input() focusElementCSSClass: string;
-    @Input() rootElement: string;
+    @Input() focusElementCSSClass = '';
+    @Input() rootElement = '';
 
-    @Input() focusElementSelector: string;
+    @Input() focusElementSelector = '';
     @Input() typeSelector: 'element' | 'zone' = 'element';
-    @Input() focusClick: (event: Event, content: WalkthroughContainerComponent) => void;
-    @Input() radius: string;
+    @Input() focusClick!: (event: Event, content: WalkthroughContainerComponent) => void;
+    @Input() radius = '';
 
-    @Input() previousStep: WalkthroughComponent;
-    @Input() nextStep: WalkthroughComponent;
-    @Input() texts: WalkthroughTextI;
+    @Input() previousStep!: WalkthroughComponent;
+    @Input() nextStep!: WalkthroughComponent;
+    @Input() texts!: WalkthroughTextI;
 
-    @Input() contentTemplate: TemplateRef<any>;
-    @Input() contentText: string;
+    @Input() contentTemplate!: TemplateRef<any>;
+    @Input() contentText = '';
     @Input() contentStyle: 'none' | 'darken' = 'darken';
 
     @Input() observerOptions: MutationObserverInit = { attributes: false, childList: true, subtree: true };
@@ -83,11 +83,9 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     set marginZone(points: string | null) {
         if (this._marginZone !== points) {
             if (points === null) {
-                this._marginZone = null;
-            }
-
-            this._marginZonePx = WalkthroughMargin.parsePoints(points);
-            if (this._marginZonePx !== null) {
+                this._marginZone = '';
+            } else {
+                this._marginZonePx = WalkthroughMargin.parsePoints(points);
                 this._marginZone = points;
             }
         }
@@ -282,9 +280,9 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     }
 
     @Input() scrollOnTarget = true;
-    @Input() visibilityCallback: () => boolean;
+    @Input() visibilityCallback!: () => boolean;
 
-    private _id: string;
+    private _id = '';
     private _uid = `walkthrough-${nextUniqueId++}`;
     private _readyHasBeenEmitted = false;
     private _display = false;
@@ -299,17 +297,17 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private _hidePrevious = false;
     private _hideNext = false;
     private _hideNav = false;
-    private _arrowColor: string;
-    private _marginZone: string;
+    private _arrowColor = '';
+    private _marginZone = '';
     private _marginZonePx = new WalkthroughMargin();
     private _alignContent: 'left' | 'center' | 'content' | 'right' = 'left';
     private _verticalAlignContent: 'above' | 'top' | 'center' | 'bottom' | 'below' = 'top';
     private _contentSpacing = 0;
     private _verticalContentSpacing = 50;
-    private _focusElement: HTMLElement;
-    private _focusElementEnd: HTMLElement;
+    private _focusElement: HTMLElement | null = null;
+    private _focusElementEnd: HTMLElement | null = null;
     /** target coordinates */
-    private _offsetCoordinates: WalkthroughElementCoordinate;
+    private _offsetCoordinates: WalkthroughElementCoordinate | null = null;
     private _onContainerInit = new Subject<void>();
     private _onResize = new Subject<void>();
     private _notScrollOnResize = true;
@@ -547,7 +545,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         this.open();
     }
 
-    private _getInstance(): WalkthroughContainerComponent {
+    private _getInstance(): WalkthroughContainerComponent | null {
         return WalkthroughComponent._walkthroughContainer ? WalkthroughComponent._walkthroughContainer.instance : null;
     }
 
@@ -571,7 +569,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         walkthroughContainer: WalkthroughContainerComponent,
     ) {
         if (componentOrTemplateRef instanceof TemplateRef) {
-            walkthroughContainer.attachTemplatePortal(new TemplatePortal<T>(componentOrTemplateRef, null));
+            walkthroughContainer.attachTemplatePortal(new TemplatePortal<T>(componentOrTemplateRef, null!));
         } else {
             walkthroughContainer.attachComponentPortal(new ComponentPortal(componentOrTemplateRef));
         }
@@ -589,7 +587,7 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
 
                 // if there is a root element defined (in some cases when position fixed is used, we need to scroll on it)
                 if (this.rootElement) {
-                    document.querySelector(this.rootElement).scrollIntoView(true);
+                    document.querySelector(this.rootElement)?.scrollIntoView(true);
                 }
             }
             this._offsetCoordinates = this._walkthroughService.retrieveCoordinates(element);
@@ -612,12 +610,12 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
         setTimeout(() => this._getInstance().close(false, true, false), 50);
     }
 
-    private _hasElements(elements: NodeListOf<HTMLElement>): boolean {
-        return elements && elements.length > 0;
+    private _hasElements(elements: NodeListOf<HTMLElement> | null): boolean {
+        return elements !== null && elements.length > 0;
     }
 
-    private _getFocusElements(): NodeListOf<HTMLElement> {
-        let focusElements: NodeListOf<HTMLElement> = null;
+    private _getFocusElements(): NodeListOf<HTMLElement> | null {
+        let focusElements: NodeListOf<HTMLElement> | null = null;
         if (this.focusElementSelector) {
             try {
                 focusElements = document.querySelectorAll(this.focusElementSelector) as NodeListOf<HTMLElement>;

@@ -20,10 +20,10 @@ let nextUniqueId = 0;
 @Component({
     selector: 'ng-walkthrough-flow',
     template: '',
-    standalone: false
+    standalone: false,
 })
 export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
-    @ContentChildren(WalkthroughComponent) walkthroughComponents: QueryList<WalkthroughComponent>;
+    @ContentChildren(WalkthroughComponent) walkthroughComponents!: QueryList<WalkthroughComponent>;
 
     @HostBinding('attr.id')
     @Input()
@@ -38,28 +38,28 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     @Output() finished: EventEmitter<WalkthroughEvent> = new EventEmitter();
     @Input() contentStyle: 'none' | 'darken' = 'darken';
 
-    @Input() arrowColor: string;
+    @Input() arrowColor = '';
     @Input() marginZone: string | null = null;
-    @Input() showArrow: string | boolean;
+    @Input() showArrow: string | boolean = false;
 
-    @Input() rootElement: string;
+    @Input() rootElement = '';
 
-    @Input() closeButton: string | boolean;
-    @Input() closeAnywhere: string | boolean;
-    @Input() finishButton: string | boolean;
-    @Input() hidePrevious: string | boolean;
+    @Input() closeButton: string | boolean = false;
+    @Input() closeAnywhere: string | boolean = true;
+    @Input() finishButton: string | boolean = false;
+    @Input() hidePrevious: string | boolean = false;
 
-    @Input() focusBackdrop: string | boolean;
-    @Input() focusGlow: string | boolean;
-    @Input() radius: string;
+    @Input() focusBackdrop: string | boolean = false;
+    @Input() focusGlow: string | boolean = false;
+    @Input() radius = '';
 
-    @Input() notScrollOnResize: string | boolean;
+    @Input() notScrollOnResize: string | boolean = false;
 
-    @Input() texts: WalkthroughTextI;
+    @Input() texts!: WalkthroughTextI;
 
     @Input() observerOptions: MutationObserverInit = { attributes: false, childList: true, subtree: true };
 
-    private _id: string;
+    private _id = '';
     private _uid = `walkthrough-flow-${nextUniqueId++}`;
 
     ngAfterViewInit() {
@@ -73,7 +73,7 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
             for (const option in changes) {
                 if (changes[option] && option !== 'id') {
                     this.walkthroughComponents.forEach((walkthrough: WalkthroughComponent) => {
-                        walkthrough[option] = changes[option].currentValue;
+                        (walkthrough as any)[option] = changes[option].currentValue;
                     });
                 }
             }
@@ -81,7 +81,7 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     }
 
     init() {
-        let prevComp: WalkthroughComponent = null;
+        let prevComp: WalkthroughComponent | null = null;
         this.walkthroughComponents.forEach((walkthrough: WalkthroughComponent) => {
             // navigation auto (ignore previousStep/nextStep on the WalkthroughComponent)
 
@@ -146,7 +146,9 @@ export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
             }
         });
         // navigation auto (close on last step)
-        prevComp.finishButton = true;
+        if (prevComp) {
+            prevComp.finishButton = true;
+        }
     }
 
     start() {

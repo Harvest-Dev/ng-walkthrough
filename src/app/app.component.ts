@@ -14,7 +14,7 @@ import {
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
     frenchText: WalkthroughTextI = {
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     verticalContentSpacing = 50;
     notScrollOnResize = false;
 
-    @ViewChild('walk1') walk1: WalkthroughComponent;
+    @ViewChild('walk1') walk1!: WalkthroughComponent;
 
     // disabled flags
     step1flowDisabled = false;
