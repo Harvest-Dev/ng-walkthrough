@@ -6,14 +6,23 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "target": "ES2022",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["ES2022", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "paths": {
-      "angular-walkthrough": ["dist/angular-walkthrough"],
-      "angular-walkthrough/*": ["dist/angular-walkthrough/*"]
+      "angular-walkthrough": [
+        "dist/angular-walkthrough"
+      ],
+      "angular-walkthrough/*": [
+        "dist/angular-walkthrough/*"
+      ]
     },
     "useDefineForClassFields": false
   }
