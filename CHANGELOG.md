@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.12.0 (2026-04-07)
+
+### Breaking change
+
+-   upgrade to Angular 21.0
+
 ## V0.11.0 (2024-07-02)
 
 ### Breaking change
