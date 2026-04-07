@@ -392,7 +392,10 @@ export class WalkthroughComponent implements AfterViewInit, OnDestroy {
             setTimeout(() => {
                 WalkthroughComponent._walkthroughContainer =
                     this._appendComponentToBody<WalkthroughContainerComponent>(WalkthroughContainerComponent);
-                this._onContainerInit.next();
+                // Wait for the container's view to be initialized before notifying
+                WalkthroughComponent._walkthroughContainer.instance.viewReady.pipe(first()).subscribe(() => {
+                    this._onContainerInit.next();
+                });
             });
         }
     }

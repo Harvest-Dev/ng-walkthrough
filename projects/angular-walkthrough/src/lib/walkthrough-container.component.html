@@ -18,7 +18,7 @@
             @if (contentText) {
                 <p>{{ contentText }}</p>
             }
-            <ng-template cdkPortalHost></ng-template>
+            <ng-template cdkPortalOutlet></ng-template>
         </div>
         @if (!hideNav && ((hasPrevious && !hidePrevious) || (hasNext && !hideNext) || hasFinish)) {
             <div class="wkt-navigate">

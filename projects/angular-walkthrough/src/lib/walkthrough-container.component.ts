@@ -1,5 +1,6 @@
 import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
+    AfterViewInit,
     Component,
     ComponentRef,
     ElementRef,
@@ -11,6 +12,7 @@ import {
     ViewChild,
     ViewContainerRef,
 } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { WalkthroughText } from './walkthrough-text';
 import { WalkthroughElementCoordinate, WalkthroughMargin } from './walkthrough-tools';
@@ -29,7 +31,7 @@ const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     templateUrl: './walkthrough-container.component.html',
     standalone: false,
 })
-export class WalkthroughContainerComponent extends BasePortalOutlet {
+export class WalkthroughContainerComponent extends BasePortalOutlet implements AfterViewInit {
     markerUrl = 'url(#wkt-arrow)';
 
     /* if a walkthrough is ongoing (paused or not) */
@@ -38,6 +40,10 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
     show = false;
     pause = false;
     parent!: WalkthroughComponent;
+
+    // Signal when view is ready
+    viewReady = new Subject<void>();
+    private _viewInitialized = false;
 
     // highlight zone
 
@@ -122,6 +128,11 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
         super();
     }
 
+    ngAfterViewInit() {
+        this._viewInitialized = true;
+        this.viewReady.next();
+    }
+
     @HostListener('click')
     click() {
         if (this.hasCloseAnywhere && this.show) {
@@ -140,6 +151,9 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
      * @param portal Portal to be attached as the walkthrough content.
      */
     attachComponentPortal<T>(portal: ComponentPortal<T>): ComponentRef<T> {
+        if (!this._portalHost) {
+            throw Error('Portal host not initialized');
+        }
         if (this._portalHost.hasAttached()) {
             throwWalkthroughContentAlreadyAttachedError();
         }
@@ -153,6 +167,9 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
      * @param portal Portal to be attached as the walkthrough content.
      */
     attachTemplatePortal<C>(portal: TemplatePortal<C>): EmbeddedViewRef<C> {
+        if (!this._portalHost) {
+            throw Error('Portal host not initialized');
+        }
         if (this._portalHost.hasAttached()) {
             throwWalkthroughContentAlreadyAttachedError();
         }
@@ -577,7 +594,9 @@ export class WalkthroughContainerComponent extends BasePortalOutlet {
 
     close(finishLink = false, closeWalkthrough = true, triggerFinishIfEnd = true) {
         // remove content
-        this._portalHost.dispose();
+        if (this._portalHost) {
+            this._portalHost.dispose();
+        }
         // hide
         this.show = false;
         if (this.parent) {
