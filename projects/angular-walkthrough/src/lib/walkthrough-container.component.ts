@@ -27,6 +27,7 @@ const is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     selector: 'walkthrough-container',
     styleUrls: ['./walkthrough-container.component.scss'],
     templateUrl: './walkthrough-container.component.html',
+    standalone: false
 })
 export class WalkthroughContainerComponent extends BasePortalOutlet {
     markerUrl = 'url(#wkt-arrow)';

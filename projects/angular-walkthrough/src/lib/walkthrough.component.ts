@@ -39,6 +39,7 @@ export interface WalkthroughNavigate {
 @Component({
     selector: 'ng-walkthrough',
     template: '',
+    standalone: false
 })
 export class WalkthroughComponent implements AfterViewInit, OnDestroy {
     private static _walkthroughContainer: ComponentRef<WalkthroughContainerComponent> = null;

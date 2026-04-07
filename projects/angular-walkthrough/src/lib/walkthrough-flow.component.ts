@@ -20,6 +20,7 @@ let nextUniqueId = 0;
 @Component({
     selector: 'ng-walkthrough-flow',
     template: '',
+    standalone: false
 })
 export class WalkthroughFlowComponent implements AfterViewInit, OnChanges {
     @ContentChildren(WalkthroughComponent) walkthroughComponents: QueryList<WalkthroughComponent>;
