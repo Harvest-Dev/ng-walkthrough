@@ -4,7 +4,6 @@
   "description": "Walkthrough, an Angular library",
   "author": "Célian Veyssière",
   "license": "MIT",
-  "private": false,
   "keywords": [
     "walkthrough",
     "angular"
@@ -18,7 +17,8 @@
     "url": "git+https://github.com/Harvest-Dev/ng-walkthrough.git"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.com"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "bugs": {
     "url": "https://github.com/Harvest-Dev/ng-walkthrough/issues"
