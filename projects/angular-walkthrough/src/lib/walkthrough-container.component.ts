@@ -1,11 +1,11 @@
 import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ComponentRef,
     ElementRef,
     EmbeddedViewRef,
-    HostBinding,
     HostListener,
     Renderer2,
     TemplateRef,
@@ -37,9 +37,33 @@ export class WalkthroughContainerComponent extends BasePortalOutlet implements A
     /* if a walkthrough is ongoing (paused or not) */
     ongoing = false;
 
-    show = false;
+    private _show = false;
+    get show(): boolean {
+        return this._show;
+    }
+    set show(value: boolean) {
+        this._show = value;
+        this._updateHostClasses();
+    }
+
     pause = false;
-    parent!: WalkthroughComponent;
+
+    private _parent!: WalkthroughComponent;
+
+    get parent(): WalkthroughComponent {
+        return this._parent;
+    }
+
+    set parent(value: WalkthroughComponent) {
+        this._parent = value;
+        // Set id attribute imperatively to avoid NG0100
+        const newId = value ? value.id + '-container' : null;
+        if (newId) {
+            this._renderer.setAttribute(this._el.nativeElement, 'id', newId);
+        } else {
+            this._renderer.removeAttribute(this._el.nativeElement, 'id');
+        }
+    }
 
     // Signal when view is ready
     viewReady = new Subject<void>();
@@ -47,9 +71,26 @@ export class WalkthroughContainerComponent extends BasePortalOutlet implements A
 
     // highlight zone
 
-    hasHighlightZone = false;
+    private _hasHighlightZone = false;
+    get hasHighlightZone(): boolean {
+        return this._hasHighlightZone;
+    }
+    set hasHighlightZone(value: boolean) {
+        this._hasHighlightZone = value;
+        this._updateHostClasses();
+    }
+
     hasHighlight = false;
-    hasBackdrop = false;
+
+    private _hasBackdrop = false;
+    get hasBackdrop(): boolean {
+        return this._hasBackdrop;
+    }
+    set hasBackdrop(value: boolean) {
+        this._hasBackdrop = value;
+        this._updateHostClasses();
+    }
+
     hasGlow = false;
     hasClickable = false;
     hideOther = false;
@@ -63,7 +104,15 @@ export class WalkthroughContainerComponent extends BasePortalOutlet implements A
     hasNext = false;
     hasFinish = false;
     hasCloseButton = false;
-    hasCloseAnywhere = true;
+
+    private _hasCloseAnywhere = true;
+    get hasCloseAnywhere(): boolean {
+        return this._hasCloseAnywhere;
+    }
+    set hasCloseAnywhere(value: boolean) {
+        this._hasCloseAnywhere = value;
+        this._updateHostClasses();
+    }
 
     // arrow
 
@@ -94,28 +143,6 @@ export class WalkthroughContainerComponent extends BasePortalOutlet implements A
     @ViewChild('contentBlock') contentBlock!: ElementRef;
     @ViewChild('zone') zone!: ElementRef;
 
-    // HostBinding
-
-    @HostBinding('attr.id')
-    get id() {
-        return this.parent ? this.parent.id + '-container' : null;
-    }
-
-    @HostBinding('class.hide')
-    get hide() {
-        return !this.show;
-    }
-
-    @HostBinding('class.cursor')
-    get cursor() {
-        return this.hasCloseAnywhere;
-    }
-
-    @HostBinding('class.backdrop')
-    get backdrop() {
-        return !this.hasHighlightZone && this.hasBackdrop;
-    }
-
     private _contentPosition: 'above' | 'top' | 'center' | 'bottom' | 'below' | 'top-screen-center' = 'above';
     private _arrowPosition: 'topBottom' | 'leftRight' = 'topBottom';
 
@@ -124,13 +151,44 @@ export class WalkthroughContainerComponent extends BasePortalOutlet implements A
         private _walkthroughService: WalkthroughService,
         private _renderer: Renderer2,
         private _el: ElementRef,
+        private _cd: ChangeDetectorRef
     ) {
         super();
+        // Set initial host classes
+        this._renderer.addClass(this._el.nativeElement, 'hide');
     }
 
     ngAfterViewInit() {
         this._viewInitialized = true;
         this.viewReady.next();
+    }
+
+    /**
+     * Update host element classes imperatively to avoid NG0100 errors.
+     * These classes were previously managed via @HostBinding but that causes
+     * ExpressionChangedAfterItHasBeenCheckedError when values change mid-cycle.
+     */
+    private _updateHostClasses(): void {
+        const el = this._el.nativeElement;
+        // hide class: applied when not showing
+        if (!this._show) {
+            this._renderer.addClass(el, 'hide');
+        } else {
+            this._renderer.removeClass(el, 'hide');
+        }
+        // cursor class: applied when closeAnywhere is enabled
+        if (this._hasCloseAnywhere) {
+            this._renderer.addClass(el, 'cursor');
+        } else {
+            this._renderer.removeClass(el, 'cursor');
+        }
+        // backdrop class: applied when no highlight zone but backdrop is enabled
+        if (!this._hasHighlightZone && this._hasBackdrop) {
+            this._renderer.addClass(el, 'backdrop');
+        } else {
+            this._renderer.removeClass(el, 'backdrop');
+        }
+        this._cd.markForCheck();
     }
 
     @HostListener('click')
