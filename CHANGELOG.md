@@ -1,5 +1,11 @@
 # Changelog of ng-walkthrough
 
+## V0.12.0 (2026-06-04)
+
+### Correction
+
+-    fix: update host classes
+
 ## V0.12.0 (2026-04-07)
 
 ### Breaking change
